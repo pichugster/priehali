@@ -118,7 +118,7 @@
         <div class="ticket__tabs" role="tablist">
           <button class="ticket__tab active" data-tab="tourist" type="button"><span class="ticket__code">TUR</span><span class="ticket__label">Турист</span></button>
           <button class="ticket__tab" data-tab="move" type="button"><span class="ticket__code">MOV</span><span class="ticket__label">Переезд</span></button>
-          <button class="ticket__tab" data-tab="earn" type="button"><span class="ticket__code">WRK</span><span class="ticket__label">Удалёнка</span></button>
+          <button class="ticket__tab" data-tab="live" type="button"><span class="ticket__code">LIV</span><span class="ticket__label">Живу тут</span></button>
         </div>
 
         <div class="ticket__perf" aria-hidden="true"></div>
@@ -158,16 +158,8 @@
           </div>
         </div>
 
-        <div class="fields" data-fields="earn" hidden>
-          <p class="ticket__lead">Нужен доход, который долетит вместе с тобой.</p>
-          <div class="field">
-            <span class="field__label">Направление</span>
-            <div class="selwrap"><select id="e_dir"><option value="all">Все способы</option><option value="ai">Нейросети</option><option value="montage">Монтаж</option><option value="content">Контент</option></select></div>
-          </div>
-          <div class="field">
-            <span class="field__label">Уровень</span>
-            <div class="selwrap"><select id="e_lvl"><option value="zero">С нуля</option><option value="some">Уже что-то умею</option></select></div>
-          </div>
+        <div class="fields" data-fields="live" hidden>
+          <p class="ticket__lead">Уже переехал — теперь вопросы другие.</p>
         </div>
 
         <button class="ticket__go" id="go" type="button">Показать подборку</button>
@@ -258,8 +250,15 @@
       if(comp.has('couple')) cards.push(card('👫','Жильё для двоих','Совместный бюджет'));
       if(comp.has('solo') && comp.size===1) cards.push(card('🧳','Коливинги','Как не заскучать и найти своих'));
     } else {
-      title='Удалённый доход'; sub=val('e_lvl','zero')==='zero'?'С нуля — старт для новичка':'Уже умеешь — прокачаем';
-      cards=[card('🤖','Заработок на ИИ','Услуги, контент, продукты','https://pichugster.com'),card('🎬','Монтаж','Навык, который кормит','https://pichugster.com'),card('✍️','Контент и тексты','На заказ и для себя','https://pichugster.com'),card('🧭','С чего начать','Первые шаги новичку','https://pichugster.com')];
+      title='Живу тут'; sub='Комьюнити, быт и всё, что важно уже после переезда';
+      cards=[
+        card('🤝','Комьюнити','Встречи, чаты, движухи для своих'),
+        card('🛂','Продление визы','Что менять и когда'),
+        card('💰','Жизнь как местному','Где дешевле, без туристической наценки'),
+        card('🧑‍🤝‍🧑','Нетворкинг','Где искать связи и знакомства'),
+        card('🏠','Аренда на год+','Долгосрочные условия и договоры'),
+        card('🩺','Свой врач','Проверенные клиники для долгой жизни'),
+      ];
     }
     titleEl.textContent=title; subEl.textContent=sub; cardsEl.innerHTML=cards.join('');
   }
