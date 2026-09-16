@@ -10,12 +10,12 @@
 <meta name="theme-color" content="#F4F6F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style is:global>
   :root{
     --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
     --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
-    --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1080px;
+    --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1080px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -27,11 +27,11 @@
 
   nav{padding:28px 0}
   .nav__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  .nav__logo{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--jade-dark)}
+  .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--jade-dark)}
   .nav__tag{font-size:.85rem;color:var(--ink-soft)}
 
   .hero{padding:12px 0 48px;text-align:center}
-  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;margin:0 auto 16px;max-width:16ch}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;margin:0 auto 16px;max-width:16ch}
   .hero__sub{font-size:1.02rem;color:var(--ink-soft);max-width:46ch;margin:0 auto}
 
   .ticket{background:var(--bg-card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 26px;box-shadow:0 24px 48px -32px rgba(22,35,43,.35);max-width:680px;margin:36px auto 0}
@@ -66,7 +66,7 @@
 
   .picks{padding:56px 0 40px}
   .picks-head{text-align:center;margin-bottom:30px}
-  .picks-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,3vw,2rem)}
+  .picks-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,3vw,2rem)}
   .picks-head p{color:var(--ink-soft);margin-top:6px}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
   .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;transition:transform .2s,box-shadow .2s,border-color .2s;color:inherit;display:block}
@@ -85,7 +85,7 @@
   .author__row{display:flex;align-items:center;gap:20px;max-width:720px;margin:0 auto}
   .author svg{width:38px;height:20px;color:var(--gold);flex:none}
   .author p{color:var(--ink-soft);font-size:.92rem}
-  .author p b{color:var(--ink);font-family:var(--serif);font-weight:600}
+  .author p b{color:var(--ink);font-family:var(--serif);font-weight:400;font-style:italic}
   .author a{color:var(--jade-dark);font-weight:600}
 
   footer{padding:24px 0 40px;border-top:1px solid var(--line)}

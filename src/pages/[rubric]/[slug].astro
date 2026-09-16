@@ -25,12 +25,12 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 <meta name="theme-color" content="#F4F6F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style is:global>
   :root{
     --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
     --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
-    --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1000px;
+    --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1000px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -41,7 +41,7 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 
   nav{padding:28px 0}
   .nav__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  .nav__logo{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--jade-dark)}
+  .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--jade-dark)}
   .nav__tag{font-size:.85rem;color:var(--ink-soft)}
 
   .crumbs{padding:6px 0 22px;font-size:.82rem;color:var(--ink-soft)}
@@ -50,7 +50,7 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 
   .cat-head{padding-bottom:30px}
   .cat-ic{font-size:2.2rem}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1;margin:10px 0 8px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1;margin:10px 0 8px}
   .lede{font-size:1.05rem;color:var(--ink-soft)}
 
   main{padding-bottom:56px}
