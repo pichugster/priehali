@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Приехали — Вьетнам🇻🇳</title><meta name="description" content="Всё о жизни в Нячанге в одном месте: для туриста, для переезжающих и для тех, кто уже обжился."><meta name="theme-color" content="#F4F6F0"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/index.C5x-qnQs.css"></head><body><nav><div class="nav__row"><span class="nav__logo">приехали.ком</span><a href="/favorites/" class="nav__tag" style="border:1px solid var(--line);border-radius:999px;padding:6px 14px">♡ Избранное</a></div></nav><main><section class="hero"><div class="wrap"><h1>Здрасте, приехали</h1><p class="hero__sub">Выбери, кто ты — давай соберём то, что пригодится.</p><div class="ticket"><div class="ticket__route"><span>PRIEHALI</span><span class="ticket__plane" aria-hidden="true">✈</span><span>NHA TRANG</span></div><div class="ticket__tabs" role="tablist"><button class="ticket__tab active" data-tab="tourist" type="button"><span class="ticket__code">TUR</span><span class="ticket__label">Турист</span></button><button class="ticket__tab" data-tab="move" type="button"><span class="ticket__code">MOV</span><span class="ticket__label">Переезд</span></button><button class="ticket__tab" data-tab="live" type="button"><span class="ticket__code">LIV</span><span class="ticket__label">Живу тут</span></button></div><div class="ticket__perf" aria-hidden="true"></div><div class="fields" data-fields="tourist"><p class="ticket__lead">Едешь на пару недель — не на постоянку.</p><div class="field"><span class="field__label">Ты в Нячанге</span><div class="selwrap"><select id="t_exp"><option value="first">Впервые</option><option value="been">Уже был</option></select></div></div><div class="field"><span class="field__label">Что интересно (можно несколько)</span><div class="chips"><button class="chip on" data-group="t_int" data-value="all" type="button">Всё подряд</button><button class="chip" data-group="t_int" data-value="food" type="button">Еда</button><button class="chip" data-group="t_int" data-value="beach" type="button">Пляжи</button><button class="chip" data-group="t_int" data-value="party" type="button">Тусовки</button><button class="chip" data-group="t_int" data-value="tours" type="button">Экскурсии</button></div></div></div><div class="fields" data-fields="move" hidden><p class="ticket__lead">Собираешься остаться надолго — с вещами и вопросами.</p><div class="field"><span class="field__label">Едешь</span><div class="selwrap"><select id="m_inc"><option value="income">С доходом</option><option value="savings">С накоплениями</option><option value="none">Без дохода</option></select></div></div><div class="field"><span class="field__label">Состав (можно несколько)</span><div class="chips"><button class="chip on" data-group="m_comp" data-value="solo" type="button">Один</button><button class="chip" data-group="m_comp" data-value="couple" type="button">Парой</button><button class="chip" data-group="m_comp" data-value="family" type="button">С детьми</button><button class="chip" data-group="m_comp" data-value="pet" type="button">С питомцем</button></div></div></div><div class="fields" data-fields="live" hidden><p class="ticket__lead">Уже переехал — теперь вопросы другие.</p></div><button class="ticket__go" id="go" type="button">Показать подборку</button></div></div></section><section class="picks" id="picks"><div class="wrap"><div class="picks-head"><h2 id="picksTitle">Подборки для туриста</h2><p id="picksSub">Проверено на месте — тыкай в категорию</p></div><div class="cards" id="cards"></div></div></section></main><section class="author"><div class="wrap author__row"><svg viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 18C10 6 18 6 24 14C30 6 38 6 46 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg><p><b>Портал приехали.ком</b> Города меняются быстрее, чем успевают обновляться путеводители. Мы живём здесь и обновляем подборки, когда что-то меняется — а не раз в год.</p></div></section><footer><div class="footer__row"><span>приехали.ком</span><span class="footer__muted">© 2026</span></div></footer><script>
+  // ---------- Избранное (localStorage, без логина) ----------
+  const FAV_KEY = 'priehali_favorites';
+  function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch(e){ return []; } }
+  function saveFavs(list){ localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
+  function isFav(url){ return getFavs().some(f=>f.url===url); }
+  function toggleFav(btn){
+    const url=btn.dataset.url, title=btn.dataset.title, icon=btn.dataset.icon;
+    let list=getFavs();
+    if(list.some(f=>f.url===url)){ list=list.filter(f=>f.url!==url); btn.classList.remove('on'); btn.textContent='♡'; }
+    else { list.push({url,title,icon}); btn.classList.add('on'); btn.textContent='♥'; }
+    saveFavs(list);
+  }
+  function refreshFavButtons(root=document){
+    root.querySelectorAll('.favbtn').forEach(btn=>{
+      const on=isFav(btn.dataset.url);
+      btn.classList.toggle('on',on);
+      btn.textContent=on?'♥':'♡';
+    });
+  }
+  function favBtn(url,title,icon){
+    const safeTitle=String(title).replace(/"/g,'&quot;');
+    return `<button class="favbtn" data-url="${url}" data-title="${safeTitle}" data-icon="${icon}" onclick="event.preventDefault();event.stopPropagation();toggleFav(this)" aria-label="В избранное">♡</button>`;
+  }
+
+  let activeTab='tourist';
+  const tabs=document.querySelectorAll('.ticket__tab'), fieldsets=document.querySelectorAll('.fields');
+  const cardsEl=document.getElementById('cards'), titleEl=document.getElementById('picksTitle'), subEl=document.getElementById('picksSub');
+
+  const multi={ t_int:new Set(['all']), m_comp:new Set(['solo']) };
+
+  document.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const group=chip.dataset.group, value=chip.dataset.value, set=multi[group];
+      const groupChips=[...document.querySelectorAll(`.chip[data-group="${group}"]`)];
+      const resetValue = group==='t_int' ? 'all' : 'solo';
+
+      if(value===resetValue){
+        set.clear(); set.add(resetValue);
+      } else {
+        set.delete(resetValue);
+        if(set.has(value)) set.delete(value); else set.add(value);
+        if(set.size===0) set.add(resetValue);
+      }
+      groupChips.forEach(c=>c.classList.toggle('on', set.has(c.dataset.value)));
+      render();
+    });
+  });
+
+  function card(ic,t,d,href){ if(href) return `<a class="card" href="${href}">${favBtn(href,t,ic)}<div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p><span class="go">Открыть →</span></a>`; return `<div class="card"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p><span class="soon">Скоро</span></div>`; }
+  function val(id,def){ const el=document.getElementById(id); return el?el.value:def; }
+
+  const touristCards=[
+    {ic:'🍜',t:'Где поесть',d:'Кафе, стритфуд, рестораны',tag:'food',slug:'eda'},
+    {ic:'🏖',t:'Пляжные клубы',d:'Где провести день у моря',tag:'beach',slug:'plyazhi'},
+    {ic:'🎉',t:'Тусовки',d:'Бары и вечеринки',tag:'party',slug:'tusovki'},
+    {ic:'🗺',t:'Экскурсии',d:'Острова, водопады, туры',tag:'tours',slug:'ekskursii'},
+    {ic:'💆',t:'Массажи и спа',d:'Проверенные места',tag:null,slug:'spa'},
+    {ic:'🛵',t:'Аренда байка',d:'Где брать и как не влететь',tag:null,slug:'bayk'},
+    {ic:'🏨',t:'Где остановиться',d:'Районы и отели',tag:null,slug:'gde-zhit'},
+    {ic:'💸',t:'Цены',d:'Сколько брать с собой и как считать',tag:null,slug:'ceny'},
+  ];
+
+  function render(){
+    let title='',sub='',cards=[];
+    if(activeTab==='tourist'){
+      title='Подборки для туриста';
+      sub=val('t_exp','first')==='first'?'Впервые в Нячанге — вот с чего начать':'Ты уже был — копнём глубже';
+      const chosen=multi.t_int;
+      const showAll=chosen.has('all');
+      cards=touristCards.filter(c=>c.tag===null || showAll || chosen.has(c.tag)).map(c=>card(c.ic,c.t,c.d,`/tourist/${c.slug}/`));
+    } else if(activeTab==='move'){
+      const incVal=val('m_inc','income');
+      const inc={income:'С доходом',savings:'С накоплениями',none:'Без дохода'}[incVal];
+      const comp=multi.m_comp;
+      const compLabels={solo:'один',couple:'парой',family:'с детьми',pet:'с питомцем'};
+      title='Переезд в Нячанг';
+      sub=inc+' · '+[...comp].map(v=>compLabels[v]).join(', ');
+      if(incVal==='none') cards.push(card('🧑‍💻','Научиться зарабатывать','Удалённый доход с нуля — на pichugster','https://pichugster.com').replace('class="card"','class="card feat"'));
+      cards.push(
+        card('🛂','Виза','Как въехать и продлевать','/move/viza/'),
+        card('🏠','Жильё надолго','Районы, цены, договоры','/move/zhile/'),
+        card('🏦','Банки и деньги','Карты и как платить','/move/banki/'),
+        card('📶','Симка и интернет','Связь с первого дня','/move/internet/'),
+        card('🛵','Транспорт','Байк, права, аренда','/move/transport/'),
+        card('🩺','Медицина','Клиники и страховка','/move/medicina/'),
+        card('💸','Сколько нужно денег','Стартовый бюджет и как считать','/move/byudzhet/'),
+        card('🤝','Комьюнити','Где найти своих','/move/komyuniti/')
+      );
+      if(comp.has('family')) cards.push(card('🎒','Школы и садики','Куда устроить детей','/move/shkoly/'));
+      if(comp.has('pet')) cards.push(card('🐾','Ввоз питомца','Документы и жильё','/move/pitomec/'));
+      if(comp.has('couple')) cards.push(card('👫','Жильё для двоих','Совместный бюджет','/move/zhile-dvoih/'));
+      if(comp.has('solo') && comp.size===1) cards.push(card('🧳','Коливинги','Как не заскучать и найти своих','/move/kolivingi/'));
+    } else {
+      title='Живу тут'; sub='Комьюнити, быт и всё, что важно уже после переезда';
+      cards=[
+        card('🤝','Комьюнити','Встречи, чаты, движухи для своих','/live/komyuniti-tut/'),
+        card('🛂','Продление визы','Что менять и когда','/live/prodlenie-vizy/'),
+        card('💰','Жизнь как местному','Где дешевле, без туристической наценки','/live/mestnye-ceny/'),
+        card('🧑‍🤝‍🧑','Нетворкинг','Где искать связи и знакомства','/live/networking/'),
+        card('🏠','Аренда на год+','Долгосрочные условия и договоры','/live/arenda-god/'),
+        card('🩺','Свой врач','Проверенные клиники для долгой жизни','/live/svoy-vrach/'),
+      ];
+    }
+    titleEl.textContent=title; subEl.textContent=sub; cardsEl.innerHTML=cards.join(''); refreshFavButtons(cardsEl);
+  }
+
+  tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');activeTab=t.dataset.tab;fieldsets.forEach(f=>f.hidden=f.dataset.fields!==activeTab);render();}));
+  document.querySelectorAll('.fields select').forEach(s=>s.addEventListener('change',render));
+  document.getElementById('go').addEventListener('click',()=>{render();document.getElementById('picks').scrollIntoView({behavior:'smooth',block:'start'});});
+  render();
+</script></body></html>

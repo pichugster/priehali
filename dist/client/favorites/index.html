@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Избранное — приехали.ком</title><meta name="theme-color" content="#F4F6F0"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>:root{--bg:#f4f6f0;--bg-card:#fff;--ink:#16232b;--ink-soft:#4a5a5f;--line:#dae1d3;--jade:#2f7b6d;--jade-dark:#204f46;--gold:#d9a441;--serif:"Fraunces",Georgia,serif;--sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;--maxw:1000px}*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6}a{color:inherit;text-decoration:none}.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}nav{padding:28px 0}.nav__row{max-width:var(--maxw);flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin:0 auto;padding:0 24px;display:flex}.nav__logo{font-family:var(--serif);color:var(--jade-dark);font-size:1.25rem;font-weight:600}main{padding-bottom:60px}h1{font-family:var(--serif);margin-bottom:8px;font-size:clamp(1.9rem,4vw,2.5rem);font-weight:500}.lede{color:var(--ink-soft);margin-bottom:30px;font-size:.95rem}.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;display:grid}.card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:20px;transition:transform .2s,box-shadow .2s,border-color .2s;display:block;position:relative}.card:hover{border-color:var(--jade);transform:translateY(-3px);box-shadow:0 20px 40px -30px #16232b66}.card .ic{font-size:1.5rem}.card h3{margin:10px 0 12px;font-size:1.02rem;font-weight:600}.card .go{letter-spacing:.04em;color:var(--jade-dark);font-size:.72rem;font-weight:600}.rmbtn{border:1px solid var(--line);cursor:pointer;width:28px;height:28px;color:var(--ink-soft);background:#fff;border-radius:50%;justify-content:center;align-items:center;font-size:.85rem;display:flex;position:absolute;top:14px;right:14px}.rmbtn:hover{color:#c0504d;border-color:#c0504d}.empty{text-align:center;color:var(--ink-soft);padding:60px 20px}.empty a{color:var(--jade-dark);font-weight:600}footer{border-top:1px solid var(--line);padding:24px 0 40px}.footer__row{max-width:var(--maxw);font-family:var(--serif);color:var(--jade-dark);justify-content:space-between;margin:0 auto;padding:0 24px;display:flex}.footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+</style></head><body><nav><div class="nav__row"><a class="nav__logo" href="/">приехали.ком</a></div></nav><main class="wrap"><h1>♡ Избранное</h1><p class="lede">Сохраняется в этом браузере. Если очистишь историю или зайдёшь с другого устройства — список будет пустым (пока нет аккаунтов).</p><div id="grid" class="grid"></div><div id="empty" class="empty" style="display:none">Пока пусто. <a href="/">Вернись на главную</a> и жми ♡ на понравившихся темах и статьях.</div></main><footer><div class="footer__row"><a href="/">приехали.ком</a><span class="footer__muted">© 2026</span></div></footer><script>
+  const FAV_KEY = 'priehali_favorites';
+  function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch(e){ return []; } }
+  function saveFavs(list){ localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
+
+  function render(){
+    const list = getFavs();
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    if(list.length === 0){ grid.style.display='none'; empty.style.display='block'; return; }
+    grid.style.display='grid'; empty.style.display='none';
+    grid.innerHTML = list.map(f => `
+      <a class="card" href="${f.url}">
+        <button class="rmbtn" data-url="${f.url}" onclick="event.preventDefault();event.stopPropagation();removeFav(this)" aria-label="Убрать из избранного">✕</button>
+        <div class="ic">${f.icon || '📌'}</div>
+        <h3>${f.title}</h3>
+        <span class="go">Открыть →</span>
+      </a>
+    `).join('');
+  }
+  function removeFav(btn){
+    const url = btn.dataset.url;
+    saveFavs(getFavs().filter(f => f.url !== url));
+    render();
+  }
+  render();
+</script></body></html>
