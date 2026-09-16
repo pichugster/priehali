@@ -98,7 +98,7 @@
 <nav>
   <div class="nav__row">
     <span class="nav__logo">приехали.ком</span>
-    <span class="nav__tag">Вьетнам 🇻🇳 </span>
+    <span class="nav__tag">Вьетнам резиновый </span>
   </div>
 </nav>
 
@@ -218,14 +218,14 @@
   function val(id,def){ const el=document.getElementById(id); return el?el.value:def; }
 
   const touristCards=[
-    {ic:'🍜',t:'Где поесть',d:'Кафе, стритфуд, рестораны',tag:'food'},
-    {ic:'🏖',t:'Пляжные клубы',d:'Где провести день у моря',tag:'beach'},
-    {ic:'🎉',t:'Тусовки',d:'Бары и вечеринки',tag:'party'},
-    {ic:'🗺',t:'Экскурсии',d:'Острова, водопады, туры',tag:'tours'},
-    {ic:'💆',t:'Массажи и спа',d:'Проверенные места',tag:null},
-    {ic:'🛵',t:'Аренда байка',d:'Где брать и как не влететь',tag:null},
-    {ic:'🏨',t:'Где остановиться',d:'Районы и отели',tag:null},
-    {ic:'💸',t:'Цены',d:'Сколько брать с собой и как считать',tag:null},
+    {ic:'🍜',t:'Где поесть',d:'Кафе, стритфуд, рестораны',tag:'food',slug:'eda'},
+    {ic:'🏖',t:'Пляжные клубы',d:'Где провести день у моря',tag:'beach',slug:'plyazhi'},
+    {ic:'🎉',t:'Тусовки',d:'Бары и вечеринки',tag:'party',slug:'tusovki'},
+    {ic:'🗺',t:'Экскурсии',d:'Острова, водопады, туры',tag:'tours',slug:'ekskursii'},
+    {ic:'💆',t:'Массажи и спа',d:'Проверенные места',tag:null,slug:'spa'},
+    {ic:'🛵',t:'Аренда байка',d:'Где брать и как не влететь',tag:null,slug:'bayk'},
+    {ic:'🏨',t:'Где остановиться',d:'Районы и отели',tag:null,slug:'gde-zhit'},
+    {ic:'💸',t:'Цены',d:'Сколько брать с собой и как считать',tag:null,slug:'ceny'},
   ];
 
   function render(){
@@ -235,7 +235,7 @@
       sub=val('t_exp','first')==='first'?'Впервые в Нячанге — вот с чего начать':'Ты уже был — копнём глубже';
       const chosen=multi.t_int;
       const showAll=chosen.has('all');
-      cards=touristCards.filter(c=>c.tag===null || showAll || chosen.has(c.tag)).map(c=>card(c.ic,c.t,c.d));
+      cards=touristCards.filter(c=>c.tag===null || showAll || chosen.has(c.tag)).map(c=>card(c.ic,c.t,c.d,`/tourist/${c.slug}/`));
     } else if(activeTab==='move'){
       const incVal=val('m_inc','income');
       const inc={income:'С доходом',savings:'С накоплениями',none:'Без дохода'}[incVal];
@@ -244,20 +244,29 @@
       title='Переезд в Нячанг';
       sub=inc+' · '+[...comp].map(v=>compLabels[v]).join(', ');
       if(incVal==='none') cards.push(card('🧑‍💻','Научиться зарабатывать','Удалённый доход с нуля — на pichugster','https://pichugster.com').replace('class="card"','class="card feat"'));
-      cards.push(card('🛂','Виза','Как въехать и продлевать'),card('🏠','Жильё надолго','Районы, цены, договоры'),card('🏦','Банки и деньги','Карты и как платить'),card('📶','Симка и интернет','Связь с первого дня'),card('🛵','Транспорт','Байк, права, аренда'),card('🩺','Медицина','Клиники и страховка'),card('💸','Сколько нужно денег','Стартовый бюджет и как считать'),card('🤝','Комьюнити','Где найти своих'));
-      if(comp.has('family')) cards.push(card('🎒','Школы и садики','Куда устроить детей'));
-      if(comp.has('pet')) cards.push(card('🐾','Ввоз питомца','Документы и жильё'));
-      if(comp.has('couple')) cards.push(card('👫','Жильё для двоих','Совместный бюджет'));
-      if(comp.has('solo') && comp.size===1) cards.push(card('🧳','Коливинги','Как не заскучать и найти своих'));
+      cards.push(
+        card('🛂','Виза','Как въехать и продлевать','/move/viza/'),
+        card('🏠','Жильё надолго','Районы, цены, договоры','/move/zhile/'),
+        card('🏦','Банки и деньги','Карты и как платить','/move/banki/'),
+        card('📶','Симка и интернет','Связь с первого дня','/move/internet/'),
+        card('🛵','Транспорт','Байк, права, аренда','/move/transport/'),
+        card('🩺','Медицина','Клиники и страховка','/move/medicina/'),
+        card('💸','Сколько нужно денег','Стартовый бюджет и как считать','/move/byudzhet/'),
+        card('🤝','Комьюнити','Где найти своих','/move/komyuniti/')
+      );
+      if(comp.has('family')) cards.push(card('🎒','Школы и садики','Куда устроить детей','/move/shkoly/'));
+      if(comp.has('pet')) cards.push(card('🐾','Ввоз питомца','Документы и жильё','/move/pitomec/'));
+      if(comp.has('couple')) cards.push(card('👫','Жильё для двоих','Совместный бюджет','/move/zhile-dvoih/'));
+      if(comp.has('solo') && comp.size===1) cards.push(card('🧳','Коливинги','Как не заскучать и найти своих','/move/kolivingi/'));
     } else {
       title='Живу тут'; sub='Комьюнити, быт и всё, что важно уже после переезда';
       cards=[
-        card('🤝','Комьюнити','Встречи, чаты, движухи для своих'),
-        card('🛂','Продление визы','Что менять и когда'),
-        card('💰','Жизнь как местному','Где дешевле, без туристической наценки'),
-        card('🧑‍🤝‍🧑','Нетворкинг','Где искать связи и знакомства'),
-        card('🏠','Аренда на год+','Долгосрочные условия и договоры'),
-        card('🩺','Свой врач','Проверенные клиники для долгой жизни'),
+        card('🤝','Комьюнити','Встречи, чаты, движухи для своих','/live/komyuniti-tut/'),
+        card('🛂','Продление визы','Что менять и когда','/live/prodlenie-vizy/'),
+        card('💰','Жизнь как местному','Где дешевле, без туристической наценки','/live/mestnye-ceny/'),
+        card('🧑‍🤝‍🧑','Нетворкинг','Где искать связи и знакомства','/live/networking/'),
+        card('🏠','Аренда на год+','Долгосрочные условия и договоры','/live/arenda-god/'),
+        card('🩺','Свой врач','Проверенные клиники для долгой жизни','/live/svoy-vrach/'),
       ];
     }
     titleEl.textContent=title; subEl.textContent=sub; cardsEl.innerHTML=cards.join('');
