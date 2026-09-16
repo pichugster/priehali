@@ -1,0 +1,107 @@
+---
+import events from '../../data/events.js';
+
+export function getStaticPaths() {
+  return events.map((e) => ({ params: { slug: e.slug }, props: { item: e } }));
+}
+
+const { item } = Astro.props;
+const others = events.filter((e) => e.slug !== item.slug);
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{item.title} — приехали.ком</title>
+<meta name="description" content={item.summary}>
+<meta name="theme-color" content="#F4F6F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style is:global>
+  :root{
+    --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
+    --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
+    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:680px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
+
+  nav{padding:28px 0}
+  .nav__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--jade-dark)}
+  .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft)}
+  .nav__links a:hover{color:var(--jade-dark)}
+
+  .crumbs{padding:6px 0 22px;font-size:.82rem;color:var(--ink-soft)}
+  .crumbs a{color:var(--jade-dark);font-weight:500}
+
+  main{padding-bottom:56px}
+  .meta-row{display:flex;gap:16px;font-size:.82rem;color:var(--jade-dark);font-weight:600;margin-bottom:12px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,4vw,2.3rem);line-height:1.15;margin-bottom:16px}
+  article p{margin-bottom:16px}
+
+  .edit-note{margin-top:32px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
+  .edit-note b{color:var(--ink)}
+
+  .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
+  .others h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  .others a{display:block;font-size:.88rem;color:var(--jade-dark);padding:4px 0}
+
+  footer{padding:24px 0 40px;border-top:1px solid var(--line)}
+  .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
+  .footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav__row">
+    <a class="nav__logo" href="/">приехали.ком</a>
+    <div class="nav__links">
+      <a href="/news/">Новости</a>
+      <a href="/events/">События</a>
+      <a href="/qa/">Вопрос-ответ</a>
+      <a href="/favorites/">♡ Избранное</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap crumbs">
+  <a href="/">приехали.</a> / <a href="/events/">События</a> / {item.title}
+</div>
+
+<main class="wrap">
+  <div class="meta-row"><span>📅 {item.when}</span><span>📍 {item.place}</span></div>
+  <h1>{item.title}</h1>
+
+  <article>
+    <p>{item.summary}. Ниже — рыба: замени на реальные детали, когда появятся.</p>
+    <p>
+      Здесь — описание события: программа, что взять с собой, как добраться, нужна ли регистрация.
+      Чем конкретнее — тем полезнее для читателя.
+    </p>
+  </article>
+
+  <div class="edit-note">
+    <b>Это рыба.</b> Дата, место и текст — заглушка. Файл — общий шаблон <code>events/[slug].astro</code>,
+    содержимое берётся из <code>src/data/events.js</code> (запись с <code>slug: "{item.slug}"</code>).
+  </div>
+
+  <div class="others">
+    <h3>Другие события</h3>
+    {others.map((e) => (<a href={`/events/${e.slug}/`}>{e.title}</a>))}
+  </div>
+</main>
+
+<footer>
+  <div class="footer__row">
+    <a href="/">приехали.ком</a>
+    <span class="footer__muted">© 2026</span>
+  </div>
+</footer>
+</body>
+</html>
