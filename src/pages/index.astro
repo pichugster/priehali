@@ -114,10 +114,10 @@
   .favbtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
 
   .author{padding:40px 0;border-top:1px solid var(--line)}
-  .author__row{display:flex;align-items:center;gap:20px;max-width:720px;margin:0 auto}
-  .author svg{width:38px;height:20px;color:var(--gold);flex:none}
+  .author__row{display:flex;align-items:flex-start;gap:20px;max-width:720px;margin:0 auto}
+  .author svg{width:38px;height:20px;color:var(--gold);flex:none;margin-top:4px}
+  .author__title{display:block;color:var(--ink);font-family:var(--serif);font-weight:600;font-size:1.02rem;margin-bottom:6px}
   .author p{color:var(--ink-soft);font-size:.92rem}
-  .author p b{color:var(--ink);font-family:var(--serif);font-weight:600}
   .author a{color:var(--jade-dark);font-weight:600}
 
   footer{padding:24px 0 40px;border-top:1px solid var(--line)}
@@ -228,7 +228,10 @@
 <section class="author">
   <div class="wrap author__row">
     <svg viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 18C10 6 18 6 24 14C30 6 38 6 46 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-    <p><b>Портал приехали.ком</b> Города меняются быстрее, чем успевают обновляться путеводители. Мы живём здесь и обновляем подборки, когда что-то меняется — а не раз в год.</p>
+    <div>
+      <b class="author__title">Портал приехали.ком</b>
+      <p>Города меняются быстрее, чем успевают обновляться путеводители. Мы оперативно обновляем подборки, когда что-то меняется, а не раз в год.</p>
+    </div>
   </div>
 </section>
 
