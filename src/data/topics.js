@@ -12,6 +12,8 @@ const topics = [
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'bayk', title: 'Аренда байка', icon: '🛵', summary: 'Где брать и как не влететь' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'gde-zhit', title: 'Где остановиться', icon: '🏨', summary: 'Районы и отели' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'ceny', title: 'Цены', icon: '💸', summary: 'Сколько брать с собой и как считать' },
+  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'svyaz', title: 'Связь', icon: '📶', summary: 'eSIM, симка и интернет для туриста' },
+  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'shopping', title: 'Подарки и шоппинг', icon: '🎁', summary: 'Что привезти домой и где купить' },
 
   // ---------- MOV: Переезд ----------
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'viza', title: 'Виза', icon: '🛂', summary: 'Как въехать и продлевать' },
