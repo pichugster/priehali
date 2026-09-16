@@ -73,6 +73,26 @@
   .ticket__go{width:100%;border:0;border-radius:12px;background:var(--jade);color:#fff;font-weight:600;font-size:.96rem;padding:13px;margin-top:6px;cursor:pointer;transition:background .15s}
   .ticket__go:hover{background:var(--jade-dark)}
 
+  .conditions{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:14px auto 0}
+  .cond-card{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 14px}
+  .cond-label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .cond-loading{font-size:.82rem;color:var(--ink-soft)}
+  .weather-row{display:flex;align-items:center;gap:10px}
+  .weather-icon{flex:none}
+  .cond-temp{font-family:var(--serif);font-size:1.6rem;font-weight:500;color:var(--ink);line-height:1}
+  .cond-desc{font-size:.8rem;color:var(--ink-soft);margin-top:3px}
+  .cond-feels{font-size:.7rem;color:var(--ink-soft);margin-top:10px}
+  .rate-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;gap:8px;white-space:nowrap}
+  .rate-left{display:flex;align-items:center;gap:7px;min-width:0}
+  .rate-coin{width:19px;height:19px;border-radius:50%;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+  .rate-label{font-size:.76rem;color:var(--ink)}
+  .rate-value{font-size:.76rem;font-weight:600;color:var(--ink)}
+  .cond-error{font-size:.78rem;color:var(--ink-soft)}
+
+  @media (max-width:560px){
+    .conditions{grid-template-columns:1fr}
+  }
+
   .picks{padding:56px 0 40px}
   .picks-head{text-align:center;margin-bottom:30px}
   .picks-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,3vw,2rem)}
@@ -175,6 +195,21 @@
         </div>
 
         <button class="ticket__go" id="go" type="button">Показать подборку</button>
+      </div>
+
+      <div class="conditions" id="conditions">
+        <div class="cond-card">
+          <span class="cond-label">Нячанг сейчас</span>
+          <div class="cond-body" id="weatherBody">
+            <span class="cond-loading">Гружу погоду…</span>
+          </div>
+        </div>
+        <div class="cond-card">
+          <span class="cond-label">Курс валют</span>
+          <div class="cond-body" id="ratesBody">
+            <span class="cond-loading">Гружу курс…</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -312,6 +347,72 @@
   document.querySelectorAll('.fields select').forEach(s=>s.addEventListener('change',render));
   document.getElementById('go').addEventListener('click',()=>{render();document.getElementById('picks').scrollIntoView({behavior:'smooth',block:'start'});});
   render();
+
+  // ---------- Погода в Нячанге (Open-Meteo, без ключа) ----------
+  const NHA_TRANG = { lat: 12.2451, lon: 109.1943 };
+
+  const WICON = {
+    sun: `<svg class="weather-icon" width="42" height="42" viewBox="0 0 42 42"><defs><radialGradient id="sunGrad" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9A8"/><stop offset="100%" stop-color="#FFA23D"/></radialGradient></defs><g stroke="#FFB84D" stroke-width="2.2" stroke-linecap="round"><line x1="21" y1="2" x2="21" y2="7"/><line x1="21" y1="35" x2="21" y2="40"/><line x1="2" y1="21" x2="7" y2="21"/><line x1="35" y1="21" x2="40" y2="21"/><line x1="7.8" y1="7.8" x2="11.3" y2="11.3"/><line x1="30.7" y1="30.7" x2="34.2" y2="34.2"/><line x1="7.8" y1="34.2" x2="11.3" y2="30.7"/><line x1="30.7" y1="11.3" x2="34.2" y2="7.8"/></g><circle cx="21" cy="21" r="11.5" fill="url(#sunGrad)"/></svg>`,
+    cloudSun: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 38 34"><defs><radialGradient id="s3" cx="30%" cy="25%" r="80%"><stop offset="0%" stop-color="#FFE9A8"/><stop offset="100%" stop-color="#FFA23D"/></radialGradient><linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FBFCFE"/><stop offset="100%" stop-color="#D7DEE6"/></linearGradient></defs><circle cx="14" cy="12" r="8" fill="url(#s3)"/><path d="M8 30c-4 0-7-3-7-6.5S4 17 8 17c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H8z" fill="url(#c1)" stroke="#C4CDD6" stroke-width="0.5"/></svg>`,
+    cloud: `<svg class="weather-icon" width="42" height="34" viewBox="0 0 36 26"><defs><linearGradient id="c4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D7DEE6"/><stop offset="100%" stop-color="#AEB9C3"/></linearGradient></defs><path d="M7 24c-4 0-7-3-7-6.5S3 11 7 11c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c4)" stroke="#9AA7B4" stroke-width="0.5"/></svg>`,
+    fog: `<svg class="weather-icon" width="42" height="34" viewBox="0 0 36 30"><defs><linearGradient id="c5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E3E8EC"/><stop offset="100%" stop-color="#C2CBD3"/></linearGradient></defs><path d="M7 18c-4 0-7-3-7-6.5S3 5 7 5c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c5)" stroke="#AEB9C3" stroke-width="0.5"/><g stroke="#AEB9C3" stroke-width="2" stroke-linecap="round"><line x1="4" y1="23" x2="28" y2="23"/><line x1="7" y1="28" x2="25" y2="28"/></g></svg>`,
+    rain: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 36 34"><defs><linearGradient id="c2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C9D2DB"/><stop offset="100%" stop-color="#9AA7B4"/></linearGradient></defs><path d="M7 24c-4 0-7-3-7-6.5S3 11 7 11c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c2)" stroke="#8B98A5" stroke-width="0.5"/><g stroke="#5B8FD9" stroke-width="2" stroke-linecap="round"><line x1="10" y1="27" x2="8" y2="33"/><line x1="18" y1="27" x2="16" y2="33"/><line x1="26" y1="27" x2="24" y2="33"/></g></svg>`,
+    storm: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 36 34"><defs><linearGradient id="c3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B96A3"/><stop offset="100%" stop-color="#5C6773"/></linearGradient></defs><path d="M7 22c-4 0-7-3-7-6.5S3 9 7 9c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c3)"/><path d="M16 24l-4 7h4l-2 5 7-8h-4l3-4z" fill="#FFC94A"/></svg>`,
+  };
+  const WEATHER_MAP = {
+    0: [WICON.sun, 'Ясно'], 1: [WICON.cloudSun, 'Малооблачно'], 2: [WICON.cloudSun, 'Переменная облачность'], 3: [WICON.cloud, 'Облачно'],
+    45: [WICON.fog, 'Туман'], 48: [WICON.fog, 'Туман'],
+    51: [WICON.rain, 'Морось'], 53: [WICON.rain, 'Морось'], 55: [WICON.rain, 'Морось'],
+    61: [WICON.rain, 'Дождь'], 63: [WICON.rain, 'Дождь'], 65: [WICON.rain, 'Сильный дождь'],
+    80: [WICON.rain, 'Ливень'], 81: [WICON.rain, 'Ливень'], 82: [WICON.storm, 'Сильный ливень'],
+    95: [WICON.storm, 'Гроза'], 96: [WICON.storm, 'Гроза с градом'], 99: [WICON.storm, 'Гроза с градом'],
+  };
+
+  (async () => {
+    const el = document.getElementById('weatherBody');
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${NHA_TRANG.lat}&longitude=${NHA_TRANG.lon}&current=temperature_2m,apparent_temperature,weather_code&timezone=Asia%2FHo_Chi_Minh`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const c = data.current;
+      const [icon, desc] = WEATHER_MAP[c.weather_code] || [WICON.sun, 'Погода'];
+      el.innerHTML = `
+        <div class="weather-row">
+          ${icon}
+          <div>
+            <div class="cond-temp">${Math.round(c.temperature_2m)}°C</div>
+            <div class="cond-desc">${desc}</div>
+          </div>
+        </div>
+        <div class="cond-feels">Ощущается как ${Math.round(c.apparent_temperature)}°C</div>
+      `;
+    } catch (e) {
+      el.innerHTML = '<span class="cond-error">Не удалось загрузить погоду</span>';
+    }
+  })();
+
+  // ---------- Курс валют (ExchangeRate-API open-доступ, без ключа) ----------
+  (async () => {
+    const el = document.getElementById('ratesBody');
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/USD');
+      const data = await res.json();
+      if (data.result !== 'success') throw new Error('bad response');
+      const vndPerUsd = data.rates.VND;
+      const rubPerUsd = data.rates.RUB;
+      const fmt = (n) => Math.round(n).toLocaleString('ru-RU');
+      const usd100vnd = vndPerUsd * 100;
+      const rub100vnd = (vndPerUsd / rubPerUsd) * 100;
+      const vnd1mRub = (1000000 / vndPerUsd) * rubPerUsd;
+      el.innerHTML = `
+        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:var(--jade)">$</div><span class="rate-label">100 USD</span></div><span class="rate-value">${fmt(usd100vnd)} ₫</span></div>
+        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:#3A6EA5">₽</div><span class="rate-label">100 RUB</span></div><span class="rate-value">${fmt(rub100vnd)} ₫</span></div>
+        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:var(--gold)">₫</div><span class="rate-label">1 000 000 ₫</span></div><span class="rate-value">${fmt(vnd1mRub)} ₽</span></div>
+      `;
+    } catch (e) {
+      el.innerHTML = '<span class="cond-error">Не удалось загрузить курс</span>';
+    }
+  })();
 </script>
 </body>
 </html>
