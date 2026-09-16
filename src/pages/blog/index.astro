@@ -1,20 +1,15 @@
 ---
-import qa from '../../data/qa.js';
+import blog from '../../data/blog.js';
 
-export function getStaticPaths() {
-  return qa.map((q) => ({ params: { slug: q.slug }, props: { item: q } }));
-}
-
-const { item } = Astro.props;
-const others = qa.filter((q) => q.slug !== item.slug);
+const sorted = [...blog].sort((a, b) => new Date(b.date) - new Date(a.date));
 ---
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{item.title} — приехали.ком</title>
-<meta name="description" content={item.summary}>
+<title>Блог — приехали.ком</title>
+<meta name="description" content="Нейтральные и занимательные темы про Вьетнам — не гид, а просто интересное чтение.">
 <meta name="theme-color" content="#F4F6F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,10 +18,10 @@ const others = qa.filter((q) => q.slug !== item.slug);
   :root{
     --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
     --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
-    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:680px;
+    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:760px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
@@ -37,17 +32,16 @@ const others = qa.filter((q) => q.slug !== item.slug);
   .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft);flex-wrap:wrap}
   .nav__links a:hover{color:var(--jade-dark)}
 
-  .crumbs{padding:6px 0 22px;font-size:.82rem;color:var(--ink-soft)}
-  .crumbs a{color:var(--jade-dark);font-weight:500}
+  main{padding-bottom:60px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.5rem);margin-bottom:8px}
+  .lede{color:var(--ink-soft);margin-bottom:30px;font-size:.95rem}
 
-  main{padding-bottom:56px}
-  .item__tag{display:inline-block;font-size:.64rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:4px 11px;margin-bottom:14px}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,4vw,2.2rem);line-height:1.2;margin-bottom:20px}
-  article p{margin-bottom:16px}
-
-  .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
-  .others h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
-  .others a{display:block;font-size:.88rem;color:var(--jade-dark);padding:4px 0}
+  .list{display:flex;flex-direction:column;gap:10px}
+  .item{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .15s,transform .15s}
+  .item:hover{border-color:var(--jade);transform:translateY(-2px)}
+  .item__tag{display:inline-block;font-size:.64rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:3px 10px;margin-bottom:8px}
+  .item h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin-bottom:4px}
+  .item p{color:var(--ink-soft);font-size:.86rem}
 
   footer{padding:24px 0 40px;border-top:1px solid var(--line)}
   .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
@@ -68,19 +62,18 @@ const others = qa.filter((q) => q.slug !== item.slug);
   </div>
 </nav>
 
-<div class="wrap crumbs">
-  <a href="/">приехали.</a> / <a href="/qa/">Вопрос-ответ</a> / {item.title}
-</div>
-
 <main class="wrap">
-  <span class="item__tag">{item.tag}</span>
-  <h1>{item.title}</h1>
+  <h1>Блог</h1>
+  <p class="lede">Не гид, а просто интересное — то, что стоит знать о Вьетнаме безотносительно твоих планов.</p>
 
-  <article set:html={item.body} />
-
-  <div class="others">
-    <h3>Другие вопросы</h3>
-    {others.map((q) => (<a href={`/qa/${q.slug}/`}>{q.title}</a>))}
+  <div class="list">
+    {sorted.map((p) => (
+      <a class="item" href={`/blog/${p.slug}/`}>
+        <span class="item__tag">{p.tag}</span>
+        <h2>{p.title}</h2>
+        <p>{p.summary}</p>
+      </a>
+    ))}
   </div>
 </main>
 

@@ -27,7 +27,7 @@ import qa from '../../data/qa.js';
   nav{padding:28px 0}
   .nav__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--jade-dark)}
-  .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft)}
+  .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft);flex-wrap:wrap}
   .nav__links a:hover{color:var(--jade-dark)}
 
   main{padding-bottom:60px}
@@ -53,6 +53,7 @@ import qa from '../../data/qa.js';
   <div class="nav__row">
     <a class="nav__logo" href="/">приехали.ком</a>
     <div class="nav__links">
+      <a href="/blog/">Блог</a>
       <a href="/news/">Новости</a>
       <a href="/events/">События</a>
       <a href="/qa/">Вопрос-ответ</a>

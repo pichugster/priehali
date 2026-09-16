@@ -1,12 +1,13 @@
 ---
-import events from '../../data/events.js';
+import blog from '../../data/blog.js';
 
 export function getStaticPaths() {
-  return events.map((e) => ({ params: { slug: e.slug }, props: { item: e } }));
+  return blog.map((p) => ({ params: { slug: p.slug }, props: { item: p } }));
 }
 
 const { item } = Astro.props;
-const others = events.filter((e) => e.slug !== item.slug);
+const others = blog.filter((p) => p.slug !== item.slug && p.tag === item.tag).slice(0, 4);
+const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -41,12 +42,11 @@ const others = events.filter((e) => e.slug !== item.slug);
   .crumbs a{color:var(--jade-dark);font-weight:500}
 
   main{padding-bottom:56px}
-  .meta-row{display:flex;gap:16px;font-size:.82rem;color:var(--jade-dark);font-weight:600;margin-bottom:12px}
+  .item__tag{display:inline-block;font-size:.64rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:4px 11px;margin-bottom:12px}
+  .date{font-size:.76rem;color:var(--ink-soft);margin-bottom:6px}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,4vw,2.3rem);line-height:1.15;margin-bottom:16px}
   article p{margin-bottom:16px}
-
-  .edit-note{margin-top:32px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
-  .edit-note b{color:var(--ink)}
+  article b{color:var(--ink)}
 
   .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
   .others h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
@@ -72,30 +72,22 @@ const others = events.filter((e) => e.slug !== item.slug);
 </nav>
 
 <div class="wrap crumbs">
-  <a href="/">приехали.</a> / <a href="/events/">События</a> / {item.title}
+  <a href="/">приехали.</a> / <a href="/blog/">Блог</a> / {item.title}
 </div>
 
 <main class="wrap">
-  <div class="meta-row"><span>📅 {item.when}</span><span>📍 {item.place}</span></div>
+  <span class="item__tag">{item.tag}</span>
+  <div class="date">{dateStr}</div>
   <h1>{item.title}</h1>
 
-  <article>
-    <p>{item.summary}. Ниже — рыба: замени на реальные детали, когда появятся.</p>
-    <p>
-      Здесь — описание события: программа, что взять с собой, как добраться, нужна ли регистрация.
-      Чем конкретнее — тем полезнее для читателя.
-    </p>
-  </article>
+  <article set:html={item.body} />
 
-  <div class="edit-note">
-    <b>Это рыба.</b> Дата, место и текст — заглушка. Файл — общий шаблон <code>events/[slug].astro</code>,
-    содержимое берётся из <code>src/data/events.js</code> (запись с <code>slug: "{item.slug}"</code>).
-  </div>
-
-  <div class="others">
-    <h3>Другие события</h3>
-    {others.map((e) => (<a href={`/events/${e.slug}/`}>{e.title}</a>))}
-  </div>
+  {others.length > 0 && (
+    <div class="others">
+      <h3>Ещё в теме «{item.tag}»</h3>
+      {others.map((p) => (<a href={`/blog/${p.slug}/`}>{p.title}</a>))}
+    </div>
+  )}
 </main>
 
 <footer>
