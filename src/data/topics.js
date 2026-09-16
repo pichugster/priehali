@@ -5,6 +5,7 @@
 const topics = [
   // ---------- TUR: Турист ----------
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'eda', title: 'Где поесть', icon: '🍜', summary: 'Кафе, стритфуд, рестораны' },
+  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'kofe', title: 'Кофе с видом', icon: '☕', summary: 'Атмосферные кофейни, куда идут не ради еды' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'plyazhi', title: 'Пляжные клубы', icon: '🏖', summary: 'Где провести день у моря' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'tusovki', title: 'Тусовки', icon: '🎉', summary: 'Бары и вечеринки' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'ekskursii', title: 'Экскурсии', icon: '🗺', summary: 'Острова, водопады, туры' },
