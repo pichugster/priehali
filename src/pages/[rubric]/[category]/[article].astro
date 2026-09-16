@@ -55,6 +55,10 @@ const { article, topic, related } = Astro.props;
 
   main{padding-bottom:60px}
   .rubric-tag{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:5px 12px;margin-bottom:14px}
+  .title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+  .savebtn{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:9px 16px;font-size:.85rem;font-weight:600;color:var(--ink-soft);cursor:pointer;transition:all .15s;margin-top:6px}
+  .savebtn:hover{border-color:var(--gold)}
+  .savebtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.1;margin-bottom:14px}
   .lede{font-size:1.08rem;color:var(--ink-soft);margin-bottom:28px}
 
@@ -83,7 +87,7 @@ const { article, topic, related } = Astro.props;
 <nav>
   <div class="nav__row">
     <a class="nav__logo" href="/">приехали.ком</a>
-    <span class="nav__tag">Вьетнам 🇻🇳</span>
+    <a href="/favorites/" class="nav__tag" style="border:1px solid var(--line);border-radius:999px;padding:6px 14px">♡ Избранное</a>
   </div>
 </nav>
 
@@ -92,8 +96,15 @@ const { article, topic, related } = Astro.props;
 </div>
 
 <main class="wrap">
-  <span class="rubric-tag">{topic.title}</span>
-  <h1>{article.title}</h1>
+  <div class="title-row">
+    <div>
+      <span class="rubric-tag">{topic.title}</span>
+      <h1>{article.title}</h1>
+    </div>
+    <button class="savebtn" id="saveBtn" data-url={Astro.url.pathname} data-title={article.title} data-icon={article.icon}>
+      <span id="saveIcon">♡</span> <span id="saveLabel">Сохранить</span>
+    </button>
+  </div>
   <p class="lede">{article.summary}. Ниже — рыба: замени на свой текст, когда статья будет готова.</p>
 
   <div class="placeholder-photo">Фото сюда</div>
@@ -150,5 +161,27 @@ const { article, topic, related } = Astro.props;
     <span class="footer__muted">© 2026</span>
   </div>
 </footer>
+<script is:inline>
+  const FAV_KEY = 'priehali_favorites';
+  function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch(e){ return []; } }
+  function saveFavs(list){ localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
+  const saveBtn=document.getElementById('saveBtn'), saveIcon=document.getElementById('saveIcon'), saveLabel=document.getElementById('saveLabel');
+  const url=saveBtn.dataset.url, title=saveBtn.dataset.title, icon=saveBtn.dataset.icon;
+
+  function refresh(){
+    const on=getFavs().some(f=>f.url===url);
+    saveBtn.classList.toggle('on',on);
+    saveIcon.textContent=on?'♥':'♡';
+    saveLabel.textContent=on?'Сохранено':'Сохранить';
+  }
+  saveBtn.addEventListener('click',()=>{
+    let list=getFavs();
+    if(list.some(f=>f.url===url)) list=list.filter(f=>f.url!==url);
+    else list.push({url,title,icon});
+    saveFavs(list);
+    refresh();
+  });
+  refresh();
+</script>
 </body>
 </html>
