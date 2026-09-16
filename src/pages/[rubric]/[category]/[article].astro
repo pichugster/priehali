@@ -75,6 +75,13 @@ const { article, topic, related } = Astro.props;
 
   .placeholder-photo{background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);border:1px solid var(--line);border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;margin-bottom:32px}
   .embed-widget{margin-bottom:24px}
+  .toc{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px}
+  .toc__label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+  .toc li{counter-increment:toc;padding:3px 0}
+  .toc li::before{content:counter(toc)".";color:var(--jade-dark);font-weight:600;margin-right:7px}
+  .toc a{font-size:.88rem;color:var(--ink)}
+  .toc a:hover{color:var(--jade-dark)}
 
   article h2{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:30px 0 12px}
   article p{margin-bottom:16px;color:var(--ink)}
@@ -122,10 +129,19 @@ const { article, topic, related } = Astro.props;
       <span id="saveIcon">♡</span> <span id="saveLabel">Сохранить</span>
     </button>
   </div>
-  <p class="lede">{article.summary}{!article.body && '. Ниже — рыба: замени на свой текст, когда статья будет готова.'}</p>
+  <p class="lede">{article.hook || article.summary}{!article.body && '. Ниже — рыба: замени на свой текст, когда статья будет готова.'}</p>
 
   {article.embed && (
     <div class="embed-widget" set:html={article.embed} />
+  )}
+
+  {article.toc && (
+    <nav class="toc">
+      <span class="toc__label">Содержание</span>
+      <ol>
+        {article.toc.map((t) => (<li><a href={`#${t.id}`}>{t.label}</a></li>))}
+      </ol>
+    </nav>
   )}
 
   <div class="placeholder-photo">Фото сюда</div>
