@@ -1,8 +1,14 @@
 // Рыба-статьи для каждой категории. Сгенерированы из topics.js по шаблонам —
 // когда появятся реальные статьи, просто переписывай title/summary у нужной
 // записи или добавляй новые объекты в массив (не обязательно ровно 3 на тему).
+//
+// date — дата публикации, checkedDate — дата последней проверки на актуальность.
+// Шаблон статьи сам показывает метку свежести по checkedDate: обновляй её,
+// когда перечитал статью и убедился, что всё ещё верно (раз в месяц — план).
 
 import topics from './topics.js';
+
+const LAUNCH_DATE = '2026-09-16';
 
 const templates = [
   {
@@ -30,6 +36,8 @@ const articles = topics.flatMap((t) =>
     title: tpl.title(t),
     summary: tpl.summary,
     icon: t.icon,
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
   }))
 );
 
@@ -43,6 +51,8 @@ const partnerArticles = [
     title: 'Как бронировать экскурсии через Klook',
     summary: 'Бронирую так уже полгода — дешевле и без нервотрёпки с торговцами на набережной',
     icon: '🗺',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
     embed: `<a href="https://klook.tpo.mx/boiKgdGL" target="_blank" rel="noopener sponsored" style="display:block;text-align:center;background:var(--jade);color:#fff;font-weight:600;padding:14px;border-radius:12px;text-decoration:none">Смотреть экскурсии в Нячанге на Klook →</a>`,
     body: `
 <p>На набережной в Нячанге к тебе каждые пять минут подходят с одним и тем же предложением: "остров, снорклинг, обед, всё включено". Цена называется на глаз, зависит от того, как ты выглядишь и на каком языке отвечаешь. Я через это проходил и в итоге перешёл на Klook — не потому что это модно, а потому что там цена одна для всех и её видно заранее.</p>
@@ -69,6 +79,8 @@ const partnerArticles = [
     title: 'eSIM для Вьетнама через Klook',
     summary: 'Ставлю сим ещё в аэропорту вылета — на месте сразу есть интернет, без очередей',
     icon: '📶',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
     embed: `<a href="https://klook.tpo.mx/boiKgdGL" target="_blank" rel="noopener sponsored" style="display:block;text-align:center;background:var(--jade);color:#fff;font-weight:600;padding:14px;border-radius:12px;text-decoration:none">Купить eSIM для Вьетнама на Klook →</a>`,
     body: `
 <p>В аэропорту Камрань стойки с симками — это всегда очередь и продавец, который предложит тариф подороже туристу. eSIM решает это полностью: покупаешь заранее из дома, активируешь ещё до посадки, и на выходе из самолёта интернет уже работает.</p>
@@ -95,6 +107,8 @@ const partnerArticles = [
     title: 'eSIM для поездки во Вьетнам',
     summary: 'Ставлю ещё в аэропорту вылета — прилетаю и сразу на связи, без очередей и торга',
     icon: '📶',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
     embed: `<a href="https://klook.tpo.mx/boiKgdGL" target="_blank" rel="noopener sponsored" style="display:block;text-align:center;background:var(--jade);color:#fff;font-weight:600;padding:14px;border-radius:12px;text-decoration:none">Купить eSIM для Вьетнама на Klook →</a>`,
     body: `
 <p>Для поездки на пару недель возиться с физической симкой в чужой стране — лишняя морока: очередь на стойке в аэропорту, продавец, который предложит турцену, потом ещё вспоминать, куда её вставлять. eSIM снимает всё это разом.</p>
@@ -122,6 +136,8 @@ const partnerArticles = [
     hook: 'Коротко: до 45 дней виза вообще не нужна — но дальше начинается ветвление, в котором легко ошибиться.',
     summary: 'Разбираю по полочкам: безвиз, e-Visa, рабочие визы и вид на жительство',
     icon: '🛂',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
     toc: [
       { id: 'bezviz', label: 'Нужна ли виза, если еду не больше полутора месяцев' },
       { id: 'evisa', label: 'Что делать, если остаюсь дольше 45 дней' },
@@ -168,6 +184,8 @@ const partnerArticles = [
     hook: '20 минут от центра — и ты уже сидишь посреди зелёного рисового поля с чашкой кофе в руках.',
     summary: 'Одна из самых необычных и красивых кофеен Нячанга — атмосфера того стоит',
     icon: '☕',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
     map: 'Xóm Cốm Coffee, Đường Xóm Cốm, Diên Khánh, Khánh Hòa',
     body: `
 <p>📍 Đường Xóm Cốm, Diên Khánh, Khánh Hòa</p>

@@ -19,6 +19,18 @@ export function getStaticPaths() {
 }
 
 const { article, topic, related } = Astro.props;
+
+// Метка актуальности: считаем по checkedDate, сколько дней прошло с последней проверки
+let freshness = null;
+if (article.checkedDate) {
+  const daysSince = Math.floor((Date.now() - new Date(article.checkedDate).getTime()) / 86400000);
+  if (daysSince <= 35) freshness = { label: 'Проверено недавно', cls: 'fresh' };
+  else if (daysSince <= 70) freshness = { label: 'Скоро перепроверим', cls: 'stale' };
+  else freshness = { label: 'Нужна проверка', cls: 'old' };
+}
+const dateStr = article.date
+  ? new Date(article.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -74,6 +86,7 @@ const { article, topic, related } = Astro.props;
   .lede{font-size:1.08rem;color:var(--ink-soft);margin-bottom:28px}
 
   .placeholder-photo{background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);border:1px solid var(--line);border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;margin-bottom:32px}
+  .article-photo{width:100%;max-height:420px;object-fit:cover;border-radius:16px;margin-bottom:32px;display:block}
   .embed-widget{margin-bottom:24px}
   .toc{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px}
   .toc__label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
@@ -85,6 +98,12 @@ const { article, topic, related } = Astro.props;
   .map-block{margin:32px 0}
   .map-label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
   .map-block iframe{border-radius:14px;display:block}
+  .meta-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .meta-date{font-size:.78rem;color:var(--ink-soft)}
+  .freshness{font-size:.68rem;font-weight:600;letter-spacing:.03em;padding:3px 10px;border-radius:999px}
+  .freshness--fresh{background:rgba(47,123,109,.12);color:var(--jade-dark)}
+  .freshness--stale{background:rgba(217,164,65,.15);color:#8a6416}
+  .freshness--old{background:rgba(217,90,74,.14);color:#a8402f}
 
   article h2{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:30px 0 12px}
   article p{margin-bottom:16px;color:var(--ink)}
@@ -132,6 +151,14 @@ const { article, topic, related } = Astro.props;
       <span id="saveIcon">♡</span> <span id="saveLabel">Сохранить</span>
     </button>
   </div>
+
+  {(dateStr || freshness) && (
+    <div class="meta-line">
+      {dateStr && <span class="meta-date">Опубликовано {dateStr}</span>}
+      {freshness && <span class={`freshness freshness--${freshness.cls}`}>{freshness.label}</span>}
+    </div>
+  )}
+
   <p class="lede">{article.hook || article.summary}{!article.body && '. Ниже — рыба: замени на свой текст, когда статья будет готова.'}</p>
 
   {article.embed && (
@@ -147,7 +174,11 @@ const { article, topic, related } = Astro.props;
     </nav>
   )}
 
-  <div class="placeholder-photo">Фото сюда</div>
+  {article.image ? (
+    <img class="article-photo" src={article.image} alt={article.title} loading="eager" />
+  ) : (
+    <div class="placeholder-photo">Фото сюда</div>
+  )}
 
   <article>
     {article.body ? (
