@@ -619,6 +619,14 @@ const partnerArticles = [
 <div class="placeholder-photo">Фото Hermes сюда</div>
 <p>📍 <a href="https://www.google.com/maps?q=Hermes+Hotel+19+Biet+Thu+Nha+Trang">19 Biệt Thự</a>, Lộc Thọ, в 300-400 метрах от пляжа. 414 000-803 000 ₫ за ночь (~1 300-2 510 ₽).</p>
 <p><b>Вердикт: стоит, с той же оговоркой про шум.</b> Центральное расположение, бассейн, в целом хорошие отзывы о персонале и чистоте. Повторяющийся минус — музыка из соседнего бара по вечерам, так что при бронировании стоит попросить номер подальше от той стороны здания.</p>
+
+<div class="map-block">
+  <span class="map-label">Все восемь отелей на карте</span>
+  <iframe
+    src="https://www.google.com/maps/dir/Hoan+Hai+Hotel+96A+Tran+Phu+Nha+Trang/Ola+Hotel+184+Hung+Vuong+Nha+Trang/Prague+Nha+Trang+6D+Quan+Tran+Hung+Vuong/Starlight+Hotel+34+Nguyen+Thien+Thuat+Nha+Trang/Saphia+Hotel+90-92+Tran+Phu+Nha+Trang/Edele+Hotel+61+Nguyen+Thien+Thuat+Nha+Trang/Boss+Hotel+10+Ton+Dan+Nha+Trang/Hermes+Hotel+19+Biet+Thu+Nha+Trang?output=embed"
+    width="100%" height="380" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
 `,
   },
   {
@@ -1090,6 +1098,32 @@ const partnerArticles = [
 
 <h2>Вердикт</h2>
 <p>Стоит идти за спокойной атмосферой открытой террасы — из тех мест, где приятно задержаться дольше одной чашки.</p>
+`,
+  },
+  {
+    rubric: 'tourist',
+    category: 'kofe',
+    slug: 'kiku-cafe-bar',
+    title: 'Kiku Cafe Bar — тихое место в переулке в центре',
+    hook: 'Центр города, но спрятано в тихом переулке — редкое сочетание для этого района.',
+    summary: 'Милое маленькое кафе со стильным входом, от 40 тыс ₫',
+    icon: '☕',
+    map: 'Kiku Cafe Bar, 93/1 Bạch Đằng, Nha Trang, Khánh Hòa',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
+    body: `
+<p>📍 93/1 Bạch Đằng, Nha Trang, Khánh Hòa 57100</p>
+
+<p>Милое маленькое кафе прямо в центре города, но спрятанное в тихом переулке — здесь заметно тише, чем на соседних оживлённых улицах. Интерьер аккуратный, входная группа стильная и явно сделана с расчётом на фото.</p>
+
+<h2>Фотогеничное место</h2>
+<p>Вход настолько удачный, что его очень любят молоденькие кореяночки — тут можно увидеть, как они бесконечно снимают контент на фоне входной группы. Если любишь красивые кадры без толпы вокруг, самое то место.</p>
+
+<h2>Сколько это стоит</h2>
+<p><b>Напитки:</b> от 40 000 ₫ (~от 125 ₽).</p>
+
+<h2>Вердикт</h2>
+<p>Стоит идти за тишиной в самом центре и красивыми кадрами — напитки при этом тоже вкусные, а не просто повод для фото.</p>
 `,
   },
 ];
