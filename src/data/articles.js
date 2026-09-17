@@ -29,7 +29,7 @@ const templates = [
 ];
 
 // Темы, для которых рыба-заглушки больше не нужны — там уже все статьи настоящие.
-const NO_PLACEHOLDER_CATEGORIES = ['kofe', 'svyaz'];
+const NO_PLACEHOLDER_CATEGORIES = ['kofe', 'svyaz', 'gde-zhit'];
 
 const articles = topics
   .flatMap((t) =>
@@ -565,6 +565,57 @@ const partnerArticles = [
 
 <h2>Мой опыт поездки по трём странам</h2>
 <p>Брал региональный пакет на поездку Вьетнам — Камбоджа — Таиланд на две недели, сеть переключалась между странами автоматически при пересечении границы, вручную ничего настраивать не пришлось. Единственное неудобство — региональный тариф обычно чуть дороже за гигабайт, чем отдельная симка под одну страну, но экономия времени того стоит.</p>
+`,
+  },
+  {
+    rubric: 'tourist',
+    category: 'gde-zhit',
+    slug: 'byudzhetnye-oteli-loc-tho',
+    title: '8 бюджетных отелей в одном районе Нячанга',
+    hook: 'Все восемь сидят компактно в одном квартале, в 5-10 минутах пешком от пляжа — удобно сравнивать между собой.',
+    summary: 'Подборка из чата местных: недорого и в целом неплохо',
+    icon: '🏨',
+    date: LAUNCH_DATE,
+    checkedDate: LAUNCH_DATE,
+    body: `
+<p>Эту подборку собрал не сам — она сложилась из ответов в чате про Вьетнам на вопрос про недорогие и приличные отели. Раскопал по каждому адрес, цены и рейтинги, честно оставил заметки там, где отзывы расходятся.</p>
+
+<p>Все восемь — в районе Lộc Thọ / Tân Lập, компактно, в 5-10 минутах пешком друг от друга и от пляжа. Диапазон цен в основном $10-46 за ночь, курс на сентябрь 2026 — около 81 рубля за доллар, но он меняется, ориентируйся на актуальный на момент бронирования.</p>
+
+<h2>Hoan Hai Hotel</h2>
+<div class="placeholder-photo">Фото Hoan Hai сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Hoan+Hai+Hotel+96A+Tran+Phu+Nha+Trang">96A Trần Phú</a> — прямо на набережной. 2-3 звезды, $18-51 за ночь, рейтинг 4.5 из 5 (правда, отзывов пока немного).</p>
+<p><i>Небольшая ремарка: в исходном списке было написано «Hoang Hai» — точного совпадения с таким названием в Нячанге не нашлось, ближайшее по написанию — именно Hoan Hai. Если имелся в виду другой отель, дай знать, поправим.</i></p>
+
+<h2>Ola Hotel & Apartment</h2>
+<div class="placeholder-photo">Фото Ola сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Ola+Hotel+184+Hung+Vuong+Nha+Trang">184 Hùng Vương</a>, Западный квартал. Открылся только в 2025 — самый новый в подборке, около 250 метров от моря. 3 звезды, $10-67 за ночь.</p>
+
+<h2>Prague Nha Trang</h2>
+<div class="placeholder-photo">Фото Prague сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Prague+Nha+Trang+6D+Quan+Tran+Hung+Vuong">6D Quán Trấn / Hùng Vương</a>, район Lộc Thọ. Раньше назывался Prince Hotel. 3 звезды, $10-23 за ночь, рейтинг 8.1-8.5 из 10 — один из лучших показателей в подборке при таком ценнике.</p>
+
+<h2>Star Light</h2>
+<div class="placeholder-photo">Фото Star Light сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Starlight+Hotel+34+Nguyen+Thien+Thuat+Nha+Trang">34 Nguyễn Thiện Thuật</a>, Tân Lập. Цены от $9 за ночь, рейтинг 7.7 из 10 — самый бюджетный вариант из всех.</p>
+
+<h2>Saphia Hotel</h2>
+<div class="placeholder-photo">Фото Saphia сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Saphia+Hotel+90-92+Tran+Phu+Nha+Trang">90-92 Trần Phú</a>, на набережной. 3 звезды, $17-46 за ночь.</p>
+<p><i>По рейтингу разные источники расходятся довольно сильно — от 2.6 до 8.0 из 10. Стоит перечитать свежие отзывы перед бронированием, а не полагаться на одну цифру.</i></p>
+
+<h2>Edele Hotel</h2>
+<div class="placeholder-photo">Фото Edele сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Edele+Hotel+61+Nguyen+Thien+Thuat+Nha+Trang">61 Nguyễn Thiện Thuật</a>, в 400 метрах от пляжа и рядом с ночным рынком. 3-4 звезды, $11-46 за ночь, рейтинг стабильно 8.0-8.2 из 10 — один из самых надёжных вариантов по отзывам.</p>
+
+<h2>Boss Hotel</h2>
+<div class="placeholder-photo">Фото Boss сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Boss+Hotel+10+Ton+Dan+Nha+Trang">10 Tôn Đản</a>, Lộc Thọ. 4 звезды, есть бассейн на крыше — редкость для такого ценника. $16-40 за ночь, рейтинг 7.7-8.2 из 10.</p>
+
+<h2>Hermes Hotel</h2>
+<div class="placeholder-photo">Фото Hermes сюда</div>
+<p>📍 <a href="https://www.google.com/maps?q=Hermes+Hotel+19+Biet+Thu+Nha+Trang">19 Biệt Thự</a>, Lộc Thọ, в 300-400 метрах от пляжа. 3 звезды.</p>
+<p><i>Цена скачет сильнее всего среди всех восьми — от $16 до $95 в разных источниках, и рейтинг тоже разбросан от 7.2 до 8.5. Скорее всего, дело в динамическом ценообразовании по датам — смотри конкретные даты своей поездки, а не общий диапазон.</i></p>
 `,
   },
 ];
