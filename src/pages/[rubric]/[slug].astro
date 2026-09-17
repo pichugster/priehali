@@ -42,6 +42,8 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
     --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1000px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
@@ -61,7 +63,7 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 
   .cat-head{padding-bottom:30px}
   .cat-ic{font-size:2.2rem}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1;margin:10px 0 8px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.6rem);line-height:1.1;margin:10px 0 8px}
   .lede{font-size:1.05rem;color:var(--ink-soft)}
 
   main{padding-bottom:56px}

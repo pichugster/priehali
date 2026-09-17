@@ -1,4 +1,47 @@
 ---
+import news from '../data/news.js';
+import blog from '../data/blog.js';
+import events from '../data/events.js';
+import topics from '../data/topics.js';
+import articles from '../data/articles.js';
+
+// Самая свежая запись из новостей/блога/событий — для полоски Breaking News
+const feed = [
+  ...news.map((n) => ({ ...n, kind: 'news', href: `/news/${n.slug}/` })),
+  ...blog.map((b) => ({ ...b, kind: 'blog', href: `/blog/${b.slug}/` })),
+  ...events.map((e) => ({ ...e, kind: 'events', href: `/events/${e.slug}/` })),
+].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+const breaking = feed[0];
+
+// 4 карточки для Category Grid — по одной настоящей статье из разных рубрик
+const gridSlugs = [
+  { rubric: 'move', category: 'viza', slug: 'vidy-viz' },
+  { rubric: 'tourist', category: 'kofe', slug: 'xom-com-coffee' },
+  { rubric: 'tourist', category: 'svyaz', slug: 'chto-takoe-esim' },
+  { rubric: 'live', category: 'komyuniti-tut', slug: 'top-10' },
+];
+const gridItems = gridSlugs.map((g) => {
+  const a = articles.find((x) => x.rubric === g.rubric && x.category === g.category && x.slug === g.slug);
+  const t = topics.find((x) => x.rubric === g.rubric && x.slug === g.category);
+  return { article: a, topic: t };
+}).filter((x) => x.article && x.topic);
+
+function timeAgo(dateStr) {
+  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
+  if (days <= 0) return 'сегодня';
+  if (days === 1) return 'вчера';
+  if (days < 7) return `${days} дн. назад`;
+  const weeks = Math.floor(days / 7);
+  return `${weeks} нед. назад`;
+}
+
+// Лента "последнее" — 5 штук вперемешку из news/blog/events
+const latestFeed = feed.slice(0, 5);
+
+// Editor's Pick — самая содержательная статья (виза, с оглавлением)
+const editorsPick = articles.find((a) => a.slug === 'vidy-viz');
+const editorsPickTopic = topics.find((t) => t.rubric === 'move' && t.slug === 'viza');
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -27,6 +70,8 @@
     --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:1080px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
@@ -42,7 +87,7 @@
   .nav__tag{font-size:.85rem;color:var(--ink-soft)}
 
   .hero{padding:12px 0 48px;text-align:center}
-  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;margin:0 auto 16px;max-width:16ch}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,8vw,3.4rem);line-height:1.08;margin:0 auto 16px;max-width:16ch}
   .hero__sub{font-size:1.02rem;color:var(--ink-soft);max-width:46ch;margin:0 auto}
 
   .ticket{background:var(--bg-card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 26px;box-shadow:0 24px 48px -32px rgba(22,35,43,.35);max-width:680px;margin:36px auto 0}
@@ -115,6 +160,62 @@
   .favbtn:hover{border-color:var(--gold)}
   .favbtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
 
+  .breaking{display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto 18px;padding:11px 24px;background:linear-gradient(120deg,rgba(217,164,65,.14),rgba(47,123,109,.1));border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.86rem}
+  .breaking__tag{flex:none;font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:#fff;border-radius:999px;padding:3px 10px}
+  .breaking__text{flex:1;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .breaking__arrow{flex:none;color:var(--jade-dark);font-weight:600}
+  .breaking:hover .breaking__text{text-decoration:underline}
+
+  .section{padding:44px 0}
+  .section__head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px}
+  .section__head h2{font-family:var(--serif);font-weight:500;font-size:1.5rem}
+  .section__head a{font-size:.8rem;color:var(--jade-dark);font-weight:600}
+
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .gcard{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .gcard:hover{transform:translateY(-3px);border-color:var(--jade);box-shadow:0 20px 40px -28px rgba(22,35,43,.4)}
+  .gcard__photo{height:110px;background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+  .gcard__body{padding:14px 16px 16px}
+  .gcard__tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin-bottom:6px}
+  .gcard h3{font-size:.94rem;font-weight:600;line-height:1.3;margin-bottom:6px}
+  .gcard__time{font-size:.72rem;color:var(--ink-soft)}
+
+  .split{display:grid;grid-template-columns:1.1fr 1fr;gap:28px}
+  .latest-list{display:flex;flex-direction:column}
+  .litem{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .litem:first-child{padding-top:0}
+  .litem__ph{flex:none;width:64px;height:64px;border-radius:10px;background:repeating-linear-gradient(135deg,var(--line) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+  .litem__kind{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin-bottom:3px}
+  .litem h3{font-size:.9rem;font-weight:600;line-height:1.3;margin-bottom:3px}
+  .litem__time{font-size:.72rem;color:var(--ink-soft)}
+
+  .pick{display:block;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;height:100%;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .pick:hover{transform:translateY(-3px);border-color:var(--jade);box-shadow:0 24px 48px -30px rgba(22,35,43,.4)}
+  .pick__photo{height:170px;background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);display:flex;align-items:center;justify-content:center;font-size:2rem}
+  .pick__body{padding:20px 22px 24px}
+  .pick__tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .pick h3{font-family:var(--serif);font-weight:500;font-size:1.3rem;line-height:1.2;margin-bottom:8px}
+  .pick p{color:var(--ink-soft);font-size:.9rem;margin-bottom:14px}
+  .pick__cta{font-size:.84rem;font-weight:600;color:var(--jade-dark)}
+
+  .footer2{border-top:1px solid var(--line);padding:36px 0 24px}
+  .footer2__top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:24px}
+  .footer2__brand{font-family:var(--serif);font-size:1.2rem;color:var(--jade-dark)}
+  .footer2__tag{font-size:.82rem;color:var(--ink-soft);margin-top:4px;max-width:32ch}
+  .footer2__links{display:flex;gap:32px;flex-wrap:wrap}
+  .footer2__col h4{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .footer2__col a{display:block;font-size:.86rem;color:var(--ink);padding:3px 0}
+  .footer2__col a:hover{color:var(--jade-dark)}
+  .footer2__bottom{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:var(--ink-soft)}
+
+  @media (max-width:900px){
+    .grid4{grid-template-columns:repeat(2,1fr)}
+    .split{grid-template-columns:1fr}
+  }
+  @media (max-width:1180px){
+    .breaking{max-width:none}
+  }
+
   .author{padding:40px 0;border-top:1px solid var(--line)}
   .author__row{display:flex;align-items:flex-start;gap:20px;max-width:720px;margin:0 auto}
   .author svg{width:38px;height:20px;color:var(--gold);flex:none;margin-top:4px}
@@ -144,6 +245,12 @@
     </div>
   </div>
 </nav>
+
+<a class="breaking" href={breaking.href}>
+  <span class="breaking__tag">Свежее</span>
+  <span class="breaking__text">{breaking.title}</span>
+  <span class="breaking__arrow">→</span>
+</a>
 
 <div class="conditions" id="conditions">
   <div class="cond-card">
@@ -231,6 +338,56 @@
       <div class="cards" id="cards"></div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head"><h2>Главное по рубрикам</h2></div>
+      <div class="grid4">
+        {gridItems.map(({ article, topic }) => (
+          <a class="gcard" href={`/${article.rubric}/${article.category}/${article.slug}/`}>
+            <div class="gcard__photo">{article.icon}</div>
+            <div class="gcard__body">
+              <span class="gcard__tag">{topic.title}</span>
+              <h3>{article.title}</h3>
+              <span class="gcard__time">{timeAgo(article.date)}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <div class="section__head"><h2>Последнее</h2><a href="/blog/">Весь блог →</a></div>
+        <div class="latest-list">
+          {latestFeed.map((item) => (
+            <a class="litem" href={item.href}>
+              <div class="litem__ph">{item.icon || '📰'}</div>
+              <div>
+                <div class="litem__kind">{item.kind === 'news' ? 'Новости' : item.kind === 'blog' ? 'Блог' : 'События'}</div>
+                <h3>{item.title}</h3>
+                <span class="litem__time">{timeAgo(item.date)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div>
+        <div class="section__head"><h2>Рекомендуем</h2></div>
+        <a class="pick" href={`/${editorsPickTopic.rubric}/${editorsPickTopic.slug}/${editorsPick.slug}/`}>
+          <div class="pick__photo">{editorsPick.icon}</div>
+          <div class="pick__body">
+            <span class="pick__tag">{editorsPickTopic.title}</span>
+            <h3>{editorsPick.title}</h3>
+            <p>{editorsPick.summary}</p>
+            <span class="pick__cta">Читать →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <section class="author">
@@ -243,10 +400,30 @@
   </div>
 </section>
 
-<footer>
-  <div class="footer__row">
-    <span>приехали.ком</span>
-    <span class="footer__muted">© 2026</span>
+<footer class="footer2">
+  <div class="wrap">
+    <div class="footer2__top">
+      <div>
+        <div class="footer2__brand">приехали.ком</div>
+        <p class="footer2__tag">Нячанг, каким я его знаю — без розовых очков и без инфоцыганства.</p>
+      </div>
+      <div class="footer2__links">
+        <div class="footer2__col">
+          <h4>Разделы</h4>
+          <a href="/blog/">Блог</a>
+          <a href="/news/">Новости</a>
+          <a href="/events/">События</a>
+          <a href="/qa/">Вопрос-ответ</a>
+        </div>
+        <div class="footer2__col">
+          <h4>Полезное</h4>
+          <a href="/favorites/">Избранное</a>
+          <a href="/sprosit/">Задать вопрос</a>
+          <a href="/zayavka/">Оставить заявку</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer2__bottom">© 2026 приехали.ком</div>
   </div>
 </footer>
 

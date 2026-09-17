@@ -59,6 +59,8 @@ const dateStr = article.date
     --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:760px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
@@ -82,7 +84,7 @@ const dateStr = article.date
   .savebtn{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:9px 16px;font-size:.85rem;font-weight:600;color:var(--ink-soft);cursor:pointer;transition:all .15s;margin-top:6px}
   .savebtn:hover{border-color:var(--gold)}
   .savebtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.1;margin-bottom:14px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.7rem);line-height:1.1;margin-bottom:14px}
   .lede{font-size:1.08rem;color:var(--ink-soft);margin-bottom:28px}
 
   .placeholder-photo{background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);border:1px solid var(--line);border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;margin-bottom:32px}

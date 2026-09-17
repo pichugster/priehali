@@ -26,6 +26,8 @@ const others = qa.filter((q) => q.slug !== item.slug);
     --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:680px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -42,7 +44,7 @@ const others = qa.filter((q) => q.slug !== item.slug);
 
   main{padding-bottom:56px}
   .item__tag{display:inline-block;font-size:.64rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:4px 11px;margin-bottom:14px}
-  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,4vw,2.2rem);line-height:1.2;margin-bottom:20px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,7vw,2.2rem);line-height:1.2;margin-bottom:20px}
   article p{margin-bottom:16px}
 
   .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
