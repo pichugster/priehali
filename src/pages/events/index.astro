@@ -1,5 +1,7 @@
 ---
 import events from '../../data/events.js';
+
+const sorted = [...events].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -65,7 +67,7 @@ import events from '../../data/events.js';
   <p class="lede">Фестивали, рынки, встречи комьюнити — что происходит в городе.</p>
 
   <div class="list">
-    {events.map((e) => (
+    {sorted.map((e) => (
       <a class="item" href={`/events/${e.slug}/`}>
         <div class="item__meta"><span>📅 {e.when}</span><span>📍 {e.place}</span></div>
         <h2>{e.title}</h2>
