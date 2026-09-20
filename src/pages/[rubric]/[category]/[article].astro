@@ -112,8 +112,6 @@ const dateStr = article.date
   article ul{margin:0 0 16px 20px}
   article li{margin-bottom:8px;color:var(--ink)}
 
-  .edit-note{margin-top:36px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
-  .edit-note b{color:var(--ink)}
 
   .siblings{margin-top:48px;border-top:1px solid var(--line);padding-top:28px}
   .siblings h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
@@ -162,7 +160,7 @@ const dateStr = article.date
     </div>
   )}
 
-  <p class="lede">{article.hook || article.summary}{!article.body && '. Ниже — рыба: замени на свой текст, когда статья будет готова.'}</p>
+  <p class="lede">{article.hook || article.summary}</p>
 
   {article.embed && (
     <div class="embed-widget" set:html={article.embed} />
@@ -184,39 +182,7 @@ const dateStr = article.date
   )}
 
   <article>
-    {article.body ? (
-      <Fragment set:html={article.body} />
-    ) : (
-      <>
-    <p>
-      Здесь начинается основной текст статьи. Опиши в двух-трёх предложениях, о чём пойдёт речь
-      и почему читателю стоит дочитать до конца — это первый абзац, который решает, останется он или уйдёт.
-    </p>
-
-    <h2>Что нужно знать</h2>
-    <p>
-      Раздел с сутью: конкретные факты, цифры, названия мест. Пиши коротко и по делу —
-      абзацы по 2-3 предложения читаются на телефоне гораздо легче, чем длинные простыни текста.
-    </p>
-    <ul>
-      <li>Первый важный пункт — замени на реальный факт</li>
-      <li>Второй пункт — например, конкретное место или цена</li>
-      <li>Третий пункт — то, о чём часто спрашивают</li>
-    </ul>
-
-    <h2>Личный опыт</h2>
-    <p>
-      Здесь — то, что отличает эту статью от сотни таких же в интернете: что видел лично,
-      что сработало, а что нет. Именно этот раздел читатели запоминают и пересылают друзьям.
-    </p>
-
-    <h2>Лайфхак</h2>
-    <p>
-      Один конкретный совет, который сэкономит время или деньги. Чем конкретнее — тем лучше:
-      не «будьте осторожны», а «спрашивай цену заранее, вот так-то».
-    </p>
-      </>
-    )}
+    <Fragment set:html={article.body} />
   </article>
 
   {article.map && (
@@ -227,14 +193,6 @@ const dateStr = article.date
         width="100%" height="320" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
       />
     </div>
-  )}
-
-  {!article.body && (
-  <div class="edit-note">
-    <b>Это рыба.</b> Файл — общий шаблон <code>[rubric]/[category]/[article].astro</code>,
-    а конкретный текст этой карточки берётся из <code>src/data/articles.js</code>
-    (запись с <code>category: "{topic.slug}"</code>, <code>slug: "{article.slug}"</code>).
-  </div>
   )}
 
   <div class="siblings">

@@ -83,8 +83,8 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
   .pill--solid{background:var(--jade);color:#fff}
   .acard:hover .pill--solid{background:var(--jade-dark)}
 
-  .edit-note{margin-top:32px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
-  .edit-note b{color:var(--ink)}
+  .empty-state{text-align:center;padding:48px 20px;background:var(--bg-card);border:1px solid var(--line);border-radius:16px;color:var(--ink-soft)}
+  .empty-state__ic{display:block;font-size:1.8rem;margin-bottom:10px}
 
   .siblings{margin-top:48px;border-top:1px solid var(--line);padding-top:28px}
   .siblings h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
@@ -119,37 +119,38 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
   <div class="cat-head">
     <div class="cat-ic">{topic.icon}</div>
     <h1>{topic.title}</h1>
-    <p class="lede">{topic.summary}. Ниже — статьи по теме.</p>
+    <p class="lede">{topic.summary}</p>
   </div>
 
-  <div class="grid">
-    {catArticles.map((a) => {
-      const url = `/${a.rubric}/${a.category}/${a.slug}/`;
-      const loc = a.map ? a.map.split(',').slice(1).join(',').trim() : null;
-      return (
-      <a class="acard" href={url}>
-        <div class="acard__photo">{a.icon}</div>
-        <div class="acard__body">
-          <h3>{a.title}</h3>
-          {loc && <p class="acard__loc">📍 {loc}</p>}
-          <p class="acard__desc">{a.summary}</p>
-        </div>
-        <div class="acard__actions">
-          <button class="pill pill--ghost" data-url={url} data-title={a.title} data-icon={a.icon} onclick="event.preventDefault();event.stopPropagation();toggleFav(this)" aria-label="В избранное">
-            <span class="favIcon">♡</span> Сохранить
-          </button>
-          <span class="pill pill--solid">Читать →</span>
-        </div>
-      </a>
-      );
-    })}
-  </div>
-
-  <div class="edit-note">
-    <b>Это рыба.</b> Статьи в этой теме генерируются из <code>src/data/articles.js</code>.
-    Добавишь туда новый объект с <code>rubric</code>/<code>category</code>, совпадающими с этой темой, —
-    появится ещё одна карточка. Поменяешь <code>title</code>/<code>summary</code> у существующей — обновится здесь и в самой статье.
-  </div>
+  {catArticles.length > 0 ? (
+    <div class="grid">
+      {catArticles.map((a) => {
+        const url = `/${a.rubric}/${a.category}/${a.slug}/`;
+        const loc = a.map ? a.map.split(',').slice(1).join(',').trim() : null;
+        return (
+        <a class="acard" href={url}>
+          <div class="acard__photo">{a.icon}</div>
+          <div class="acard__body">
+            <h3>{a.title}</h3>
+            {loc && <p class="acard__loc">📍 {loc}</p>}
+            <p class="acard__desc">{a.summary}</p>
+          </div>
+          <div class="acard__actions">
+            <button class="pill pill--ghost" data-url={url} data-title={a.title} data-icon={a.icon} onclick="event.preventDefault();event.stopPropagation();toggleFav(this)" aria-label="В избранное">
+              <span class="favIcon">♡</span> Сохранить
+            </button>
+            <span class="pill pill--solid">Читать →</span>
+          </div>
+        </a>
+        );
+      })}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <span class="empty-state__ic">✍️</span>
+      <p>Собираем материал для этого раздела — скоро здесь появятся статьи.</p>
+    </div>
+  )}
 
   <div class="siblings">
     <h3>Другие темы «{topic.rubricLabel}»</h3>

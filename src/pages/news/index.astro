@@ -45,6 +45,8 @@ const sorted = [...news].sort((a, b) => new Date(b.date) - new Date(a.date));
   .item__date{font-size:.72rem;color:var(--ink-soft);float:right}
   .item h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin-bottom:4px}
   .item p{color:var(--ink-soft);font-size:.86rem}
+  .empty-state{text-align:center;padding:48px 20px;background:var(--bg-card);border:1px solid var(--line);border-radius:16px;color:var(--ink-soft)}
+  .empty-state__ic{display:block;font-size:1.8rem;margin-bottom:10px}
 
   footer{padding:24px 0 40px;border-top:1px solid var(--line)}
   .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
@@ -69,16 +71,23 @@ const sorted = [...news].sort((a, b) => new Date(b.date) - new Date(a.date));
   <h1>Новости</h1>
   <p class="lede">Только то, что реально касается туриста или переехавшего — без пересказа вьетнамской политики целиком.</p>
 
-  <div class="list">
-    {sorted.map((n) => (
-      <a class="item" href={`/news/${n.slug}/`}>
-        <span class="item__date">{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}</span>
-        <span class="item__tag">{n.tag}</span>
-        <h2>{n.title}</h2>
-        <p>{n.summary}</p>
-      </a>
-    ))}
-  </div>
+  {sorted.length > 0 ? (
+    <div class="list">
+      {sorted.map((n) => (
+        <a class="item" href={`/news/${n.slug}/`}>
+          <span class="item__date">{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}</span>
+          <span class="item__tag">{n.tag}</span>
+          <h2>{n.title}</h2>
+          <p>{n.summary}</p>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <span class="empty-state__ic">📰</span>
+      <p>Пока здесь пусто — как появится что-то стоящее, сразу опубликуем.</p>
+    </div>
+  )}
 </main>
 
 <footer>

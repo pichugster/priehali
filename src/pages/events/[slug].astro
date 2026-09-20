@@ -51,8 +51,6 @@ const others = events.filter((e) => e.slug !== item.slug);
   article ul{margin:0 0 16px 20px}
   article li{margin-bottom:8px}
 
-  .edit-note{margin-top:32px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
-  .edit-note b{color:var(--ink)}
 
   .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
   .others h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
@@ -86,25 +84,8 @@ const others = events.filter((e) => e.slug !== item.slug);
   <h1>{item.title}</h1>
 
   <article>
-    {item.body ? (
-      <Fragment set:html={item.body} />
-    ) : (
-      <>
-    <p>{item.summary}. Ниже — рыба: замени на реальные детали, когда появятся.</p>
-    <p>
-      Здесь — описание события: программа, что взять с собой, как добраться, нужна ли регистрация.
-      Чем конкретнее — тем полезнее для читателя.
-    </p>
-      </>
-    )}
+    <Fragment set:html={item.body} />
   </article>
-
-  {!item.body && (
-  <div class="edit-note">
-    <b>Это рыба.</b> Дата, место и текст — заглушка. Файл — общий шаблон <code>events/[slug].astro</code>,
-    содержимое берётся из <code>src/data/events.js</code> (запись с <code>slug: "{item.slug}"</code>).
-  </div>
-  )}
 
   <div class="others">
     <h3>Другие события</h3>

@@ -1,51 +1,11 @@
-// Рыба-статьи для каждой категории. Сгенерированы из topics.js по шаблонам —
-// когда появятся реальные статьи, просто переписывай title/summary у нужной
-// записи или добавляй новые объекты в массив (не обязательно ровно 3 на тему).
+// Реальные, вручную написанные статьи по каждой рубрике/теме.
+// Рыба-заглушки убраны полностью — сайт показывает только готовый контент.
 //
 // date — дата публикации, checkedDate — дата последней проверки на актуальность.
 // Шаблон статьи сам показывает метку свежести по checkedDate: обновляй её,
 // когда перечитал статью и убедился, что всё ещё верно (раз в месяц — план).
 
-import topics from './topics.js';
-
 const LAUNCH_DATE = '2026-09-16';
-
-const templates = [
-  {
-    slug: 'top-10',
-    title: (t) => `Топ-10: ${t.title.toLowerCase()}`,
-    summary: 'Подборка проверенных вариантов, обновляется',
-  },
-  {
-    slug: 'lichny-opyt',
-    title: (t) => `Личный опыт: ${t.title.toLowerCase()}`,
-    summary: 'Что видел сам на месте — без пересказа чужих статей',
-  },
-  {
-    slug: 'kak-vybrat',
-    title: (t) => `Как выбрать: ${t.title.toLowerCase()}`,
-    summary: 'На что смотреть в первую очередь, а на что забить',
-  },
-];
-
-// Темы, для которых рыба-заглушки больше не нужны — там уже все статьи настоящие.
-const NO_PLACEHOLDER_CATEGORIES = ['kofe', 'svyaz', 'gde-zhit', 'eda', 'ekskursii', 'spa'];
-
-const articles = topics
-  .flatMap((t) =>
-    templates.map((tpl) => ({
-      rubric: t.rubric,
-      category: t.slug,
-      slug: tpl.slug,
-      title: tpl.title(t),
-      summary: tpl.summary,
-      icon: t.icon,
-      date: LAUNCH_DATE,
-      checkedDate: LAUNCH_DATE,
-    }))
-  )
-  .filter((a) => !NO_PLACEHOLDER_CATEGORIES.includes(a.category));
-
 
 // Отдельные статьи под конкретные партнёрки — не по общему шаблону выше,
 // а руками, потому что у каждой свой смысл, свой текст и своя ссылка.
@@ -1894,4 +1854,4 @@ const partnerArticles = [
   },
 ];
 
-export default [...articles, ...partnerArticles];
+export default partnerArticles;
