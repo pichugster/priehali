@@ -48,9 +48,11 @@ const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric'
   .date{font-size:.76rem;color:var(--ink-soft);margin-bottom:6px}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,7vw,2.3rem);line-height:1.15;margin-bottom:16px}
   article p{margin-bottom:16px}
+  article h2{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:26px 0 12px}
+  article b{color:var(--ink)}
+  article ul{margin:0 0 16px 20px}
+  article li{margin-bottom:8px}
 
-  .edit-note{margin-top:32px;padding:16px 18px;border:1px dashed var(--gold);border-radius:14px;background:rgba(217,164,65,.08);font-size:.86rem;color:var(--ink-soft)}
-  .edit-note b{color:var(--ink)}
 
   .others{margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
   .others h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
@@ -85,21 +87,8 @@ const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric'
   <h1>{item.title}</h1>
 
   <article>
-    <p>{item.summary}. Ниже — рыба: замени на реальную новость, когда появится инфоповод.</p>
-    <p>
-      Здесь — сама новость: что произошло, кого касается и что с этим делать читателю.
-      Пиши коротко, без воды — 3-5 абзацев обычно достаточно для новостного формата.
-    </p>
-    <p>
-      Если есть источник (официальный сайт, объявление, личный опыт) — сошлись на него здесь же,
-      чтобы читатель мог проверить сам.
-    </p>
+    <Fragment set:html={item.body} />
   </article>
-
-  <div class="edit-note">
-    <b>Это рыба.</b> Текст и дата — заглушка. Файл — общий шаблон <code>news/[slug].astro</code>,
-    содержимое берётся из <code>src/data/news.js</code> (запись с <code>slug: "{item.slug}"</code>).
-  </div>
 
   <div class="others">
     <h3>Другие новости</h3>
