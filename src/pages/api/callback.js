@@ -16,10 +16,12 @@ export async function GET({ url }) {
     return new Response('Нет кода авторизации от GitHub', { status: 400 });
   }
 
+  const redirectUri = `${url.origin}/api/callback`;
+
   const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ client_id: clientId, client_secret: clientSecret, code }),
+    body: JSON.stringify({ client_id: clientId, client_secret: clientSecret, code, redirect_uri: redirectUri }),
   });
   const tokenData = await tokenRes.json();
 
