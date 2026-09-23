@@ -715,6 +715,12 @@ const partnerArticles = [
     map: 'Alpaca Homestyle Cafe, 10/1B Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/alpaca-1.jpg',
+      '/images/alpaca-2.jpg',
+      '/images/alpaca-3.jpg',
+      '/images/alpaca-4.jpg',
+    ],
     body: `
 <p>📍 10/1B Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 650000</p>
 
@@ -796,6 +802,11 @@ const partnerArticles = [
     map: 'Bánh Mì Phan, 164 Bạch Đằng, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/banh-mi-phan-1.jpg',
+      '/images/banh-mi-phan-2.jpg',
+      '/images/banh-mi-phan-3.jpg',
+    ],
     body: `
 <p>📍 164 Bạch Đằng, Nha Trang, Khánh Hòa 650000</p>
 
@@ -825,6 +836,12 @@ const partnerArticles = [
     map: 'Artisan Cafe & Eatery, Hẻm đường Hoàng Diệu, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/artisan-cafe-1.jpg',
+      '/images/artisan-cafe-2.jpg',
+      '/images/artisan-cafe-3.jpg',
+      '/images/artisan-cafe-4.jpg',
+    ],
     body: `
 <p>📍 17/35a Hẻm đường Hoàng Diệu, Nha Trang, Khánh Hòa 57129</p>
 
@@ -877,6 +894,11 @@ const partnerArticles = [
     map: 'Atelier, 140 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/atelier-1.jpg',
+      '/images/atelier-2.jpg',
+      '/images/atelier-3.jpg',
+    ],
     body: `
 <p>📍 140 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 650000</p>
 
@@ -1079,6 +1101,13 @@ const partnerArticles = [
     map: 'BaBaBa Japanese, 4/25 Phạm Văn Đồng, Bắc Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/bababa-1.jpg',
+      '/images/bababa-2.jpg',
+      '/images/bababa-3.jpg',
+      '/images/bababa-4.jpg',
+      '/images/bababa-5.jpg',
+    ],
     body: `
 <p>📍 4/25 Phạm Văn Đồng, Bắc Nha Trang, Khánh Hòa 650000</p>
 
