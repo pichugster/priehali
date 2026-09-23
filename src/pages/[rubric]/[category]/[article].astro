@@ -74,13 +74,14 @@ const dateStr = article.date
   .nav__links a:hover{color:var(--jade-dark)}
   .nav__tag{font-size:.85rem;color:var(--ink-soft)}
 
-  .crumbs{padding:6px 0 34px;font-size:.82rem;line-height:1.5;color:var(--ink-soft)}
+  .crumbs{padding-top:6px;padding-bottom:34px;font-size:.82rem;line-height:1.5;color:var(--ink-soft)}
   .crumbs a{color:var(--jade-dark);font-weight:500}
   .crumbs a:hover{text-decoration:underline}
 
   main{padding-bottom:60px}
   .rubric-tag{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--jade-dark);background:rgba(47,123,109,.1);border-radius:999px;padding:5px 12px;margin-bottom:14px}
-  .title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+  .title-row{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+  .title-row .savebtn{order:2}
   .savebtn{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:9px 16px;font-size:.85rem;font-weight:600;color:var(--ink-soft);cursor:pointer;transition:all .15s;margin-top:6px}
   .savebtn:hover{border-color:var(--gold)}
   .savebtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
@@ -99,14 +100,18 @@ const dateStr = article.date
   .gallery__share{right:12px}
   .gallery__fav.on{color:#E8452C}
   .gallery__next{position:absolute;top:50%;right:12px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+  .gallery__prev{position:absolute;top:50%;left:12px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
   .gallery__dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
   .gallery__dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
   .gallery__dot.is-active{background:#fff;width:16px;border-radius:4px;transition:width .2s}
 
-  .lightbox{display:none;position:fixed;inset:0;background:rgba(10,14,12,.94);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(10,14,12,.94);z-index:100;align-items:center;justify-content:center;padding:20px;touch-action:pan-y}
   .lightbox.is-open{display:flex}
-  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
-  .lightbox__close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.1rem;cursor:pointer}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;user-select:none;-webkit-user-select:none}
+  .lightbox__close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.1rem;cursor:pointer;z-index:2}
+  .lightbox__prev,.lightbox__next{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+  .lightbox__prev{left:12px}
+  .lightbox__next{right:12px}
 
   .embed-widget{margin-bottom:24px}
   .toc{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px}
@@ -211,6 +216,7 @@ const dateStr = article.date
 
       {article.images.length > 1 && (
         <>
+          <button class="gallery__prev" id="galleryPrev" aria-label="Предыдущее фото">‹</button>
           <button class="gallery__next" id="galleryNext" aria-label="Следующее фото">›</button>
           <div class="gallery__dots" id="galleryDots">
             {article.images.map((_, i) => (
@@ -221,8 +227,14 @@ const dateStr = article.date
       )}
     </div>
 
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <button class="lightbox__close" aria-label="Закрыть">✕</button>
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox__close" id="lightboxClose" aria-label="Закрыть">✕</button>
+      {article.images.length > 1 && (
+        <>
+          <button class="lightbox__prev" id="lightboxPrev" aria-label="Предыдущее фото">‹</button>
+          <button class="lightbox__next" id="lightboxNext" aria-label="Следующее фото">›</button>
+        </>
+      )}
       <img id="lightboxImg" src="" alt="" />
     </div>
   ) : (
@@ -307,35 +319,66 @@ const dateStr = article.date
     });
   }
 
-  // Карусель: точки + стрелка
+  // Карусель: точки + стрелки
   const track = document.getElementById('galleryTrack');
   const dots = document.querySelectorAll('.gallery__dot');
   const nextBtn = document.getElementById('galleryNext');
+  const prevBtn = document.getElementById('galleryPrev');
+  function currentSlide(){ return Math.round(track.scrollLeft / track.clientWidth); }
+  function goToSlide(i){
+    const clamped = Math.max(0, Math.min(dots.length - 1, i));
+    track.scrollTo({ left: clamped * track.clientWidth, behavior: 'smooth' });
+  }
   if(track && dots.length){
     track.addEventListener('scroll', () => {
-      const idx = Math.round(track.scrollLeft / track.clientWidth);
+      const idx = currentSlide();
       dots.forEach((d,i)=>d.classList.toggle('is-active', i===idx));
     }, { passive: true });
-    if(nextBtn){
-      nextBtn.addEventListener('click', () => {
-        const idx = Math.round(track.scrollLeft / track.clientWidth);
-        const nextIdx = (idx + 1) % dots.length;
-        track.scrollTo({ left: nextIdx * track.clientWidth, behavior: 'smooth' });
-      });
-    }
+    if(nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentSlide() + 1));
+    if(prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlide() - 1));
   }
 
   // Лайтбокс
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  let lbIndex = 0;
+
+  function showLightboxImage(){
+    lightboxImg.src = galleryImages[lbIndex];
+  }
   window.openLightbox = function(i){
     if(!lightbox || !galleryImages[i]) return;
-    lightboxImg.src = galleryImages[i];
+    lbIndex = i;
+    showLightboxImage();
     lightbox.classList.add('is-open');
   };
   window.closeLightbox = function(){
     if(lightbox) lightbox.classList.remove('is-open');
   };
+  function lbNext(){ lbIndex = (lbIndex + 1) % galleryImages.length; showLightboxImage(); }
+  function lbPrev(){ lbIndex = (lbIndex - 1 + galleryImages.length) % galleryImages.length; showLightboxImage(); }
+
+  if(lightboxClose) lightboxClose.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+  if(lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); lbNext(); });
+  if(lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); lbPrev(); });
+  if(lightbox){
+    // клик по фону/фото закрывает, но не по кнопкам навигации
+    lightbox.addEventListener('click', (e) => {
+      if(e.target === lightbox || e.target === lightboxImg) closeLightbox();
+    });
+    // свайп влево/вправо
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 40){
+        if(dx < 0) lbNext(); else lbPrev();
+      }
+    }, { passive: true });
+  }
 </script>
 </body>
 </html>
