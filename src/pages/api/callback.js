@@ -41,12 +41,13 @@ export async function GET({ url }) {
         e.origin
       );
       window.removeEventListener('message', receiveMessage, false);
+      setTimeout(function() { window.close(); }, 200);
     }
     window.addEventListener('message', receiveMessage, false);
     window.opener.postMessage('authorizing:github', '*');
   })();
 </script>
-Вход выполнен, можно закрыть эту вкладку.
+Вход выполнен, окно закроется само.
 </body></html>`;
 
   return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
