@@ -273,6 +273,12 @@ const partnerArticles = [
     map: "A'memoir Cafe & Sweets, 81 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa",
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/amemoir-cafe-1.jpg',
+      '/images/amemoir-cafe-2.jpg',
+      '/images/amemoir-cafe-3.jpg',
+      '/images/amemoir-cafe-4.jpg',
+    ],
     body: `
 <p>📍 81 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 650000</p>
 
@@ -319,6 +325,12 @@ const partnerArticles = [
     map: 'Bóng Râm Cocktails & Coffee, 62a Nguyễn Thị Minh Khai, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/bong-ram-1.jpg',
+      '/images/bong-ram-2.jpg',
+      '/images/bong-ram-3.jpg',
+      '/images/bong-ram-4.jpg',
+    ],
     body: `
 <p>📍 62a Nguyễn Thị Minh Khai, Nha Trang, Khánh Hòa 650000</p>
 
