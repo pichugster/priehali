@@ -8,7 +8,7 @@ export async function GET({ url }) {
   const clientId = import.meta.env.GITHUB_OAUTH_CLIENT_ID;
 
   if (!clientId) {
-    return new Response('GITHUB_OAUTH_CLIENT_ID не задан в переменных окружения Vercel', { status: 500 });
+    return new Response('GITHUB_OAUTH_CLIENT_ID не задан в переменных окружения Vercel', { status: 500, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
   }
 
   const redirectUri = `${url.origin}/api/callback`;
