@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: ЗАМЕНИ-НА/твой-репозиторий
+  repo: pichugster/priehali
   branch: main
   base_url: https://priehali.com
   auth_endpoint: api/auth
