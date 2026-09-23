@@ -153,6 +153,14 @@ const partnerArticles = [
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
     map: 'Xóm Cốm Coffee, Đường Xóm Cốm, Diên Khánh, Khánh Hòa',
+    images: [
+      '/images/xom-com-1.jpg',
+      '/images/xom-com-2.jpg',
+      '/images/xom-com-3.jpg',
+      '/images/xom-com-4.jpg',
+      '/images/xom-com-5.jpg',
+      '/images/xom-com-6.jpg',
+    ],
     body: `
 <p>📍 Đường Xóm Cốm, Diên Khánh, Khánh Hòa</p>
 
@@ -208,6 +216,11 @@ const partnerArticles = [
     map: 'Ola Cafe, 31 Đường Nguyễn Hữu Huân, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/ola-cafe-1.jpg',
+      '/images/ola-cafe-2.jpg',
+      '/images/ola-cafe-3.jpg',
+    ],
     body: `
 <p>📍 31 Đường Nguyễn Hữu Huân, Nha Trang, Khánh Hòa 650000</p>
 
@@ -257,6 +270,13 @@ const partnerArticles = [
     map: 'Railway Cafe, 66a Nguyễn Trãi, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/railway-cafe-1.jpg',
+      '/images/railway-cafe-2.jpg',
+      '/images/railway-cafe-3.jpg',
+      '/images/railway-cafe-4.jpg',
+      '/images/railway-cafe-5.jpg',
+    ],
     body: `
 <p>📍 66a Nguyễn Trãi, Nha Trang, Khánh Hòa 650000</p>
 
