@@ -11,5 +11,8 @@
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^11.0.10",
     "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "js-yaml": "^5.4.2"
   }
 }
