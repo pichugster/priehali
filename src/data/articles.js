@@ -181,6 +181,10 @@ const partnerArticles = [
     map: 'DALAT Coffee, 51/4 Tuệ Tĩnh, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/dalat-coffee-1.jpg',
+      '/images/dalat-coffee-2.jpg',
+    ],
     body: `
 <p>📍 51/4 Tuệ Tĩnh, Nha Trang, Khánh Hòa 650000</p>
 
@@ -224,6 +228,12 @@ const partnerArticles = [
     map: 'Mưa Cafe, 206/2 Dã Tượng, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/mua-cafe-1.jpg',
+      '/images/mua-cafe-2.jpg',
+      '/images/mua-cafe-3.jpg',
+      '/images/mua-cafe-4.jpg',
+    ],
     body: `
 <p>📍 206/2 Dã Tượng, Nha Trang, Khánh Hòa</p>
 
@@ -1075,6 +1085,12 @@ const partnerArticles = [
     map: 'Nora Coffee Roastery, 9 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/nora-coffee-1.jpg',
+      '/images/nora-coffee-2.jpg',
+      '/images/nora-coffee-3.jpg',
+      '/images/nora-coffee-4.jpg',
+    ],
     body: `
 <p>📍 9 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 57000</p>
 
