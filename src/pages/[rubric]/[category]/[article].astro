@@ -88,11 +88,26 @@ const dateStr = article.date
   .lede{font-size:1.08rem;color:var(--ink-soft);margin-bottom:28px}
 
   .placeholder-photo{background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);border:1px solid var(--line);border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:.82rem;margin-bottom:32px}
-  .gallery{margin-bottom:32px}
-  .gallery__hero{width:100%;max-height:420px;object-fit:cover;border-radius:16px;display:block}
-  .gallery__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:8px}
-  .gallery__thumb{width:100%;height:110px;object-fit:cover;border-radius:10px;display:block;cursor:zoom-in;transition:opacity .15s}
-  .gallery__thumb:hover{opacity:.85}
+
+  .gallery{position:relative;margin-bottom:32px;border-radius:16px;overflow:hidden}
+  .gallery__carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
+  .gallery__carousel::-webkit-scrollbar{display:none}
+  .gallery__slide{flex:0 0 100%;scroll-snap-align:start}
+  .gallery__slide img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in}
+  .gallery__fav,.gallery__share{position:absolute;top:12px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:none;display:flex;align-items:center;justify-content:center;font-size:1.05rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);color:var(--ink)}
+  .gallery__fav{right:58px}
+  .gallery__share{right:12px}
+  .gallery__fav.on{color:#E8452C}
+  .gallery__next{position:absolute;top:50%;right:12px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+  .gallery__dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+  .gallery__dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+  .gallery__dot.is-active{background:#fff;width:16px;border-radius:4px;transition:width .2s}
+
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(10,14,12,.94);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .lightbox.is-open{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+  .lightbox__close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.1rem;cursor:pointer}
+
   .embed-widget{margin-bottom:24px}
   .toc{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px}
   .toc__label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
@@ -180,15 +195,35 @@ const dateStr = article.date
   )}
 
   {article.images && article.images.length > 0 ? (
-    <div class="gallery">
-      <img class="gallery__hero" src={article.images[0]} alt={article.title} loading="eager" />
+    <div class="gallery" id="gallery">
+      <div class="gallery__carousel" id="galleryTrack">
+        {article.images.map((src, i) => (
+          <div class="gallery__slide">
+            <img src={src} alt={`${article.title} — фото ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} onclick={`openLightbox(${i})`} />
+          </div>
+        ))}
+      </div>
+
+      <button class="gallery__fav" id="galleryFav" aria-label="В избранное">
+        <span id="galleryFavIcon">♡</span>
+      </button>
+      <button class="gallery__share" id="galleryShare" aria-label="Поделиться">⇪</button>
+
       {article.images.length > 1 && (
-        <div class="gallery__grid">
-          {article.images.slice(1).map((src, i) => (
-            <img class="gallery__thumb" src={src} alt={`${article.title} — фото ${i + 2}`} loading="lazy" />
-          ))}
-        </div>
+        <>
+          <button class="gallery__next" id="galleryNext" aria-label="Следующее фото">›</button>
+          <div class="gallery__dots" id="galleryDots">
+            {article.images.map((_, i) => (
+              <span class={`gallery__dot ${i === 0 ? 'is-active' : ''}`}></span>
+            ))}
+          </div>
+        </>
       )}
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <button class="lightbox__close" aria-label="Закрыть">✕</button>
+      <img id="lightboxImg" src="" alt="" />
     </div>
   ) : (
     <div class="placeholder-photo">Фото сюда</div>
@@ -224,27 +259,83 @@ const dateStr = article.date
     <span class="footer__muted">© 2026</span>
   </div>
 </footer>
-<script is:inline>
+<script define:vars={{ galleryImages: article.images || [] }}>
   const FAV_KEY = 'priehali_favorites';
   function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch(e){ return []; } }
   function saveFavs(list){ localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
   const saveBtn=document.getElementById('saveBtn'), saveIcon=document.getElementById('saveIcon'), saveLabel=document.getElementById('saveLabel');
   const url=saveBtn.dataset.url, title=saveBtn.dataset.title, icon=saveBtn.dataset.icon;
 
+  const galleryFav = document.getElementById('galleryFav');
+  const galleryFavIcon = document.getElementById('galleryFavIcon');
+
   function refresh(){
     const on=getFavs().some(f=>f.url===url);
     saveBtn.classList.toggle('on',on);
     saveIcon.textContent=on?'♥':'♡';
     saveLabel.textContent=on?'Сохранено':'Сохранить';
+    if(galleryFav){
+      galleryFav.classList.toggle('on',on);
+      galleryFavIcon.textContent=on?'♥':'♡';
+    }
   }
-  saveBtn.addEventListener('click',()=>{
+  function toggleFavorite(){
     let list=getFavs();
     if(list.some(f=>f.url===url)) list=list.filter(f=>f.url!==url);
     else list.push({url,title,icon});
     saveFavs(list);
     refresh();
-  });
+  }
+  saveBtn.addEventListener('click',toggleFavorite);
+  if(galleryFav) galleryFav.addEventListener('click',toggleFavorite);
   refresh();
+
+  // Шеринг
+  const galleryShare = document.getElementById('galleryShare');
+  if(galleryShare){
+    galleryShare.addEventListener('click', async () => {
+      const shareData = { title, url: location.href };
+      if(navigator.share){
+        try{ await navigator.share(shareData); }catch(e){}
+      } else {
+        try{
+          await navigator.clipboard.writeText(location.href);
+          galleryShare.textContent='✓';
+          setTimeout(()=>{ galleryShare.textContent='⇪'; }, 1500);
+        }catch(e){}
+      }
+    });
+  }
+
+  // Карусель: точки + стрелка
+  const track = document.getElementById('galleryTrack');
+  const dots = document.querySelectorAll('.gallery__dot');
+  const nextBtn = document.getElementById('galleryNext');
+  if(track && dots.length){
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach((d,i)=>d.classList.toggle('is-active', i===idx));
+    }, { passive: true });
+    if(nextBtn){
+      nextBtn.addEventListener('click', () => {
+        const idx = Math.round(track.scrollLeft / track.clientWidth);
+        const nextIdx = (idx + 1) % dots.length;
+        track.scrollTo({ left: nextIdx * track.clientWidth, behavior: 'smooth' });
+      });
+    }
+  }
+
+  // Лайтбокс
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  window.openLightbox = function(i){
+    if(!lightbox || !galleryImages[i]) return;
+    lightboxImg.src = galleryImages[i];
+    lightbox.classList.add('is-open');
+  };
+  window.closeLightbox = function(){
+    if(lightbox) lightbox.classList.remove('is-open');
+  };
 </script>
 </body>
 </html>
