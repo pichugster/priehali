@@ -302,6 +302,12 @@ const partnerArticles = [
     map: 'Moonybunny, 74A Vân Đồn, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/moonybunny-1.jpg',
+      '/images/moonybunny-2.jpg',
+      '/images/moonybunny-3.jpg',
+      '/images/moonybunny-4.jpg',
+    ],
     body: `
 <p>📍 74A Vân Đồn, Nha Trang, Khánh Hòa</p>
 
@@ -354,6 +360,12 @@ const partnerArticles = [
     map: 'Jungle Coffee Nha Trang, 8 Lê Quý Đôn, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/jungle-coffee-1.jpg',
+      '/images/jungle-coffee-2.jpg',
+      '/images/jungle-coffee-3.jpg',
+      '/images/jungle-coffee-4.jpg',
+    ],
     body: `
 <p>📍 8 Lê Quý Đôn, Nha Trang, Khánh Hòa 650000</p>
 
@@ -377,6 +389,12 @@ const partnerArticles = [
     map: 'Cafe Hòn Kiến Nha Trang, 56 Đống Đa, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/hon-kien-1.jpg',
+      '/images/hon-kien-2.jpg',
+      '/images/hon-kien-3.jpg',
+      '/images/hon-kien-4.jpg',
+    ],
     body: `
 <p>📍 56 Đống Đa, phường, Nha Trang, Khánh Hòa 650000</p>
 
@@ -1083,6 +1101,12 @@ const partnerArticles = [
     map: 'Kiku Cafe Bar, 93/1 Bạch Đằng, Nha Trang, Khánh Hòa',
     date: LAUNCH_DATE,
     checkedDate: LAUNCH_DATE,
+    images: [
+      '/images/kiku-cafe-1.jpg',
+      '/images/kiku-cafe-2.jpg',
+      '/images/kiku-cafe-3.jpg',
+      '/images/kiku-cafe-4.jpg',
+    ],
     body: `
 <p>📍 93/1 Bạch Đằng, Nha Trang, Khánh Hòa 57100</p>
 
