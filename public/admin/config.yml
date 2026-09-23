@@ -1,0 +1,39 @@
+backend:
+  name: github
+  repo: ЗАМЕНИ-НА/твой-репозиторий
+  branch: main
+  base_url: https://priehali.com
+  auth_endpoint: api/auth
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "articles"
+    label: "Статьи (Турист / Переезд / Живу тут)"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{fields.slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Slug (латиницей, без пробелов — часть адреса страницы)", name: "slug", widget: "string" }
+      - label: "Рубрика"
+        name: "rubric"
+        widget: "select"
+        options:
+          - { label: "Турист", value: "tourist" }
+          - { label: "Переезд", value: "move" }
+          - { label: "Живу тут", value: "live" }
+      - { label: "Раздел (например kofe, eda, spa — техническое имя раздела)", name: "category", widget: "string" }
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Хук (первая цепляющая фраза)", name: "hook", widget: "text", required: false }
+      - { label: "Краткое описание (для карточки и поисковика)", name: "summary", widget: "text" }
+      - { label: "Иконка (один эмодзи)", name: "icon", widget: "string" }
+      - { label: "Адрес для карты", name: "map", widget: "string", required: false }
+      - { label: "Дата публикации", name: "date", widget: "string", default: "2026-09-23" }
+      - { label: "Дата последней проверки актуальности", name: "checkedDate", widget: "string", default: "2026-09-23" }
+      - label: "Фото (пути вида /images/имя.jpg)"
+        name: "images"
+        widget: "list"
+        required: false
+      - { label: "Текст статьи", name: "body", widget: "markdown" }
