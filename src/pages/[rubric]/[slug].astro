@@ -65,6 +65,9 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
   .cat-ic{font-size:2.2rem}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.6rem);line-height:1.1;margin:10px 0 8px}
   .lede{font-size:1.05rem;color:var(--ink-soft)}
+  .cat-intro{font-size:1rem;color:var(--ink-soft);max-width:68ch}
+  .cat-intro p{margin-bottom:12px}
+  .cat-intro p:last-child{margin-bottom:0}
 
   main{padding-bottom:56px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -113,14 +116,18 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 </nav>
 
 <div class="wrap crumbs">
-  <a href="/">приехали.</a> / <a href={`/#${topic.rubric}`}>{topic.rubricLabel}</a> / {topic.title}
+  <a href="/">Приехали</a> / <a href={`/#${topic.rubric}`}>{topic.rubricLabel}</a> / {topic.title}
 </div>
 
 <main class="wrap">
   <div class="cat-head">
     <div class="cat-ic">{topic.icon}</div>
     <h1>{topic.title}</h1>
-    <p class="lede">{topic.summary}</p>
+    {topic.intro ? (
+      <div class="cat-intro" set:html={topic.intro} />
+    ) : (
+      <p class="lede">{topic.summary}</p>
+    )}
   </div>
 
   {catArticles.length > 0 ? (
