@@ -2,6 +2,12 @@
 // меняем его на токен доступа и передаём обратно в окно с админкой.
 // Нужна ещё GITHUB_OAUTH_CLIENT_SECRET в Vercel.
 
+// Кеш успешных обменов — если один и тот же код прилетит повторно
+// (например, повторный запрос от самой Decap CMS), не бьём GitHub второй
+// раз (код одноразовый, второй раз он всё равно откажет), а просто
+// повторяем уже готовый успешный ответ.
+const successCache = new Map();
+
 export const prerender = false;
 
 export async function GET({ url }) {
@@ -10,6 +16,13 @@ export async function GET({ url }) {
   const clientSecret = import.meta.env.GITHUB_OAUTH_CLIENT_SECRET;
   const code = url.searchParams.get('code');
   console.log('[callback] invoked at', new Date().toISOString(), 'code:', code ? code.slice(0, 6) + '...' : 'нет', 'full url:', url.href);
+
+  if (code && successCache.has(code)) {
+    console.log('[callback] повтор запроса с уже использованным кодом — отдаём кешированный успех');
+    return new Response(successCache.get(code), {
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+    });
+  }
 
   if (!clientId || !clientSecret) {
     return new Response('GITHUB_OAUTH_CLIENT_ID / GITHUB_OAUTH_CLIENT_SECRET не заданы в переменных окружения Vercel', {
@@ -82,9 +95,9 @@ export async function GET({ url }) {
     var pinger = setInterval(function() {
       if (done) { clearInterval(pinger); return; }
       window.opener.postMessage('authorizing:github', '*');
-    }, 500);
+    }, 150);
     window.opener.postMessage('authorizing:github', '*');
-    // Аварийный запасной путь: если за 5 секунд рукопожатие так и не
+    // Аварийный запасной путь: если за 1.5 секунды рукопожатие так и не
     // состоялось — всё равно отправляем токен напрямую и закрываем окно.
     setTimeout(function() {
       if (done) return;
@@ -92,11 +105,13 @@ export async function GET({ url }) {
       clearInterval(pinger);
       window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
       window.close();
-    }, 5000);
+    }, 1500);
   })();
 </script>
 Вход выполнен, окно закроется само.
 </body></html>`;
+
+  successCache.set(code, html);
 
   return new Response(html, {
     headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
