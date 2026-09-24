@@ -74,41 +74,73 @@ export async function GET({ url }) {
   const payload = JSON.stringify({ token: tokenData.access_token, provider: 'github' });
 
   const html = `<!doctype html>
-<html><body>
+<html><body style="font-family:sans-serif;padding:24px">
+<p id="status">Вход выполнен, окно закроется само...</p>
+<pre id="debug" style="background:#f4f4f4;padding:12px;border-radius:8px;font-size:12px;white-space:pre-wrap"></pre>
 <script>
   (function() {
-    var done = false;
-    function receiveMessage(e) {
-      if (done) return;
-      done = true;
-      window.opener.postMessage(
-        'authorization:github:success:' + ${JSON.stringify(payload)},
-        e.origin
-      );
-      window.removeEventListener('message', receiveMessage, false);
-      clearInterval(pinger);
-      setTimeout(function() { window.close(); }, 300);
+    var debugEl = document.getElementById('debug');
+    var statusEl = document.getElementById('status');
+    var log = [];
+    function dbg(msg) {
+      log.push(msg);
+      debugEl.textContent = log.join('\\n');
     }
-    window.addEventListener('message', receiveMessage, false);
-    // На случай если главное окно ещё не успело подписаться на сообщение —
-    // повторяем сигнал, пока не придёт ответ.
-    var pinger = setInterval(function() {
-      if (done) { clearInterval(pinger); return; }
-      window.opener.postMessage('authorizing:github', '*');
-    }, 150);
-    window.opener.postMessage('authorizing:github', '*');
-    // Аварийный запасной путь: если за 1.5 секунды рукопожатие так и не
-    // состоялось — всё равно отправляем токен напрямую и закрываем окно.
-    setTimeout(function() {
-      if (done) return;
-      done = true;
-      clearInterval(pinger);
-      window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
-      window.close();
-    }, 1500);
+    dbg('window.opener существует: ' + (!!window.opener));
+    dbg('window.opener === window: ' + (window.opener === window));
+    if (!window.opener) {
+      statusEl.textContent = 'Не удалось связаться с окном админки — оно не найдено (window.opener пуст). Попробуй закрыть эту вкладку и войти заново прямо из /admin/, не переходя по ссылкам напрямую.';
+      dbg('ОШИБКА: window.opener отсутствует, дальше продолжать нельзя.');
+    } else {
+      var done = false;
+      function receiveMessage(e) {
+        if (done) return;
+        done = true;
+        dbg('Получен ответ от главного окна, origin: ' + e.origin);
+        try {
+          window.opener.postMessage(
+            'authorization:github:success:' + ${JSON.stringify(payload)},
+            e.origin
+          );
+          dbg('Токен отправлен успешно.');
+        } catch (err) {
+          dbg('ОШИБКА при отправке токена: ' + err.message);
+        }
+        window.removeEventListener('message', receiveMessage, false);
+        clearInterval(pinger);
+        statusEl.textContent = 'Готово, закрываю окно...';
+        setTimeout(function() { window.close(); }, 500);
+      }
+      window.addEventListener('message', receiveMessage, false);
+      try {
+        window.opener.postMessage('authorizing:github', '*');
+        dbg('Первый пинг главному окну отправлен.');
+      } catch (err) {
+        dbg('ОШИБКА при первом пинге: ' + err.message);
+      }
+      var pinger = setInterval(function() {
+        if (done) { clearInterval(pinger); return; }
+        try {
+          window.opener.postMessage('authorizing:github', '*');
+        } catch (err) {}
+      }, 150);
+      setTimeout(function() {
+        if (done) return;
+        done = true;
+        dbg('Ответа от главного окна не было — отправляю токен напрямую (аварийный путь).');
+        clearInterval(pinger);
+        try {
+          window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
+          dbg('Токен отправлен напрямую.');
+        } catch (err) {
+          dbg('ОШИБКА при аварийной отправке: ' + err.message);
+        }
+        statusEl.textContent = 'Токен отправлен напрямую, закрываю окно...';
+        setTimeout(function() { window.close(); }, 500);
+      }, 1500);
+    }
   })();
 </script>
-Вход выполнен, окно закроется само.
 </body></html>`;
 
   successCache.set(code, html);
