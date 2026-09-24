@@ -75,7 +75,7 @@ export async function GET({ url }) {
 
   const html = `<!doctype html>
 <html><body style="font-family:sans-serif;padding:24px">
-<p id="status">Вход выполнен, окно закроется само...</p>
+<p id="status">Вход выполнен, жду ответа от окна админки...</p>
 <button onclick="window.close()" style="background:#204F46;color:#fff;padding:10px 18px;border:none;border-radius:8px;cursor:pointer;margin-bottom:12px">Закрыть вручную</button>
 <pre id="debug" style="background:#f4f4f4;padding:12px;border-radius:8px;font-size:12px;white-space:pre-wrap"></pre>
 <script>
@@ -88,66 +88,46 @@ export async function GET({ url }) {
       debugEl.textContent = log.join('\\n');
     }
     dbg('window.opener существует: ' + (!!window.opener));
-    dbg('window.opener === window: ' + (window.opener === window));
     if (!window.opener) {
-      statusEl.textContent = 'Не удалось связаться с окном админки — оно не найдено (window.opener пуст). Попробуй закрыть эту вкладку и войти заново прямо из /admin/, не переходя по ссылкам напрямую.';
-      dbg('ОШИБКА: window.opener отсутствует, дальше продолжать нельзя.');
+      statusEl.textContent = 'Не удалось связаться с окном админки — оно не найдено. Попробуй закрыть эту вкладку и войти заново прямо из /admin/.';
+      dbg('ОШИБКА: window.opener отсутствует.');
     } else {
       var done = false;
+      // Decap CMS игнорирует токен, если он приходит без полного
+      // рукопожатия — поэтому НЕ отправляем токен сразу и НЕ сдаёмся
+      // по таймауту, а просто ждём ответа сколько потребуется, повторяя
+      // сигнал каждые 300мс.
       function receiveMessage(e) {
         if (done) return;
+        if (e.data !== 'authorizing:github') { dbg('Пришло постороннее сообщение, игнорирую: ' + e.data); return; }
         done = true;
-        dbg('Получен ответ от главного окна, origin: ' + e.origin);
+        dbg('Получен ответ-эхо от главного окна, origin: ' + e.origin + ' — отправляю токен.');
         try {
           window.opener.postMessage(
             'authorization:github:success:' + ${JSON.stringify(payload)},
             e.origin
           );
-          dbg('Токен отправлен успешно.');
+          dbg('Токен отправлен.');
         } catch (err) {
           dbg('ОШИБКА при отправке токена: ' + err.message);
         }
         window.removeEventListener('message', receiveMessage, false);
         clearInterval(pinger);
         statusEl.textContent = 'Готово, закрываю окно...';
-        setTimeout(function() { window.close(); }, 500);
+        setTimeout(function() { window.close(); }, 400);
       }
       window.addEventListener('message', receiveMessage, false);
-      try {
-        window.opener.postMessage('authorizing:github', '*');
-        dbg('Первый пинг главному окну отправлен.');
-      } catch (err) {
-        dbg('ОШИБКА при первом пинге: ' + err.message);
-      }
-      // Таймеры браузер может замедлить, если это окно не в фокусе —
-      // поэтому сразу же, синхронно, без ожидания, отправляем и сам
-      // токен тоже, а не только сигнал рукопожатия.
-      try {
-        window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
-        dbg('Токен отправлен сразу же (без ожидания).');
-      } catch (err) {
-        dbg('ОШИБКА при немедленной отправке: ' + err.message);
-      }
+      window.opener.postMessage('authorizing:github', '*');
+      dbg('Первый пинг отправлен, жду эхо...');
+      var pingCount = 0;
       var pinger = setInterval(function() {
         if (done) { clearInterval(pinger); return; }
+        pingCount++;
         try {
           window.opener.postMessage('authorizing:github', '*');
         } catch (err) {}
-      }, 150);
-      setTimeout(function() {
-        if (done) return;
-        done = true;
-        dbg('Ответа от главного окна не было — отправляю токен напрямую (аварийный путь).');
-        clearInterval(pinger);
-        try {
-          window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
-          dbg('Токен отправлен напрямую.');
-        } catch (err) {
-          dbg('ОШИБКА при аварийной отправке: ' + err.message);
-        }
-        statusEl.textContent = 'Токен отправлен напрямую, закрываю окно...';
-        setTimeout(function() { window.close(); }, 500);
-      }, 1500);
+        if (pingCount % 10 === 0) dbg('Всё ещё жду ответа... (' + pingCount + ' попыток)');
+      }, 300);
     }
   })();
 </script>
