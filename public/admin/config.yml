@@ -2,7 +2,7 @@ backend:
   name: github
   repo: pichugster/priehali
   branch: main
-  base_url: https://priehali.com
+  base_url: https://www.priehali.com
   auth_endpoint: api/auth
 
 media_folder: "public/images"
