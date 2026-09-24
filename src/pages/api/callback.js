@@ -22,7 +22,7 @@ export async function GET({ url }) {
     });
   }
 
-  const redirectUri = `${url.origin}/api/callback`;
+  const redirectUri = 'https://priehali.com/api/callback';
 
   const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
     method: 'POST',
@@ -52,16 +52,35 @@ export async function GET({ url }) {
 <html><body>
 <script>
   (function() {
+    var done = false;
     function receiveMessage(e) {
+      if (done) return;
+      done = true;
       window.opener.postMessage(
         'authorization:github:success:' + ${JSON.stringify(payload)},
         e.origin
       );
       window.removeEventListener('message', receiveMessage, false);
-      setTimeout(function() { window.close(); }, 200);
+      clearInterval(pinger);
+      setTimeout(function() { window.close(); }, 300);
     }
     window.addEventListener('message', receiveMessage, false);
+    // На случай если главное окно ещё не успело подписаться на сообщение —
+    // повторяем сигнал, пока не придёт ответ.
+    var pinger = setInterval(function() {
+      if (done) { clearInterval(pinger); return; }
+      window.opener.postMessage('authorizing:github', '*');
+    }, 500);
     window.opener.postMessage('authorizing:github', '*');
+    // Аварийный запасной путь: если за 5 секунд рукопожатие так и не
+    // состоялось — всё равно отправляем токен напрямую и закрываем окно.
+    setTimeout(function() {
+      if (done) return;
+      done = true;
+      clearInterval(pinger);
+      window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
+      window.close();
+    }, 5000);
   })();
 </script>
 Вход выполнен, окно закроется само.

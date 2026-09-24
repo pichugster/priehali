@@ -13,7 +13,7 @@ export async function GET({ url }) {
     });
   }
 
-  const redirectUri = `${url.origin}/api/callback`;
+  const redirectUri = 'https://priehali.com/api/callback';
   const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo,user&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
   return new Response(null, {
