@@ -76,6 +76,7 @@ export async function GET({ url }) {
   const html = `<!doctype html>
 <html><body style="font-family:sans-serif;padding:24px">
 <p id="status">Вход выполнен, окно закроется само...</p>
+<button onclick="window.close()" style="background:#204F46;color:#fff;padding:10px 18px;border:none;border-radius:8px;cursor:pointer;margin-bottom:12px">Закрыть вручную</button>
 <pre id="debug" style="background:#f4f4f4;padding:12px;border-radius:8px;font-size:12px;white-space:pre-wrap"></pre>
 <script>
   (function() {
@@ -117,6 +118,15 @@ export async function GET({ url }) {
         dbg('Первый пинг главному окну отправлен.');
       } catch (err) {
         dbg('ОШИБКА при первом пинге: ' + err.message);
+      }
+      // Таймеры браузер может замедлить, если это окно не в фокусе —
+      // поэтому сразу же, синхронно, без ожидания, отправляем и сам
+      // токен тоже, а не только сигнал рукопожатия.
+      try {
+        window.opener.postMessage('authorization:github:success:' + ${JSON.stringify(payload)}, '*');
+        dbg('Токен отправлен сразу же (без ожидания).');
+      } catch (err) {
+        dbg('ОШИБКА при немедленной отправке: ' + err.message);
       }
       var pinger = setInterval(function() {
         if (done) { clearInterval(pinger); return; }
