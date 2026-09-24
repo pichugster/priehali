@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://priehali.com/sitemap-index.xml
