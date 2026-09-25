@@ -16,6 +16,25 @@ export async function getStaticPaths() {
 
 const { topic, catArticles } = Astro.props;
 const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== topic.slug);
+
+// Если у статей темы заданы группы (group) — рендерим по группам с заголовками,
+// в порядке order. Иначе — как раньше, плоской сеткой.
+const hasGroups = catArticles.some((a) => a.group);
+const GROUP_ORDER = ['Перед поездкой', 'Уже во Вьетнаме', 'Для долгой жизни и переезда', 'Семья'];
+let groupedArticles = null;
+if (hasGroups) {
+  const byGroup = {};
+  for (const a of catArticles) {
+    const g = a.group || 'Другое';
+    if (!byGroup[g]) byGroup[g] = [];
+    byGroup[g].push(a);
+  }
+  for (const g in byGroup) {
+    byGroup[g].sort((a, b) => (a.order || 0) - (b.order || 0));
+  }
+  const orderedKeys = [...GROUP_ORDER.filter((g) => byGroup[g]), ...Object.keys(byGroup).filter((g) => !GROUP_ORDER.includes(g))];
+  groupedArticles = orderedKeys.map((g) => ({ group: g, items: byGroup[g] }));
+}
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -65,6 +84,9 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
 
   main{padding-bottom:56px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .group-section{margin-bottom:36px}
+  .group-section:last-child{margin-bottom:0}
+  .group-title{font-size:1.15rem;font-weight:600;color:var(--jade-dark);margin:0 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line)}
   .acard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
   .acard:hover{transform:translateY(-3px);border-color:var(--jade);box-shadow:0 20px 40px -28px rgba(22,35,43,.4)}
   .acard__photo{aspect-ratio:4/3;background:repeating-linear-gradient(135deg,var(--line) 0 10px,transparent 10px 20px);display:flex;align-items:center;justify-content:center;font-size:1.8rem}
@@ -125,6 +147,42 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
   </div>
 
   {catArticles.length > 0 ? (
+    groupedArticles ? (
+      groupedArticles.map((section) => (
+        <div class="group-section">
+          <h2 class="group-title">{section.group}</h2>
+          <div class="grid">
+            {section.items.map((a) => {
+              const url = `/${a.rubric}/${a.category}/${a.slug}/`;
+              const loc = a.map ? a.map.split(',').slice(1).join(',').trim() : null;
+              return (
+              <a class="acard" href={url}>
+                {a.images && a.images.length > 0 ? (
+                  <picture>
+                    <source srcset={a.images[0].replace('.jpg', '.webp')} type="image/webp" />
+                    <img class="acard__photo acard__photo--real" src={a.images[0]} alt={a.title} loading="lazy" />
+                  </picture>
+                ) : (
+                  <div class="acard__photo">{a.icon}</div>
+                )}
+                <div class="acard__body">
+                  <h3>{a.title}</h3>
+                  {loc && <p class="acard__loc">📍 {loc}</p>}
+                  <p class="acard__desc">{a.summary}</p>
+                </div>
+                <div class="acard__actions">
+                  <button class="pill pill--ghost" data-url={url} data-title={a.title} data-icon={a.icon} onclick="event.preventDefault();event.stopPropagation();toggleFav(this)" aria-label="В избранное">
+                    <span class="favIcon">♡</span> Сохранить
+                  </button>
+                  <span class="pill pill--solid">Читать →</span>
+                </div>
+              </a>
+              );
+            })}
+          </div>
+        </div>
+      ))
+    ) : (
     <div class="grid">
       {catArticles.map((a) => {
         const url = `/${a.rubric}/${a.category}/${a.slug}/`;
@@ -132,7 +190,10 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
         return (
         <a class="acard" href={url}>
           {a.images && a.images.length > 0 ? (
-            <img class="acard__photo acard__photo--real" src={a.images[0]} alt={a.title} loading="lazy" />
+            <picture>
+              <source srcset={a.images[0].replace('.jpg', '.webp')} type="image/webp" />
+              <img class="acard__photo acard__photo--real" src={a.images[0]} alt={a.title} loading="lazy" />
+            </picture>
           ) : (
             <div class="acard__photo">{a.icon}</div>
           )}
@@ -151,6 +212,7 @@ const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== to
         );
       })}
     </div>
+    )
   ) : (
     <div class="empty-state">
       <span class="empty-state__ic">✍️</span>
