@@ -8,6 +8,7 @@ summary: "Плюсы и минусы частой смены района про
 icon: "🔄"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+hidden: true
 toc:
   -
     id: "pochemu-menyayut"

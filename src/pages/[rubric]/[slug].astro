@@ -9,7 +9,9 @@ export async function getStaticPaths() {
     params: { rubric: t.rubric, slug: t.slug },
     props: {
       topic: t,
-      catArticles: articles.filter((a) => a.rubric === t.rubric && a.category === t.slug),
+      catArticles: articles
+        .filter((a) => a.rubric === t.rubric && a.category === t.slug && !a.hidden)
+        .sort((a, b) => (a.order ?? 999) - (b.order ?? 999)),
     },
   }));
 }

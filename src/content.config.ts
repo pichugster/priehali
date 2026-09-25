@@ -19,6 +19,7 @@ const articles = defineCollection({
     toc: z.array(z.object({ id: z.string(), label: z.string() })).optional(),
     group: z.string().optional(),
     order: z.number().optional(),
+    hidden: z.boolean().optional(),
   }),
 });
 
