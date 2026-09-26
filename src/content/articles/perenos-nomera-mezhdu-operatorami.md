@@ -8,6 +8,7 @@ summary: "Можно ли сохранить номер телефона при 
 icon: "🔄"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+hidden: true
 toc:
   -
     id: "vozmozhen-li-perenos"

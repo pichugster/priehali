@@ -8,6 +8,7 @@ summary: "Когда пригодится портативный роутер и
 icon: "📡"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+hidden: true
 toc:
   -
     id: "kogda-nuzhen"

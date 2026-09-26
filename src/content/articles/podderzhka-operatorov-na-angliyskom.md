@@ -8,6 +8,7 @@ summary: "Как решать вопросы с оператором связи,
 icon: "☎️"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+hidden: true
 toc:
   -
     id: "goryachaya-liniya"
