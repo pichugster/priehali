@@ -8,6 +8,8 @@ summary: "Как выбрать выгодный тариф на связь, е�
 icon: "📶"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-4.jpg"
 order: 4
 ---
 

@@ -8,6 +8,8 @@ summary: "SIM-карта и мобильный интернет во Вьетн�
 icon: "📱"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-1.jpg"
 order: 1
 ---
 

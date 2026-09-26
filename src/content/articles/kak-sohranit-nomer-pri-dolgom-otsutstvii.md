@@ -8,6 +8,8 @@ summary: "Как сохранить вьетнамский номер и не п
 icon: "🔒"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-9.jpg"
 order: 9
 ---
 

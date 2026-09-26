@@ -8,6 +8,8 @@ summary: "Как меняется качество мобильного инте
 icon: "📶"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-6.jpg"
 order: 6
 ---
 

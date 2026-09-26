@@ -8,6 +8,8 @@ summary: "Сравнение трёх основных операторов мо
 icon: "📡"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-2.jpg"
 order: 2
 ---
 

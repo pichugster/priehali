@@ -8,6 +8,8 @@ summary: "Что делать при потере телефона с симко
 icon: "📵"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-10.jpg"
 order: 10
 ---
 

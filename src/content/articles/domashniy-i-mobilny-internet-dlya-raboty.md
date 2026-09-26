@@ -8,6 +8,8 @@ summary: "Домашний и мобильный интернет во Вьет�
 icon: "🏠"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-11.jpg"
 order: 11
 ---
 

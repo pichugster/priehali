@@ -8,6 +8,8 @@ summary: "Почему важно регистрировать симку на �
 icon: "📝"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-3.jpg"
 order: 3
 ---
 

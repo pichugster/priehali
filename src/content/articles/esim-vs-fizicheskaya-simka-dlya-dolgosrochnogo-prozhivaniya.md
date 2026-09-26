@@ -8,6 +8,8 @@ summary: "Сравнение eSIM и обычной физической сим�
 icon: "📱"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-5.jpg"
 order: 5
 ---
 

@@ -8,6 +8,8 @@ summary: "Когда во Вьетнаме может понадобиться V
 icon: "🔓"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-12.jpg"
 order: 12
 ---
 

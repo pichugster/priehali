@@ -8,6 +8,8 @@ summary: "Способы пополнить баланс телефона и ч�
 icon: "💳"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-7.jpg"
 order: 7
 ---
 

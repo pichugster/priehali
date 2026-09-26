@@ -8,6 +8,8 @@ summary: "Как проверить баланс, остаток интерне�
 icon: "📊"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/internet-8.jpg"
 order: 8
 ---
 
