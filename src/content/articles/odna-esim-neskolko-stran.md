@@ -8,6 +8,8 @@ summary: "Одна eSIM для Вьетнама, Таиланда, Камбод�
 icon: "🌏"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-9.jpg"
 order: 9
 ---
 

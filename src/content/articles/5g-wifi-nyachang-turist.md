@@ -8,6 +8,8 @@ summary: "5G, Wi-Fi и мобильный интернет во Вьетнаме
 icon: "🚀"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-10.jpg"
 order: 10
 ---
 

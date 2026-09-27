@@ -8,6 +8,8 @@ summary: "Интернет и SIM-карта во Вьетнаме для тур
 icon: "🧳"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-1.jpg"
 order: 1
 ---
 

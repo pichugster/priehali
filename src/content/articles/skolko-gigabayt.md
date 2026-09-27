@@ -9,6 +9,8 @@ icon: "📶"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
 embed: "<a href=\"https://www.trip.com/t/fTF5k5jlNW2\" target=\"_blank\" rel=\"noopener sponsored\" style=\"display:block;text-align:center;background:var(--jade);color:#fff;font-weight:600;padding:14px;border-radius:12px;text-decoration:none\">Купить eSIM для Вьетнама на Trip.com →</a>"
+images: 
+  - "/images/svyaz-6.jpg"
 order: 6
 ---
 

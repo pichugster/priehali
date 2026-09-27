@@ -8,6 +8,8 @@ summary: "Viettel, VinaPhone или MobiFone: какого оператора в
 icon: "📡"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-5.jpg"
 order: 5
 ---
 

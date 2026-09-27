@@ -8,6 +8,8 @@ summary: "eSIM не работает во Вьетнаме: что делать 
 icon: "🆘"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-8.jpg"
 order: 8
 ---
 

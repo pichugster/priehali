@@ -8,6 +8,8 @@ summary: "Как сохранить российский номер во Вье�
 icon: "🔄"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-11.jpg"
 order: 11
 ---
 

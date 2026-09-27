@@ -8,6 +8,8 @@ summary: "VPN во Вьетнаме: нужен ли туристу и каки�
 icon: "🔓"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-12.jpg"
 order: 12
 ---
 

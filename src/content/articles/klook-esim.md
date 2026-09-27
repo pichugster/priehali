@@ -8,6 +8,8 @@ summary: "eSIM для Вьетнама в 2026 году: какую выбрат
 icon: "📲"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-2.jpg"
 order: 2
 ---
 

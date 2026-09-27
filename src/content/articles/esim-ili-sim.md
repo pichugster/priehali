@@ -8,6 +8,8 @@ summary: "eSIM или обычная SIM во Вьетнаме: что лучш�
 icon: "🔀"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-3.jpg"
 order: 3
 ---
 

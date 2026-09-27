@@ -8,6 +8,8 @@ summary: "Где купить SIM-карту во Вьетнаме: аэропо
 icon: "🏪"
 date: "2026-09-25"
 checkedDate: "2026-09-25"
+images: 
+  - "/images/svyaz-4.jpg"
 order: 4
 ---
 
