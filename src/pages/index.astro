@@ -42,9 +42,9 @@ function timeAgo(dateStr) {
 // Лента "последнее" — 5 штук вперемешку из news/blog/events
 const latestFeed = feed.slice(0, 5);
 
-// Editor's Pick — самая содержательная статья (виза, с оглавлением)
-const editorsPick = articles.find((a) => a.slug === 'vidy-viz');
-const editorsPickTopic = topics.find((t) => t.rubric === 'move' && t.slug === 'viza');
+// Editor's Pick — не должен совпадать со статьями из «Главного по рубрикам»
+const editorsPick = articles.find((a) => a.rubric === 'move' && a.category === 'zhile' && a.slug === 'kak-iskat-dlitelnuyu-arendu');
+const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t.slug === editorsPick.category);
 ---
 <!DOCTYPE html>
 <html lang="ru">
