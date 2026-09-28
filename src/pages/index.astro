@@ -17,18 +17,44 @@ const feed = [
 
 const breaking = feed[0];
 
-// 4 карточки для Category Grid — по одной настоящей статье из разных рубрик
+// Editor's Pick — не должен совпадать со статьями из «Главного по рубрикам»
+const editorsPick = articles.find((a) => a.rubric === 'move' && a.category === 'zhile' && a.slug === 'kak-iskat-dlitelnuyu-arendu');
+const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t.slug === editorsPick.category);
+
+// «Главное по рубрикам» — до 8 карточек. Сначала берём конкретные проверенные статьи,
+// затем добираем ещё по одной статье из следующих разделов (первая попавшаяся в разделе).
 const gridSlugs = [
   { rubric: 'move', category: 'viza', slug: 'vidy-viz' },
   { rubric: 'tourist', category: 'kofe', slug: 'xom-com-coffee' },
   { rubric: 'tourist', category: 'svyaz', slug: 'sim-i-esim-dlya-turista' },
   { rubric: 'tourist', category: 'eda', slug: 'alpaca-restaurant' },
 ];
+const gridExtraCategories = [
+  { rubric: 'tourist', category: 'plyazhi' },
+  { rubric: 'move', category: 'zhile' },
+  { rubric: 'move', category: 'banki' },
+  { rubric: 'move', category: 'internet' },
+];
+const GRID_MAX = 8;
+
 const gridItems = gridSlugs.map((g) => {
   const a = articles.find((x) => x.rubric === g.rubric && x.category === g.category && x.slug === g.slug);
   const t = topics.find((x) => x.rubric === g.rubric && x.slug === g.category);
   return { article: a, topic: t };
 }).filter((x) => x.article && x.topic);
+
+const usedKeys = new Set(gridItems.map((x) => `${x.article.rubric}/${x.article.category}/${x.article.slug}`));
+usedKeys.add(`${editorsPick.rubric}/${editorsPick.category}/${editorsPick.slug}`);
+
+for (const g of gridExtraCategories) {
+  if (gridItems.length >= GRID_MAX) break;
+  const a = articles.find((x) => x.rubric === g.rubric && x.category === g.category && !usedKeys.has(`${x.rubric}/${x.category}/${x.slug}`));
+  const t = topics.find((x) => x.rubric === g.rubric && x.slug === g.category);
+  if (a && t) {
+    gridItems.push({ article: a, topic: t });
+    usedKeys.add(`${a.rubric}/${a.category}/${a.slug}`);
+  }
+}
 
 function timeAgo(dateStr) {
   const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
@@ -41,10 +67,6 @@ function timeAgo(dateStr) {
 
 // Лента "последнее" — 5 штук вперемешку из news/blog/events
 const latestFeed = feed.slice(0, 5);
-
-// Editor's Pick — не должен совпадать со статьями из «Главного по рубрикам»
-const editorsPick = articles.find((a) => a.rubric === 'move' && a.category === 'zhile' && a.slug === 'kak-iskat-dlitelnuyu-arendu');
-const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t.slug === editorsPick.category);
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -75,7 +97,7 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
   :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
 
   nav{padding:28px 0}
-  .nav__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .nav__row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--jade-dark)}
   .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft);flex-wrap:wrap}
   .nav__links a:hover{color:var(--jade-dark)}
@@ -143,14 +165,17 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
   .gcard h3{font-size:.94rem;font-weight:600;line-height:1.3;margin-bottom:6px}
   .gcard__time{font-size:.72rem;color:var(--ink-soft)}
 
-  /* ---- МОБИЛЬНАЯ версия (<=700px): компактный виджет-таблетка в уголке ---- */
-  .corner-bar{display:none;position:relative;justify-content:flex-end;max-width:var(--maxw);margin:0 auto;padding:10px 24px 0}
-  .corner-pill{display:flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:.74rem;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:0 10px 22px -18px rgba(22,35,43,.35);white-space:nowrap}
+  /* ---- МОБИЛЬНАЯ версия (<=700px): компактная таблетка погоды/курса в строке лого ---- */
+  .corner-widget{position:relative;display:none}
+  .corner-pill{display:flex;align-items:center;gap:5px;background:var(--bg-card);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.72rem;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:0 10px 22px -18px rgba(22,35,43,.35);white-space:nowrap}
   .corner-pill .car{color:var(--ink-soft);font-size:.6rem;transition:transform .15s}
   .corner-widget.open .corner-pill .car{transform:rotate(180deg)}
-  .corner-panel{display:none;position:absolute;top:calc(100% + 6px);right:24px;width:210px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:0 20px 40px -26px rgba(22,35,43,.4);z-index:20}
+  .corner-panel{display:none;position:fixed;top:78px;right:16px;width:190px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:0 20px 40px -26px rgba(22,35,43,.4);z-index:30}
   .corner-widget.open .corner-panel{display:block}
   .corner-panel .cond-card + .cond-card{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+
+  /* ---- МОБИЛЬНАЯ версия: FAQ вместо "Вопрос-ответ" ---- */
+  .qa-short{display:none}
 
   /* ---- МОБИЛЬНАЯ версия (<=700px): горизонтальная лента "Главное по рубрикам" ---- */
   .gridstrip-head{display:none;max-width:var(--maxw);margin:0 auto;padding:14px 24px 10px}
@@ -175,9 +200,12 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
   @media (max-width:700px){
     .conditions{display:none}
     .desktop-grid{display:none}
-    .corner-bar{display:flex}
     .gridstrip-head{display:block}
     .gridstrip{display:flex}
+    .corner-widget{display:inline-flex}
+    .nav__links{width:100%;gap:11px;font-size:.78rem}
+    .qa-full{display:none}
+    .qa-short{display:inline}
   }
 
   .picks{padding:56px 0 40px}
@@ -266,11 +294,33 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
 <nav>
   <div class="nav__row">
     <a class="nav__logo" href="/">приехали.ком</a>
+
+    <!-- МОБИЛЬНАЯ ВЕРСИЯ: компактная таблетка погоды/курса, в строке с лого -->
+    <div class="corner-widget" id="cornerWidget">
+      <button class="corner-pill" id="cornerToggle" type="button" aria-expanded="false">
+        <span id="pillText">…</span><span class="car">▾</span>
+      </button>
+      <div class="corner-panel" id="cornerPanel">
+        <div class="cond-card">
+          <span class="cond-label">Нячанг сейчас</span>
+          <div class="cond-body weatherBody">
+            <span class="cond-loading">Гружу погоду…</span>
+          </div>
+        </div>
+        <div class="cond-card">
+          <span class="cond-label">Курс валют</span>
+          <div class="cond-body ratesBody">
+            <span class="cond-loading">Гружу курс…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="nav__links">
       <a href="/blog/">Блог</a>
       <a href="/news/">Новости</a>
       <a href="/events/">События</a>
-      <a href="/qa/">Вопрос-ответ</a>
+      <a href="/qa/"><span class="qa-full">Вопрос-ответ</span><span class="qa-short">FAQ</span></a>
       <a href="/favorites/">♡ Избранное</a>
     </div>
   </div>
@@ -294,29 +344,6 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
     <span class="cond-label">Курс валют</span>
     <div class="cond-body ratesBody">
       <span class="cond-loading">Гружу курс…</span>
-    </div>
-  </div>
-</div>
-
-<!-- МОБИЛЬНАЯ ВЕРСИЯ: компактная таблетка-виджет в уголке -->
-<div class="corner-bar">
-  <div class="corner-widget" id="cornerWidget">
-    <button class="corner-pill" id="cornerToggle" type="button" aria-expanded="false">
-      <span id="pillText">Погода и курс</span><span class="car">▾</span>
-    </button>
-    <div class="corner-panel" id="cornerPanel">
-      <div class="cond-card">
-        <span class="cond-label">Нячанг сейчас</span>
-        <div class="cond-body weatherBody">
-          <span class="cond-loading">Гружу погоду…</span>
-        </div>
-      </div>
-      <div class="cond-card">
-        <span class="cond-label">Курс валют</span>
-        <div class="cond-body ratesBody">
-          <span class="cond-loading">Гружу курс…</span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -648,11 +675,7 @@ const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t
   const pillText=document.getElementById('pillText');
   const pillState={temp:null,usd:null};
   function updatePill(){
-    if(pillState.temp==null && pillState.usd==null) return;
-    const parts=[];
-    if(pillState.temp!=null) parts.push(`${pillState.temp}°C`);
-    if(pillState.usd!=null) parts.push(`$100→${pillState.usd}`);
-    pillText.textContent=parts.join(' · ');
+    if(pillState.temp!=null) pillText.textContent=`${pillState.temp}°C`;
   }
   cornerToggle.addEventListener('click',()=>{
     const open=cornerWidget.classList.toggle('open');
