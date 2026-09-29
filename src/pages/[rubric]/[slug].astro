@@ -37,6 +37,7 @@ if (hasGroups) {
   const orderedKeys = [...GROUP_ORDER.filter((g) => byGroup[g]), ...Object.keys(byGroup).filter((g) => !GROUP_ORDER.includes(g))];
   groupedArticles = orderedKeys.map((g) => ({ group: g, items: byGroup[g] }));
 }
+import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -108,6 +109,19 @@ if (hasGroups) {
   .empty-state{text-align:center;padding:48px 20px;background:var(--bg-card);border:1px solid var(--line);border-radius:16px;color:var(--ink-soft)}
   .empty-state__ic{display:block;font-size:1.8rem;margin-bottom:10px}
 
+  /* ---- МОБИЛЬНАЯ версия (<=700px): по 2 карточки в ряд вместо одной на всю ширину ---- */
+  @media (max-width:700px){
+    .grid{grid-template-columns:repeat(2,1fr);gap:9px}
+    .acard{border-radius:12px}
+    .acard__photo{font-size:1.3rem}
+    .acard__body{padding:9px 9px 2px}
+    .acard h3{font-size:.78rem;line-height:1.25;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .acard__loc{font-size:.66rem;margin-bottom:3px}
+    .acard__desc{font-size:.7rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .acard__actions{flex-direction:column;gap:5px;padding:8px 9px 9px}
+    .pill{width:100%;font-size:.68rem;padding:7px 6px}
+  }
+
   .siblings{margin-top:48px;border-top:1px solid var(--line);padding-top:28px}
   .siblings h3{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
   .sib-list{display:flex;flex-wrap:wrap;gap:8px}
@@ -120,18 +134,7 @@ if (hasGroups) {
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav__row">
-    <a class="nav__logo" href="/">приехали.ком</a>
-    <div class="nav__links">
-      <a href="/blog/">Блог</a>
-      <a href="/news/">Новости</a>
-      <a href="/events/">События</a>
-      <a href="/qa/">Вопрос-ответ</a>
-      <a href="/favorites/">♡ Избранное</a>
-    </div>
-  </div>
-</nav>
+<SiteHeader />
 
 <div class="wrap crumbs">
   <a href="/">Приехали</a> / <a href={`/#${topic.rubric}`}>{topic.rubricLabel}</a> / {topic.title}

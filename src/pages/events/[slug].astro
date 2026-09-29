@@ -7,6 +7,7 @@ export function getStaticPaths() {
 
 const { item } = Astro.props;
 const others = events.filter((e) => e.slug !== item.slug);
+import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -63,18 +64,7 @@ const others = events.filter((e) => e.slug !== item.slug);
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav__row">
-    <a class="nav__logo" href="/">приехали.ком</a>
-    <div class="nav__links">
-      <a href="/blog/">Блог</a>
-      <a href="/news/">Новости</a>
-      <a href="/events/">События</a>
-      <a href="/qa/">Вопрос-ответ</a>
-      <a href="/favorites/">♡ Избранное</a>
-    </div>
-  </div>
-</nav>
+<SiteHeader />
 
 <div class="wrap crumbs">
   <a href="/">Приехали</a> / <a href="/events/">События</a> / {item.title}

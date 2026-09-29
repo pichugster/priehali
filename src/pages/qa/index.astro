@@ -1,5 +1,6 @@
 ---
 import qa from '../../data/qa.js';
+import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -52,18 +53,7 @@ import qa from '../../data/qa.js';
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav__row">
-    <a class="nav__logo" href="/">приехали.ком</a>
-    <div class="nav__links">
-      <a href="/blog/">Блог</a>
-      <a href="/news/">Новости</a>
-      <a href="/events/">События</a>
-      <a href="/qa/">Вопрос-ответ</a>
-      <a href="/favorites/">♡ Избранное</a>
-    </div>
-  </div>
-</nav>
+<SiteHeader />
 
 <main class="wrap">
   <h1>Вопрос-ответ</h1>

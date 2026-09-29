@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import SiteHeader from '../components/SiteHeader.astro';
 import news from '../data/news.js';
 import blog from '../data/blog.js';
 import events from '../data/events.js';
@@ -96,11 +97,6 @@ const latestFeed = feed.slice(0, 5);
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
 
-  nav{padding:28px 0}
-  .nav__row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  .nav__logo{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--jade-dark)}
-  .nav__links{display:flex;gap:16px;font-size:.85rem;color:var(--ink-soft);flex-wrap:wrap}
-  .nav__links a:hover{color:var(--jade-dark)}
   .nav__tag{font-size:.85rem;color:var(--ink-soft)}
 
   .hero{padding:12px 0 48px;text-align:center}
@@ -165,18 +161,6 @@ const latestFeed = feed.slice(0, 5);
   .gcard h3{font-size:.94rem;font-weight:600;line-height:1.3;margin-bottom:6px}
   .gcard__time{font-size:.72rem;color:var(--ink-soft)}
 
-  /* ---- МОБИЛЬНАЯ версия (<=700px): компактная таблетка погоды/курса в строке лого ---- */
-  .corner-widget{position:relative;display:none}
-  .corner-pill{display:flex;align-items:center;gap:5px;background:var(--bg-card);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.72rem;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:0 10px 22px -18px rgba(22,35,43,.35);white-space:nowrap}
-  .corner-pill .car{color:var(--ink-soft);font-size:.6rem;transition:transform .15s}
-  .corner-widget.open .corner-pill .car{transform:rotate(180deg)}
-  .corner-panel{display:none;position:fixed;top:78px;right:16px;width:190px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:0 20px 40px -26px rgba(22,35,43,.4);z-index:30}
-  .corner-widget.open .corner-panel{display:block}
-  .corner-panel .cond-card + .cond-card{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-
-  /* ---- МОБИЛЬНАЯ версия: FAQ вместо "Вопрос-ответ" ---- */
-  .qa-short{display:none}
-
   /* ---- МОБИЛЬНАЯ версия (<=700px): горизонтальная лента "Главное по рубрикам" ---- */
   .gridstrip-head{display:none;max-width:var(--maxw);margin:0 auto;padding:8px 24px 4px}
   .gridstrip-head h2{font-family:var(--serif);font-weight:500;font-size:.94rem}
@@ -202,10 +186,6 @@ const latestFeed = feed.slice(0, 5);
     .desktop-grid{display:none}
     .gridstrip-head{display:block}
     .gridstrip{display:flex}
-    .corner-widget{display:inline-flex}
-    .nav__links{width:100%;gap:11px;font-size:.78rem}
-    .qa-full{display:none}
-    .qa-short{display:inline}
     .breaking{padding:8px 20px;margin:0 auto 8px}
     .hero{padding:4px 0 28px}
   }
@@ -293,40 +273,7 @@ const latestFeed = feed.slice(0, 5);
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav__row">
-    <a class="nav__logo" href="/">приехали.ком</a>
-
-    <!-- МОБИЛЬНАЯ ВЕРСИЯ: компактная таблетка погоды/курса, в строке с лого -->
-    <div class="corner-widget" id="cornerWidget">
-      <button class="corner-pill" id="cornerToggle" type="button" aria-expanded="false">
-        <span id="pillText">…</span><span class="car">▾</span>
-      </button>
-      <div class="corner-panel" id="cornerPanel">
-        <div class="cond-card">
-          <span class="cond-label">Нячанг сейчас</span>
-          <div class="cond-body weatherBody">
-            <span class="cond-loading">Гружу погоду…</span>
-          </div>
-        </div>
-        <div class="cond-card">
-          <span class="cond-label">Курс валют</span>
-          <div class="cond-body ratesBody">
-            <span class="cond-loading">Гружу курс…</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="nav__links">
-      <a href="/blog/">Блог</a>
-      <a href="/news/">Новости</a>
-      <a href="/events/">События</a>
-      <a href="/qa/"><span class="qa-full">Вопрос-ответ</span><span class="qa-short">FAQ</span></a>
-      <a href="/favorites/">♡ Избранное</a>
-    </div>
-  </div>
-</nav>
+<SiteHeader />
 
 <a class="breaking" href={breaking.href}>
   <span class="breaking__tag">Свежее</span>
@@ -671,95 +618,6 @@ const latestFeed = feed.slice(0, 5);
   document.getElementById('go').addEventListener('click',()=>{render();document.getElementById('picks').scrollIntoView({behavior:'smooth',block:'start'});});
   render();
 
-  // ---------- компактный виджет погоды/курса: разворачивание по тапу ----------
-  const cornerWidget=document.getElementById('cornerWidget');
-  const cornerToggle=document.getElementById('cornerToggle');
-  const pillText=document.getElementById('pillText');
-  const pillState={temp:null,usd:null};
-  function updatePill(){
-    if(pillState.temp!=null) pillText.textContent=`${pillState.temp}°C`;
-  }
-  cornerToggle.addEventListener('click',()=>{
-    const open=cornerWidget.classList.toggle('open');
-    cornerToggle.setAttribute('aria-expanded',open?'true':'false');
-  });
-  document.addEventListener('click',(e)=>{
-    if(!cornerWidget.contains(e.target)) cornerWidget.classList.remove('open');
-  });
-
-  // ---------- Погода в Нячанге (Open-Meteo, без ключа) ----------
-  const NHA_TRANG = { lat: 12.2451, lon: 109.1943 };
-
-  const WICON = {
-    sun: `<svg class="weather-icon" width="42" height="42" viewBox="0 0 42 42"><defs><radialGradient id="sunGrad" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9A8"/><stop offset="100%" stop-color="#FFA23D"/></radialGradient></defs><g stroke="#FFB84D" stroke-width="2.2" stroke-linecap="round"><line x1="21" y1="2" x2="21" y2="7"/><line x1="21" y1="35" x2="21" y2="40"/><line x1="2" y1="21" x2="7" y2="21"/><line x1="35" y1="21" x2="40" y2="21"/><line x1="7.8" y1="7.8" x2="11.3" y2="11.3"/><line x1="30.7" y1="30.7" x2="34.2" y2="34.2"/><line x1="7.8" y1="34.2" x2="11.3" y2="30.7"/><line x1="30.7" y1="11.3" x2="34.2" y2="7.8"/></g><circle cx="21" cy="21" r="11.5" fill="url(#sunGrad)"/></svg>`,
-    cloudSun: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 38 34"><defs><radialGradient id="s3" cx="30%" cy="25%" r="80%"><stop offset="0%" stop-color="#FFE9A8"/><stop offset="100%" stop-color="#FFA23D"/></radialGradient><linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FBFCFE"/><stop offset="100%" stop-color="#D7DEE6"/></linearGradient></defs><circle cx="14" cy="12" r="8" fill="url(#s3)"/><path d="M8 30c-4 0-7-3-7-6.5S4 17 8 17c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H8z" fill="url(#c1)" stroke="#C4CDD6" stroke-width="0.5"/></svg>`,
-    cloud: `<svg class="weather-icon" width="42" height="34" viewBox="0 0 36 26"><defs><linearGradient id="c4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D7DEE6"/><stop offset="100%" stop-color="#AEB9C3"/></linearGradient></defs><path d="M7 24c-4 0-7-3-7-6.5S3 11 7 11c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c4)" stroke="#9AA7B4" stroke-width="0.5"/></svg>`,
-    fog: `<svg class="weather-icon" width="42" height="34" viewBox="0 0 36 30"><defs><linearGradient id="c5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E3E8EC"/><stop offset="100%" stop-color="#C2CBD3"/></linearGradient></defs><path d="M7 18c-4 0-7-3-7-6.5S3 5 7 5c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c5)" stroke="#AEB9C3" stroke-width="0.5"/><g stroke="#AEB9C3" stroke-width="2" stroke-linecap="round"><line x1="4" y1="23" x2="28" y2="23"/><line x1="7" y1="28" x2="25" y2="28"/></g></svg>`,
-    rain: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 36 34"><defs><linearGradient id="c2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C9D2DB"/><stop offset="100%" stop-color="#9AA7B4"/></linearGradient></defs><path d="M7 24c-4 0-7-3-7-6.5S3 11 7 11c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c2)" stroke="#8B98A5" stroke-width="0.5"/><g stroke="#5B8FD9" stroke-width="2" stroke-linecap="round"><line x1="10" y1="27" x2="8" y2="33"/><line x1="18" y1="27" x2="16" y2="33"/><line x1="26" y1="27" x2="24" y2="33"/></g></svg>`,
-    storm: `<svg class="weather-icon" width="42" height="38" viewBox="0 0 36 34"><defs><linearGradient id="c3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B96A3"/><stop offset="100%" stop-color="#5C6773"/></linearGradient></defs><path d="M7 22c-4 0-7-3-7-6.5S3 9 7 9c1-4 5-7 9-7 5 0 9 3.5 10 8 3 .5 5 3 5 6 0 3.5-3 6-6.5 6H7z" fill="url(#c3)"/><path d="M16 24l-4 7h4l-2 5 7-8h-4l3-4z" fill="#FFC94A"/></svg>`,
-  };
-  const WEATHER_MAP = {
-    0: [WICON.sun, 'Ясно'], 1: [WICON.cloudSun, 'Малооблачно'], 2: [WICON.cloudSun, 'Переменная облачность'], 3: [WICON.cloud, 'Облачно'],
-    45: [WICON.fog, 'Туман'], 48: [WICON.fog, 'Туман'],
-    51: [WICON.rain, 'Морось'], 53: [WICON.rain, 'Морось'], 55: [WICON.rain, 'Морось'],
-    61: [WICON.rain, 'Дождь'], 63: [WICON.rain, 'Дождь'], 65: [WICON.rain, 'Сильный дождь'],
-    80: [WICON.rain, 'Ливень'], 81: [WICON.rain, 'Ливень'], 82: [WICON.storm, 'Сильный ливень'],
-    95: [WICON.storm, 'Гроза'], 96: [WICON.storm, 'Гроза с градом'], 99: [WICON.storm, 'Гроза с градом'],
-  };
-
-  (async () => {
-    const els = document.querySelectorAll('.weatherBody');
-    if (!els.length) return;
-    try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${NHA_TRANG.lat}&longitude=${NHA_TRANG.lon}&current=temperature_2m,apparent_temperature,weather_code&timezone=Asia%2FHo_Chi_Minh`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const c = data.current;
-      const [icon, desc] = WEATHER_MAP[c.weather_code] || [WICON.sun, 'Погода'];
-      const html = `
-        <div class="weather-row">
-          ${icon}
-          <div>
-            <div class="cond-temp">${Math.round(c.temperature_2m)}°C</div>
-            <div class="cond-desc">${desc}</div>
-          </div>
-        </div>
-        <div class="cond-feels">Ощущается как ${Math.round(c.apparent_temperature)}°C</div>
-      `;
-      els.forEach(el => el.innerHTML = html);
-      pillState.temp = Math.round(c.temperature_2m);
-      updatePill();
-    } catch (e) {
-      els.forEach(el => el.innerHTML = '<span class="cond-error">Не удалось загрузить погоду</span>');
-    }
-  })();
-
-  // ---------- Курс валют (ExchangeRate-API open-доступ, без ключа) ----------
-  (async () => {
-    const els = document.querySelectorAll('.ratesBody');
-    if (!els.length) return;
-    try {
-      const res = await fetch('https://open.er-api.com/v6/latest/USD');
-      const data = await res.json();
-      if (data.result !== 'success') throw new Error('bad response');
-      const vndPerUsd = data.rates.VND;
-      const rubPerUsd = data.rates.RUB;
-      const fmt = (n) => Math.round(n).toLocaleString('ru-RU');
-      const usd100vnd = vndPerUsd * 100;
-      const rub100vnd = (vndPerUsd / rubPerUsd) * 100;
-      const vnd1mRub = (1000000 / vndPerUsd) * rubPerUsd;
-      const html = `
-        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:var(--jade)">$</div><span class="rate-label">100 USD</span></div><span class="rate-value">${fmt(usd100vnd)} ₫</span></div>
-        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:#3A6EA5">₽</div><span class="rate-label">100 RUB</span></div><span class="rate-value">${fmt(rub100vnd)} ₫</span></div>
-        <div class="rate-row"><div class="rate-left"><div class="rate-coin" style="background:var(--gold)">₫</div><span class="rate-label">1 000 000 ₫</span></div><span class="rate-value">${fmt(vnd1mRub)} ₽</span></div>
-      `;
-      els.forEach(el => el.innerHTML = html);
-      pillState.usd = fmt(usd100vnd) + ' ₫';
-      updatePill();
-    } catch (e) {
-      els.forEach(el => el.innerHTML = '<span class="cond-error">Не удалось загрузить курс</span>');
-    }
-  })();
 </script>
 </body>
 </html>

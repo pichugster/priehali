@@ -8,6 +8,7 @@ export function getStaticPaths() {
 const { item } = Astro.props;
 const others = blog.filter((p) => p.slug !== item.slug && p.tag === item.tag).slice(0, 4);
 const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -61,18 +62,7 @@ const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric'
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav__row">
-    <a class="nav__logo" href="/">приехали.ком</a>
-    <div class="nav__links">
-      <a href="/blog/">Блог</a>
-      <a href="/news/">Новости</a>
-      <a href="/events/">События</a>
-      <a href="/qa/">Вопрос-ответ</a>
-      <a href="/favorites/">♡ Избранное</a>
-    </div>
-  </div>
-</nav>
+<SiteHeader />
 
 <div class="wrap crumbs">
   <a href="/">Приехали</a> / <a href="/blog/">Блог</a> / {item.title}
