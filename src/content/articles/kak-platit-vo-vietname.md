@@ -8,6 +8,8 @@ summary: "Как платят во Вьетнаме: наличные донги
 icon: "💵"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-5.jpg"
 order: 5
 toc:
   -

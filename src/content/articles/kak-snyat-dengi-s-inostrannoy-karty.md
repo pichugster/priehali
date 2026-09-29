@@ -8,6 +8,8 @@ summary: "Как снять деньги во Вьетнаме с иностра
 icon: "🏧"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-7.jpg"
 order: 7
 toc:
   -

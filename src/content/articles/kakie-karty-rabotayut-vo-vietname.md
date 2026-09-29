@@ -8,6 +8,8 @@ summary: "Разбираем, какие банковские карты раб�
 icon: "🌐"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-4.jpg"
 order: 4
 toc:
   -

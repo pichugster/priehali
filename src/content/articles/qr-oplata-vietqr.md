@@ -8,6 +8,8 @@ summary: "Разбираем, что такое VietQR, как им пользо
 icon: "📱"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-6.jpg"
 order: 6
 toc:
   -

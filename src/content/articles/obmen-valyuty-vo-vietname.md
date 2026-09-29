@@ -8,6 +8,8 @@ summary: "Где менять валюту во Вьетнаме: банки, о
 icon: "💱"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-8.jpg"
 order: 8
 toc:
   -

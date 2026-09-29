@@ -8,6 +8,8 @@ summary: "Как перевести деньги из России во Вьет
 icon: "📤"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-9.jpg"
 order: 9
 toc:
   -

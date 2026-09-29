@@ -8,6 +8,8 @@ summary: "Какой вьетнамский банк выбрать иностр
 icon: "🏛"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-3.jpg"
 order: 3
 toc:
   -

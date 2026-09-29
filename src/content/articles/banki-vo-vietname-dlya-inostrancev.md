@@ -8,6 +8,8 @@ summary: "Разбираем банковскую систему Вьетнам�
 icon: "🏦"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-1.jpg"
 order: 1
 toc:
   -

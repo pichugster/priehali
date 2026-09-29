@@ -8,6 +8,8 @@ summary: "Деньги во Вьетнаме: вьетнамский донг, �
 icon: "💰"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-12.jpg"
 order: 12
 toc:
   -

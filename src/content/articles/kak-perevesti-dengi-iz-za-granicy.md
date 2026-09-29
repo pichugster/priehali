@@ -8,6 +8,8 @@ summary: "Как перевести деньги во Вьетнам из-за �
 icon: "📥"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-10.jpg"
 order: 10
 toc:
   -

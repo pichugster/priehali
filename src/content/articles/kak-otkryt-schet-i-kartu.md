@@ -8,6 +8,8 @@ summary: "Разбираем весь процесс открытия банко
 icon: "💳"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-2.jpg"
 order: 2
 toc:
   -

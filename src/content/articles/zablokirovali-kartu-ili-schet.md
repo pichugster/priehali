@@ -8,6 +8,8 @@ summary: "Заблокировали карту или банковский сч
 icon: "🚫"
 date: "2026-09-29"
 checkedDate: "2026-09-29"
+images: 
+  - "/images/banki-11.jpg"
 order: 11
 toc:
   -
