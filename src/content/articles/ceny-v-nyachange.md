@@ -8,6 +8,8 @@ summary: "Сколько стоит еда, транспорт, массаж, э
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-1.jpg"
 group: "Главное"
 order: 1
 ---

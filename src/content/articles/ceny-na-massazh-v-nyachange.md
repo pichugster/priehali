@@ -8,6 +8,8 @@ summary: "Сколько стоит массаж и спа в Нячанге в 
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-9.jpg"
 group: "Отдых и развлечения"
 order: 9
 ---

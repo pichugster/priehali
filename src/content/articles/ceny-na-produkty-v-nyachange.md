@@ -8,6 +8,8 @@ summary: "Сколько стоят продукты в Нячанге в 2026 �
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-5.jpg"
 group: "Повседневные расходы"
 order: 5
 ---

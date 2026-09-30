@@ -8,6 +8,8 @@ summary: "Цены на Grab, такси, автобусы и аренду ба�
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-7.jpg"
 group: "Повседневные расходы"
 order: 7
 ---

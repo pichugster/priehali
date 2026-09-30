@@ -8,6 +8,8 @@ summary: "Сколько стоит отдых в Нячанге на двоих
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-3.jpg"
 group: "Планируем бюджет"
 order: 3
 ---

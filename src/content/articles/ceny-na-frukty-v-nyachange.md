@@ -8,6 +8,8 @@ summary: "Сколько стоят манго, мангостин, рамбут
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-6.jpg"
 group: "Повседневные расходы"
 order: 6
 ---

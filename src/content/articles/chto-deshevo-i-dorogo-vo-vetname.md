@@ -8,6 +8,8 @@ summary: "Что во Вьетнаме дешевле, чем в России, �
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-12.jpg"
 group: "Как платить меньше"
 order: 12
 ---

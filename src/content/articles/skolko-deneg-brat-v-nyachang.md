@@ -8,6 +8,8 @@ summary: "Сколько денег брать в Нячанг на 7, 10 и 14 
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-2.jpg"
 group: "Планируем бюджет"
 order: 2
 ---

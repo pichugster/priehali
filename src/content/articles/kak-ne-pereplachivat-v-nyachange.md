@@ -8,6 +8,8 @@ summary: "Где туристы в Нячанге чаще всего переп
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-10.jpg"
 group: "Как платить меньше"
 order: 10
 ---

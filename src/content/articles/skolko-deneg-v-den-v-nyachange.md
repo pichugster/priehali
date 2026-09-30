@@ -8,6 +8,8 @@ summary: "Сколько денег нужно на день в Нячанге �
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-11.jpg"
 group: "Планируем бюджет"
 order: 11
 ---

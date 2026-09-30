@@ -8,6 +8,8 @@ summary: "Сколько стоит еда в Нячанге в 2026 году: �
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-4.jpg"
 group: "Повседневные расходы"
 order: 4
 ---

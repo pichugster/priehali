@@ -8,6 +8,8 @@ summary: "Сколько стоят VinWonders, морские экскурси�
 icon: "💸"
 date: "2026-09-30"
 checkedDate: "2026-09-30"
+images:
+  - "/images/ceny-8.jpg"
 group: "Отдых и развлечения"
 order: 8
 ---
