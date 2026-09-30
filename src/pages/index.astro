@@ -22,20 +22,20 @@ const breaking = feed[0];
 const editorsPick = articles.find((a) => a.rubric === 'move' && a.category === 'zhile' && a.slug === 'kak-iskat-dlitelnuyu-arendu');
 const editorsPickTopic = topics.find((t) => t.rubric === editorsPick.rubric && t.slug === editorsPick.category);
 
-// «Главное по рубрикам» — до 8 карточек. Сначала берём конкретные проверенные статьи,
-// затем добираем ещё по одной статье из следующих разделов (первая попавшаяся в разделе).
+// «Главное по рубрикам» — 8 карточек, по одной сильнейшей cornerstone-статье на направление.
+// Список сознательно фиксированный: карточки не должны меняться из-за того, что вышла свежая статья
+// (свежак уже отдельно показан в ленте «Последнее»).
 const gridSlugs = [
   { rubric: 'move', category: 'viza', slug: 'vidy-viz' },
-  { rubric: 'tourist', category: 'kofe', slug: 'xom-com-coffee' },
-  { rubric: 'tourist', category: 'svyaz', slug: 'sim-i-esim-dlya-turista' },
-  { rubric: 'tourist', category: 'eda', slug: 'alpaca-restaurant' },
+  { rubric: 'tourist', category: 'ceny', slug: 'ceny-v-nyachange' },
+  { rubric: 'move', category: 'internet', slug: 'sim-i-internet-vo-vietname' },
+  { rubric: 'tourist', category: 'bayk', slug: 'transport-v-nyachange' },
+  { rubric: 'tourist', category: 'eda', slug: 'gde-poest-v-nyachange' },
+  { rubric: 'tourist', category: 'ekskursii', slug: 'chto-posmotret-v-nyachange' },
+  { rubric: 'tourist', category: 'plyazhi', slug: 'luchshie-plyazhi-nyachanga' },
+  { rubric: 'move', category: 'byudzhet', slug: 'pereezd-v-nyachang-s-chego-nachat' },
 ];
-const gridExtraCategories = [
-  { rubric: 'tourist', category: 'plyazhi' },
-  { rubric: 'move', category: 'zhile' },
-  { rubric: 'move', category: 'banki' },
-  { rubric: 'move', category: 'internet' },
-];
+const gridExtraCategories = [];
 const GRID_MAX = 8;
 
 const gridItems = gridSlugs.map((g) => {
@@ -563,9 +563,9 @@ const latestFeed = feed.slice(0, 5);
     {ic:'☕',t:'Кофе с видом',d:'Атмосферные кофейни, куда идут не ради еды',tag:'food',slug:'kofe'},
     {ic:'🏖',t:'Пляжные клубы',d:'Где провести день у моря',tag:'beach',slug:'plyazhi'},
     {ic:'🎉',t:'Тусовки',d:'Бары и вечеринки',tag:'party',slug:'tusovki'},
-    {ic:'🗺',t:'Экскурсии',d:'Острова, водопады, туры',tag:'tours',slug:'ekskursii'},
+    {ic:'🗺',t:'Что посмотреть',d:'Достопримечательности, водопады, острова и экскурсии',tag:'tours',slug:'ekskursii'},
     {ic:'💆',t:'Массажи и спа',d:'Проверенные места',tag:null,slug:'spa'},
-    {ic:'🛵',t:'Аренда байка',d:'Где брать и как не влететь',tag:null,slug:'bayk'},
+    {ic:'🛵',t:'Транспорт',d:'Grab, такси, автобус и где арендовать байк',tag:null,slug:'bayk'},
     {ic:'🏨',t:'Где остановиться',d:'Районы и отели',tag:null,slug:'gde-zhit'},
     {ic:'💸',t:'Цены',d:'Сколько брать с собой и как считать',tag:null,slug:'ceny'},
     {ic:'📶',t:'Связь',d:'eSIM, симка и интернет для туриста',tag:null,slug:'svyaz'},
@@ -595,7 +595,7 @@ const latestFeed = feed.slice(0, 5);
         card('📶','Симка и интернет','Связь с первого дня','/move/internet/'),
         card('🛵','Транспорт','Байк, права, аренда','/move/transport/'),
         card('🩺','Медицина','Клиники и страховка','/move/medicina/'),
-        card('💸','Сколько нужно денег','Стартовый бюджет и как считать','/move/byudzhet/'),
+        card('💸','Переезд: с чего начать','Большой стартовый гид: виза, жильё, деньги, связь и бюджет','/move/byudzhet/'),
         card('🤝','Комьюнити','Где найти своих','/move/komyuniti/')
       );
       if(comp.has('family')) cards.push(card('🎒','Школы и садики','Куда устроить детей','/move/shkoly/'));

@@ -12,9 +12,9 @@ const topics = [
 ` },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'plyazhi', title: 'Пляжные клубы', icon: '🏖', summary: 'Где провести день у моря' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'tusovki', title: 'Тусовки', icon: '🎉', summary: 'Бары и вечеринки' },
-  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'ekskursii', title: 'Экскурсии', icon: '🗺', summary: 'Острова, водопады, туры' },
+  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'ekskursii', title: 'Что посмотреть', icon: '🗺', summary: 'Достопримечательности, водопады, острова и экскурсии' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'spa', title: 'Массажи и спа', icon: '💆', summary: 'Проверенные места' },
-  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'bayk', title: 'Аренда байка', icon: '🛵', summary: 'Где брать и как не влететь' },
+  { rubric: 'tourist', rubricLabel: 'Турист', slug: 'bayk', title: 'Транспорт', icon: '🛵', summary: 'Grab, такси, автобус и где арендовать байк' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'gde-zhit', title: 'Где остановиться', icon: '🏨', summary: 'Районы и отели' },
   { rubric: 'tourist', rubricLabel: 'Турист', slug: 'ceny', title: 'Цены', icon: '💸', summary: 'Сколько брать с собой и как считать', intro: `
 <p>«Во Вьетнаме всё дёшево» — фраза, которая одновременно и правда, и неправда. Местная еда, кофе и массаж действительно стоят копейки по сравнению с Россией. А VinWonders, морская экскурсия или ужин с морепродуктами на первой линии легко потянут дневной бюджет за миллион донгов.</p>
@@ -30,7 +30,7 @@ const topics = [
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'internet', title: 'Симка и интернет', icon: '📶', summary: 'Связь с первого дня' },
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'transport', title: 'Транспорт', icon: '🛵', summary: 'Байк, права, аренда' },
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'medicina', title: 'Медицина', icon: '🩺', summary: 'Клиники и страховка' },
-  { rubric: 'move', rubricLabel: 'Переезд', slug: 'byudzhet', title: 'Сколько нужно денег', icon: '💸', summary: 'Стартовый бюджет и как считать' },
+  { rubric: 'move', rubricLabel: 'Переезд', slug: 'byudzhet', title: 'Переезд: с чего начать', icon: '💸', summary: 'Большой стартовый гид: виза, жильё, деньги, связь и бюджет' },
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'komyuniti', title: 'Комьюнити', icon: '🤝', summary: 'Где найти своих' },
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'shkoly', title: 'Школы и садики', icon: '🎒', summary: 'Куда устроить детей' },
   { rubric: 'move', rubricLabel: 'Переезд', slug: 'pitomec', title: 'Ввоз питомца', icon: '🐾', summary: 'Документы и жильё' },
