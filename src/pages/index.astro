@@ -184,10 +184,13 @@ const latestFeed = feed.slice(0, 5);
   @media (max-width:700px){
     .conditions{display:none}
     .desktop-grid{display:none}
-    .gridstrip-head{display:block}
+    .gridstrip-head{display:block;padding:0 24px 4px}
     .gridstrip{display:flex}
-    .breaking{padding:8px 20px;margin:0 auto 8px}
+    .breaking{padding:8px 20px;margin:0 auto 10px}
     .hero{padding:4px 0 28px}
+    .hero h1{margin:0 auto 14px}
+    .hero__sub{font-size:clamp(.72rem,3.6vw,.95rem);white-space:nowrap;max-width:100%}
+    .ticket{margin:14px auto 0}
   }
 
   .picks{padding:56px 0 40px}
@@ -206,6 +209,18 @@ const latestFeed = feed.slice(0, 5);
   .favbtn{position:absolute;top:14px;right:14px;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;background:#fff;font-size:.95rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:all .15s}
   .favbtn:hover{border-color:var(--gold)}
   .favbtn.on{color:var(--gold);border-color:var(--gold);background:rgba(217,164,65,.1)}
+
+  /* ---- МОБИЛЬНАЯ версия (<=700px): подборки по 2 карточки в ряд ---- */
+  @media (max-width:700px){
+    .cards{grid-template-columns:repeat(2,1fr);gap:9px}
+    .card{border-radius:12px;padding:12px}
+    .card .ic{font-size:1.2rem}
+    .card h3{font-size:.84rem;margin:8px 0 3px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .card p{font-size:.72rem;line-height:1.3;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .card .go{font-size:.66rem}
+    .card .soon{font-size:.62rem;padding:2px 7px}
+    .favbtn{top:9px;right:9px;width:26px;height:26px;font-size:.82rem}
+  }
 
   .breaking{display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto 18px;padding:11px 24px;background:linear-gradient(120deg,rgba(217,164,65,.14),rgba(47,123,109,.1));border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.86rem}
   .breaking__tag{flex:none;font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--jade-dark);background:#fff;border-radius:999px;padding:3px 10px}
