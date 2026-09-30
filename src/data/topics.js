@@ -46,6 +46,7 @@ const topics = [
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'svoy-vrach', title: 'Свой врач', icon: '🩺', summary: 'Проверенные клиники для долгой жизни' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'barbershopy', title: 'Барбершопы', icon: '💈', summary: 'Проверенные мастера для мужской стрижки' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'zhenskaya-byuti', title: 'Женская бьюти', icon: '💅', summary: 'Маникюр, ресницы, волосы, косметология' },
+  { rubric: 'live', rubricLabel: 'Живу тут', slug: 'tennis-padel-pickleball', title: 'Теннис, падел и пиклбол', icon: '🎾', summary: 'Корты и клубы для регулярных тренировок' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'sport-i-dosug', title: 'Спорт и досуг', icon: '🏋️', summary: 'Залы, йога, сёрф, паделл — для своих' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'mastera', title: 'Мастера на все руки', icon: '🔧', summary: 'Электрик, сантехник, мелкий ремонт' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'bayk-servis', title: 'Байк-сервис', icon: '🛠', summary: 'Где чинят байк, а не разводят на ровном месте' },
