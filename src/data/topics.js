@@ -55,6 +55,7 @@ const topics = [
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'yuristy-buhgaltery', title: 'Юристы и бухгалтеры', icon: '⚖️', summary: 'Визы, регистрация бизнеса, налоги' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'psihologi', title: 'Психологи', icon: '🧠', summary: 'Поддержка и адаптация на русском и английском' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'nyani-i-sady', title: 'Няни и детские сады', icon: '🧸', summary: 'Куда пристроить ребёнка и кому доверить' },
+  { rubric: 'live', rubricLabel: 'Живу тут', slug: 'shkoly', title: 'Школы', icon: '🎒', summary: 'Вьетнамские, международные и русская школа для тех, кто живёт в Нячанге' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'repetitory-i-yazyki', title: 'Репетиторы и языки', icon: '📚', summary: 'Английский, вьетнамский, школьные предметы' },
   { rubric: 'live', rubricLabel: 'Живу тут', slug: 'fotografy-i-videografy', title: 'Фотографы и видеографы', icon: '📷', summary: 'Съёмка для себя, семьи или бизнеса' },
 ];
