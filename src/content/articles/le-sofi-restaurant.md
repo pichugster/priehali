@@ -9,6 +9,10 @@ icon: "🍽"
 map: "Le'Sofi Restaurant, 67-69 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/le-sofi-1.jpg"
+  - "/images/le-sofi-2.jpg"
+  - "/images/le-sofi-3.jpg"
 ---
 
 📍 67-69 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 650000

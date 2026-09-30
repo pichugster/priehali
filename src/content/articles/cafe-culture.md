@@ -9,6 +9,11 @@ icon: "🍽"
 map: "Cafe Culture, 120/25-26 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/cafe-culture-1.jpg"
+  - "/images/cafe-culture-2.jpg"
+  - "/images/cafe-culture-3.jpg"
+  - "/images/cafe-culture-4.jpg"
 ---
 
 📍 120/25-26 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa 650000

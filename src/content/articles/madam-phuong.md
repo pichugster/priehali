@@ -9,6 +9,10 @@ icon: "🍜"
 map: "Madam Phuong Restaurant, 111 Hồng Bàng, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/madam-phuong-1.jpg"
+  - "/images/madam-phuong-2.jpg"
+  - "/images/madam-phuong-3.jpg"
 ---
 
 📍 111 Đ. Hồng Bàng, Nha Trang, Khánh Hòa 650000

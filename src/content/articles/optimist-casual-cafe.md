@@ -9,6 +9,10 @@ icon: "🍝"
 map: "OPTIMIST Casual Cafe, 39 Đ. Trần Nguyên Hãn, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/optimist-cafe-1.jpg"
+  - "/images/optimist-cafe-2.jpg"
+  - "/images/optimist-cafe-3.jpg"
 ---
 
 📍 39 Đ. Trần Nguyên Hãn, Nha Trang, Khánh Hòa 650000

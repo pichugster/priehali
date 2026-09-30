@@ -9,6 +9,10 @@ icon: "🍣"
 map: "Mr.Tôm Sushi, 81 Hoàng Diệu, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/mr-tom-sushi-1.jpg"
+  - "/images/mr-tom-sushi-2.jpg"
+  - "/images/mr-tom-sushi-3.jpg"
 ---
 
 📍 81 Hoàng Diệu, Nha Trang, Khánh Hòa

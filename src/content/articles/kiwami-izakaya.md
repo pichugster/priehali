@@ -9,6 +9,10 @@ icon: "🍱"
 map: "IZAKAYA KIWAMI, 114 Hồng Bàng, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-09-16"
+images:
+  - "/images/kiwami-izakaya-1.jpg"
+  - "/images/kiwami-izakaya-2.jpg"
+  - "/images/kiwami-izakaya-3.jpg"
 ---
 
 📍 114 Đ. Hồng Bàng, Nha Trang, Khánh Hòa 650000
