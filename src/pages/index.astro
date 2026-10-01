@@ -76,16 +76,8 @@ const latestFeed = feed.slice(0, 5);
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Приехали.ком — гид по Нячангу и Вьетнаму: туристу, переезд, жизнь 🇻🇳</title>
+<title>Приехали — Вьетнам🇻🇳</title>
 <meta name="description" content="Всё о жизни в Нячанге в одном месте: для туриста, для переезжающих и для тех, кто уже обжился.">
-<link rel="canonical" href="https://priehali.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="приехали.ком">
-<meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://priehali.com/">
-<meta property="og:title" content="приехали.ком — гид по Нячангу и Вьетнаму">
-<meta property="og:description" content="Всё о жизни в Нячанге в одном месте: для туриста, для переезжающих и для тех, кто уже обжился.">
-<script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'приехали.ком', alternateName: ['priehali.com', 'Приехали'], url: 'https://priehali.com/', inLanguage: 'ru' })}></script>
 <meta name="theme-color" content="#F4F6F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -247,6 +239,7 @@ const latestFeed = feed.slice(0, 5);
   .litem{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
   .litem:first-child{padding-top:0}
   .litem__ph{flex:none;width:64px;height:64px;border-radius:10px;background:repeating-linear-gradient(135deg,var(--line) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+  .litem__ph--real{object-fit:cover;background:var(--line)}
   .litem__kind{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin-bottom:3px}
   .litem h3{font-size:.9rem;font-weight:600;line-height:1.3;margin-bottom:3px}
   .litem__time{font-size:.72rem;color:var(--ink-soft)}
@@ -446,7 +439,11 @@ const latestFeed = feed.slice(0, 5);
         <div class="latest-list">
           {latestFeed.map((item) => (
             <a class="litem" href={item.href}>
-              <div class="litem__ph">{item.icon || '📰'}</div>
+              {item.image ? (
+                <img class="litem__ph litem__ph--real" src={item.image} alt={item.title} loading="lazy" />
+              ) : (
+                <div class="litem__ph">{item.icon || '📰'}</div>
+              )}
               <div>
                 <div class="litem__kind">{item.kind === 'news' ? 'Новости' : item.kind === 'blog' ? 'Блог' : 'События'}</div>
                 <h3>{item.title}</h3>
