@@ -61,6 +61,8 @@ import SiteHeader from '../../components/SiteHeader.astro';
   footer{padding:24px 0 40px;border-top:1px solid var(--line)}
   .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
   .footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+
+  .cover{width:100%;max-height:420px;object-fit:cover;border-radius:16px;margin:20px 0 8px;border:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -73,6 +75,8 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <main class="wrap">
   <div class="meta-row"><span>📅 {item.when}</span><span>📍 {item.place}</span></div>
   <h1>{item.title}</h1>
+
+  {item.image && <img class="cover" src={item.image} alt={item.title} loading="eager" />}
 
   <article>
     <Fragment set:html={item.body} />

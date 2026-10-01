@@ -41,8 +41,10 @@ import SiteHeader from '../../components/SiteHeader.astro';
   .lede{color:var(--ink-soft);margin-bottom:30px;font-size:.95rem}
 
   .list{display:flex;flex-direction:column;gap:10px}
-  .item{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .15s,transform .15s}
+  .item{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .15s,transform .15s}
   .item:hover{border-color:var(--jade);transform:translateY(-2px)}
+  .item__thumb{flex:none;width:76px;height:76px;border-radius:10px;object-fit:cover;background:var(--line)}
+  .item__body{flex:1;min-width:0}
   .item__meta{display:flex;gap:14px;font-size:.72rem;color:var(--jade-dark);font-weight:600;margin-bottom:8px}
   .item h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin-bottom:4px}
   .item p{color:var(--ink-soft);font-size:.86rem}
@@ -62,9 +64,12 @@ import SiteHeader from '../../components/SiteHeader.astro';
   <div class="list">
     {sorted.map((e) => (
       <a class="item" href={`/events/${e.slug}/`}>
-        <div class="item__meta"><span>📅 {e.when}</span><span>📍 {e.place}</span></div>
-        <h2>{e.title}</h2>
-        <p>{e.summary}</p>
+        {e.image && <img class="item__thumb" src={e.image} alt={e.title} loading="lazy" />}
+        <div class="item__body">
+          <div class="item__meta"><span>📅 {e.when}</span><span>📍 {e.place}</span></div>
+          <h2>{e.title}</h2>
+          <p>{e.summary}</p>
+        </div>
       </a>
     ))}
   </div>
