@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /favorites/
+
+Sitemap: https://priehali.com/sitemap-index.xml
