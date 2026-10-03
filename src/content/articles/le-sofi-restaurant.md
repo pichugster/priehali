@@ -14,6 +14,7 @@ order: 47
 related:
   - "alpaca-restaurant"
   - "madam-phuong"
+  - "greek-kitchen"
   - "ugli-restobar"
   - "gde-poest-v-nyachange"
 images:

@@ -15,6 +15,7 @@ related:
   - "cafe-culture"
   - "atelier"
   - "simple-cafe"
+  - "greek-kitchen"
   - "gde-poest-v-nyachange"
 images:
   - "/images/optimist-cafe-1.jpg"
