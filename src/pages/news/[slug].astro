@@ -79,7 +79,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
   <div class="date">{dateStr}</div>
   <h1>{item.title}</h1>
 
-  {item.image && <img class="cover" src={item.image} alt={item.title} loading="eager" />}
+  {item.image && <img class="cover" src={item.image} alt={item.title} loading="eager" style={item.slug === 'otklyuchenie-sveta-3-oktyabrya' ? 'object-position: bottom' : undefined} />}
 
   <article>
     <Fragment set:html={item.body} />

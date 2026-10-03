@@ -68,7 +68,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
     <div class="list">
       {sorted.map((n) => (
         <a class="item" href={`/news/${n.slug}/`}>
-          {n.image && <img class="item__thumb" src={n.image} alt={n.title} loading="lazy" />}
+          {n.image && <img class="item__thumb" src={n.image} alt={n.title} loading="lazy" style={n.slug === 'otklyuchenie-sveta-3-oktyabrya' ? 'object-position: bottom' : undefined} />}
           <div class="item__body">
             <span class="item__date">{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}</span>
             <span class="item__tag">{n.tag}</span>
