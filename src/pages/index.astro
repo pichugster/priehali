@@ -254,6 +254,35 @@ const latestFeed = feed.slice(0, 5);
   .pick p{color:var(--ink-soft);font-size:.9rem;margin-bottom:14px}
   .pick__cta{font-size:.84rem;font-weight:600;color:var(--jade-dark)}
 
+  .tools-promo{background:var(--jade-dark)}
+  .tools-promo .section__head h2{color:#fff}
+  .tools-promo .section__head p{color:rgba(255,255,255,.7);font-size:.88rem;margin-top:4px}
+  .toolgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .toolcard{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:22px;transition:transform .2s,border-color .2s,background .2s}
+  .toolcard:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)}
+  .toolcard__ic{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+  .toolcard h3{color:#fff;font-family:var(--serif);font-weight:500;font-size:1.15rem;margin-bottom:5px}
+  .toolcard p{color:rgba(255,255,255,.68);font-size:.86rem;margin-bottom:10px}
+  .toolcard__cta{font-size:.82rem;font-weight:600;color:var(--gold)}
+  @media (max-width:900px){
+    .toolgrid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:700px){
+    .toolgrid{grid-template-columns:1fr}
+    .toolcard{padding:16px}
+  }
+
+  .toolbanner{display:flex;gap:14px;align-items:center;background:#fff;border:1.5px solid var(--jade);border-radius:16px;padding:16px 18px;margin-bottom:20px}
+  .toolbanner__ic{flex:none;width:40px;height:40px;border-radius:10px;background:rgba(47,123,109,.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+  .toolbanner__body{flex:1;min-width:0}
+  .toolbanner h4{font-size:.92rem;font-weight:600;margin-bottom:2px}
+  .toolbanner p{color:var(--ink-soft);font-size:.8rem}
+  .toolbanner__cta{flex:none;font-size:.82rem;font-weight:600;color:var(--jade-dark)}
+  @media (max-width:700px){
+    .toolbanner{padding:13px 14px}
+    .toolbanner p{display:none}
+  }
+
   .footer2{border-top:1px solid var(--line);padding:36px 0 24px}
   .footer2__top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:24px}
   .footer2__brand{font-family:var(--serif);font-size:1.2rem;color:var(--jade-dark)}
@@ -403,6 +432,7 @@ const latestFeed = feed.slice(0, 5);
   <section class="picks" id="picks">
     <div class="wrap">
       <div class="picks-head"><h2 id="picksTitle">Подборки для туриста</h2><p id="picksSub">Проверено на месте — тыкай в категорию</p></div>
+      <div id="toolBanner"></div>
       <div class="cards" id="cards"></div>
     </div>
   </section>
@@ -428,6 +458,41 @@ const latestFeed = feed.slice(0, 5);
             </div>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tools-promo">
+    <div class="wrap">
+      <div class="section__head" style="display:block">
+        <h2>Инструменты</h2>
+        <p>Не только читать — считать и планировать</p>
+      </div>
+      <div class="toolgrid">
+        <a class="toolcard" href="/move/checklist/">
+          <span class="toolcard__ic">✅</span>
+          <div>
+            <h3>Чек-лист переезда</h3>
+            <p>Пошаговый план на переезд в Нячанг — с сохранением прогресса</p>
+            <span class="toolcard__cta">Открыть →</span>
+          </div>
+        </a>
+        <a class="toolcard" href="/tourist/kalkulyator/">
+          <span class="toolcard__ic">💸</span>
+          <div>
+            <h3>Калькулятор бюджета</h3>
+            <p>Дни, человек, уровень комфорта — и итог в донгах и рублях</p>
+            <span class="toolcard__cta">Открыть →</span>
+          </div>
+        </a>
+        <a class="toolcard" href="/live/kalkulyator/">
+          <span class="toolcard__ic">🧮</span>
+          <div>
+            <h3>Расходы на жизнь</h3>
+            <p>Аренда, еда, транспорт и быт — сколько уходит в месяц</p>
+            <span class="toolcard__cta">Открыть →</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -539,7 +604,11 @@ const latestFeed = feed.slice(0, 5);
 
   let activeTab='tourist';
   const tabs=document.querySelectorAll('.ticket__tab'), fieldsets=document.querySelectorAll('.fields');
-  const cardsEl=document.getElementById('cards'), titleEl=document.getElementById('picksTitle'), subEl=document.getElementById('picksSub');
+  const cardsEl=document.getElementById('cards'), titleEl=document.getElementById('picksTitle'), subEl=document.getElementById('picksSub'), toolBannerEl=document.getElementById('toolBanner');
+
+  function toolBanner(ic,title,desc,href){
+    return `<a class="toolbanner" href="${href}"><span class="toolbanner__ic">${ic}</span><div class="toolbanner__body"><h4>${title}</h4><p>${desc}</p></div><span class="toolbanner__cta">Открыть →</span></a>`;
+  }
 
   const multi={ t_int:new Set(['all']), m_comp:new Set(['solo']) };
 
@@ -634,6 +703,10 @@ const latestFeed = feed.slice(0, 5);
       ];
     }
     titleEl.textContent=title; subEl.textContent=sub; cardsEl.innerHTML=cards.join(''); refreshFavButtons(cardsEl);
+    if(activeTab==='tourist') toolBannerEl.innerHTML=toolBanner('💸','Калькулятор бюджета','Посчитайте бюджет под свою поездку','/tourist/kalkulyator/');
+    else if(activeTab==='move') toolBannerEl.innerHTML=toolBanner('✅','Чек-лист переезда','Пошаговый план с сохранением прогресса','/move/checklist/');
+    else if(activeTab==='live') toolBannerEl.innerHTML=toolBanner('🧮','Расходы на жизнь','Сколько уходит в месяц на аренду, еду и быт','/live/kalkulyator/');
+    else toolBannerEl.innerHTML='';
   }
 
   tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');activeTab=t.dataset.tab;fieldsets.forEach(f=>f.hidden=f.dataset.fields!==activeTab);render();}));

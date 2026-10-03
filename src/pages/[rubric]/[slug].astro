@@ -19,6 +19,14 @@ export async function getStaticPaths() {
 const { topic, catArticles } = Astro.props;
 const siblings = topics.filter((t) => t.rubric === topic.rubric && t.slug !== topic.slug);
 
+// Баннер с инструментом — только для тех категорий, где он реально в тему.
+const TOOL_BANNERS = {
+  'move/byudzhet': { ic: '✅', title: 'Чек-лист переезда', desc: 'Пошаговый план с сохранением прогресса', href: '/move/checklist/' },
+  'tourist/ceny': { ic: '💸', title: 'Калькулятор бюджета поездки', desc: 'Дни, человек, уровень комфорта — и итог в ₫ и ₽', href: '/tourist/kalkulyator/' },
+  'live/mestnye-ceny': { ic: '🧮', title: 'Калькулятор расходов на жизнь', desc: 'Сколько в месяц уходит на аренду, еду, транспорт и быт', href: '/live/kalkulyator/' },
+};
+const toolBanner = TOOL_BANNERS[`${topic.rubric}/${topic.slug}`];
+
 // Если у статей темы заданы группы (group) — рендерим по группам с заголовками,
 // в порядке order. Иначе — как раньше, плоской сеткой.
 const hasGroups = catArticles.some((a) => a.group);
@@ -45,8 +53,8 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{`${topic.title} — ${topic.rubricLabel || ''} — приехали.ком`.replace(' —  —', ' —')}</title>
-<meta name="description" content={`${topic.title} в Нячанге — ${topic.summary}. Подборка проверенных статей для раздела «${topic.rubricLabel || ''}».`}>
+<title>{topic.seoTitle ? `${topic.seoTitle} — приехали.ком` : `${topic.title} — ${topic.rubricLabel || ''} — приехали.ком`.replace(' —  —', ' —')}</title>
+<meta name="description" content={topic.seoDescription || `${topic.title} в Нячанге — ${topic.summary}. Подборка проверенных статей для раздела «${topic.rubricLabel || ''}».`}>
 <link rel="canonical" href={new URL(`/${topic.rubric}/${topic.slug}/`, Astro.site).href}>
 {catArticles.length === 0 && <meta name="robots" content="noindex, follow">}
 <meta property="og:type" content="website">
@@ -90,6 +98,17 @@ import SiteHeader from '../../components/SiteHeader.astro';
   .lede{font-size:1.05rem;color:var(--ink-soft)}
   .cat-intro{font-size:1rem;color:var(--ink-soft);max-width:68ch}
   .cat-intro p{margin-bottom:12px}
+
+  .toolbanner{display:flex;gap:14px;align-items:center;background:#fff;border:1.5px solid var(--jade);border-radius:16px;padding:16px 18px;margin-bottom:28px}
+  .toolbanner__ic{flex:none;width:40px;height:40px;border-radius:10px;background:rgba(47,123,109,.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+  .toolbanner__body{flex:1;min-width:0}
+  .toolbanner h4{font-size:.92rem;font-weight:600;margin-bottom:2px}
+  .toolbanner p{color:var(--ink-soft);font-size:.8rem}
+  .toolbanner__cta{flex:none;font-size:.82rem;font-weight:600;color:var(--jade-dark)}
+  @media (max-width:700px){
+    .toolbanner{padding:13px 14px}
+    .toolbanner p{display:none}
+  }
   .cat-intro p:last-child{margin-bottom:0}
 
   main{padding-bottom:56px}
@@ -157,6 +176,14 @@ import SiteHeader from '../../components/SiteHeader.astro';
       <p class="lede">{topic.summary}</p>
     )}
   </div>
+
+  {toolBanner && (
+    <a class="toolbanner" href={toolBanner.href}>
+      <span class="toolbanner__ic">{toolBanner.ic}</span>
+      <div class="toolbanner__body"><h4>{toolBanner.title}</h4><p>{toolBanner.desc}</p></div>
+      <span class="toolbanner__cta">Открыть →</span>
+    </a>
+  )}
 
   {catArticles.length > 0 ? (
     groupedArticles ? (

@@ -1,0 +1,243 @@
+---
+import SiteHeader from '../../../components/SiteHeader.astro';
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор расходов на жизнь в Нячанге — приехали.ком</title>
+<meta name="description" content="Сколько в месяц уходит на аренду, еду, транспорт, связь, медицину и быт в Нячанге — ориентир по категориям для разного состава и уровня жизни.">
+<meta name="theme-color" content="#F4F6F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style is:global>
+  :root{
+    --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
+    --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
+    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
+
+  main{padding-bottom:60px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.5rem);margin-bottom:8px}
+  .lede{color:var(--ink-soft);margin-bottom:16px;font-size:.95rem}
+
+  .draft-badge{display:flex;gap:10px;align-items:flex-start;background:#FBF3DD;border:1px solid #E8CE8C;border-radius:14px;padding:13px 16px;margin-bottom:24px;font-size:.82rem;color:#6B5420}
+  .draft-badge b{display:block;margin-bottom:2px}
+
+  .card{background:var(--bg-card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 16px 32px -26px rgba(22,35,43,.25)}
+  .field{margin-bottom:20px}
+  .field:last-child{margin-bottom:0}
+  .field-label{display:block;font-weight:600;font-size:.88rem;margin-bottom:9px}
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg button{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+  .seg button:hover{border-color:var(--jade)}
+  .seg button.active{background:var(--jade);border-color:var(--jade);color:#fff}
+  .style-opt{display:flex;flex-direction:column;gap:9px}
+  .style-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:all .15s}
+  .style-row:hover{border-color:var(--jade)}
+  .style-row.active{border-color:var(--jade);background:rgba(47,123,109,.06)}
+  .style-row input{accent-color:var(--jade);flex:none}
+  .style-row .sr-text{font-size:.86rem}
+  .style-row .sr-title{font-weight:600;display:block}
+  .style-row .sr-range{color:var(--ink-soft);font-size:.78rem}
+
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .toggle{position:relative;width:42px;height:24px;flex:none}
+  .toggle input{opacity:0;width:0;height:0}
+  .toggle .slider{position:absolute;inset:0;background:var(--line);border-radius:999px;cursor:pointer;transition:background .15s}
+  .toggle .slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .15s}
+  .toggle input:checked + .slider{background:var(--jade)}
+  .toggle input:checked + .slider::before{transform:translateX(18px)}
+
+  .result{background:var(--jade-dark);color:#fff;border-radius:16px;padding:24px 22px}
+  .result h2{font-family:var(--serif);font-weight:500;font-size:1.2rem;margin-bottom:14px}
+  .result-row{display:flex;justify-content:space-between;font-size:.86rem;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+  .result-row span:last-child{font-weight:600}
+  .result-total-vnd{font-family:var(--serif);font-size:1.9rem;font-weight:500;margin:14px 0 2px}
+  .result-total-rub{color:rgba(255,255,255,.75);font-size:.86rem}
+  .result-note{color:rgba(255,255,255,.75);font-size:.76rem;margin-top:16px;line-height:1.5}
+  .result-note a{color:#fff;text-decoration:underline}
+
+  footer{padding:24px 0 40px;border-top:1px solid var(--line)}
+  .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
+  .footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+</style>
+</head>
+<body>
+<SiteHeader />
+
+<main class="wrap">
+  <h1>Калькулятор расходов на жизнь в Нячанге</h1>
+  <p class="lede">Сколько в месяц уходит на аренду, еду, транспорт, связь и быт — по категориям, чтобы понимать, из чего складывается сумма.</p>
+
+  <div class="draft-badge">
+    <span>⚠️</span>
+    <div><b>Черновик</b>Цифры — наши ориентировочные оценки, ещё не сверенные с реальными ценами на месте. Относитесь как к грубому ориентиру, не как к точному расчёту.</div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <span class="field-label">Состав</span>
+      <div class="seg" id="compSeg">
+        <button type="button" data-val="solo" class="active">Один</button>
+        <button type="button" data-val="couple">Пара</button>
+        <button type="button" data-val="family">Семья с детьми</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Уровень жизни</span>
+      <div class="style-opt" id="styleOpt">
+        <label class="style-row active">
+          <input type="radio" name="style" value="econ" checked>
+          <span class="sr-text"><span class="sr-title">Экономно</span><span class="sr-range">Простое жильё, готовите дома, минимум лишнего</span></span>
+        </label>
+        <label class="style-row">
+          <input type="radio" name="style" value="normal">
+          <span class="sr-text"><span class="sr-title">Обычно</span><span class="sr-range">Нормальное жильё, смесь готовки и кафе</span></span>
+        </label>
+        <label class="style-row">
+          <input type="radio" name="style" value="comfort">
+          <span class="sr-text"><span class="sr-title">С комфортом</span><span class="sr-range">Хорошее жильё, рестораны, не считаете каждый донг</span></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="toggle-row">
+      <div><span class="extra-text" style="font-weight:600;font-size:.88rem">Резерв на непредвиденное</span><br><span style="color:var(--ink-soft);font-size:.8rem">+10% сверху — на случай, если что-то не учли</span></div>
+      <label class="toggle"><input type="checkbox" id="reserve" checked><span class="slider"></span></label>
+    </div>
+  </div>
+
+  <div class="result">
+    <h2 id="resultTitle">Нячанг: расходы на месяц</h2>
+    <div class="result-row"><span>Аренда жилья</span><span id="rRent">—</span></div>
+    <div class="result-row"><span>Коммунальные услуги</span><span id="rUtil">—</span></div>
+    <div class="result-row"><span>Связь и интернет</span><span id="rNet">—</span></div>
+    <div class="result-row"><span>Еда</span><span id="rFood">—</span></div>
+    <div class="result-row"><span>Транспорт</span><span id="rTransport">—</span></div>
+    <div class="result-row"><span>Медицина и страховка</span><span id="rHealth">—</span></div>
+    <div class="result-row"><span>Спорт, бьюти, развлечения</span><span id="rFun">—</span></div>
+    <div class="result-row" id="rReserveRow"><span>Резерв (10%)</span><span id="rReserve">—</span></div>
+    <div class="result-total-vnd" id="rTotalVnd">—</div>
+    <div class="result-total-rub" id="rTotalRub">считаем курс…</div>
+    <p class="result-note">Это ориентир по категориям, не точный расчёт — реальные траты сильно зависят от конкретного жилья и привычек. Курс донга к рублю — текущий, на момент открытия страницы. Будем уточнять цифры по мере публикации материалов о реальных ценах.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer__row">
+    <a href="/">приехали.ком</a>
+    <span class="footer__muted">© 2026</span>
+  </div>
+</footer>
+
+<script>
+  // Черновые ориентиры на 1 взрослого при уровне "normal", в месяц, VND.
+  const TIER_MULT = { econ: 0.6, normal: 1, comfort: 1.85 };
+  const BASE = {
+    rent: 11000000,   // по домохозяйству
+    util: 1800000,    // по домохозяйству
+    net: 550000,      // по домохозяйству
+    food: 7000000,    // на человека
+    transport: 1600000, // на человека
+    health: 1400000,  // на человека
+    fun: 2000000,     // на человека
+  };
+  const HOUSEHOLD_MULT = { solo: 1, couple: 1.3, family: 1.6 };
+  const PEOPLE_COUNT = { solo: 1, couple: 2, family: 3 };
+
+  const state = { comp: 'solo', style: 'econ', reserve: true };
+  let rubPerVnd = null;
+
+  document.getElementById('compSeg').querySelectorAll('button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.getElementById('compSeg').querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.comp = btn.dataset.val;
+      render();
+    });
+  });
+
+  document.querySelectorAll('#styleOpt .style-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      document.querySelectorAll('#styleOpt .style-row').forEach((r) => r.classList.remove('active'));
+      row.classList.add('active');
+      state.style = row.querySelector('input').value;
+      render();
+    });
+  });
+
+  document.getElementById('reserve').addEventListener('change', (e) => { state.reserve = e.target.checked; render(); });
+
+  const fmt = (n) => Math.round(n).toLocaleString('ru-RU') + ' ₫';
+  const compWord = { solo: '1 человека', couple: 'пары', family: 'семьи с детьми' };
+
+  function render() {
+    const mult = TIER_MULT[state.style];
+    const hh = HOUSEHOLD_MULT[state.comp];
+    const people = PEOPLE_COUNT[state.comp];
+
+    const rent = BASE.rent * mult * hh;
+    const util = BASE.util * mult * hh;
+    const net = BASE.net * mult * hh;
+    const food = BASE.food * mult * people;
+    const transport = BASE.transport * mult * people;
+    const health = BASE.health * mult * people;
+    const fun = BASE.fun * mult * people;
+
+    const subtotal = rent + util + net + food + transport + health + fun;
+    const reserve = state.reserve ? subtotal * 0.1 : 0;
+    const total = subtotal + reserve;
+
+    document.getElementById('resultTitle').textContent = `Нячанг: расходы на месяц для ${compWord[state.comp]}`;
+    document.getElementById('rRent').textContent = fmt(rent);
+    document.getElementById('rUtil').textContent = fmt(util);
+    document.getElementById('rNet').textContent = fmt(net);
+    document.getElementById('rFood').textContent = fmt(food);
+    document.getElementById('rTransport').textContent = fmt(transport);
+    document.getElementById('rHealth').textContent = fmt(health);
+    document.getElementById('rFun').textContent = fmt(fun);
+
+    const reserveRow = document.getElementById('rReserveRow');
+    if (state.reserve) {
+      reserveRow.style.display = 'flex';
+      document.getElementById('rReserve').textContent = fmt(reserve);
+    } else {
+      reserveRow.style.display = 'none';
+    }
+
+    document.getElementById('rTotalVnd').textContent = fmt(total);
+    document.getElementById('rTotalRub').textContent = rubPerVnd
+      ? `≈ ${Math.round(total * rubPerVnd).toLocaleString('ru-RU')} ₽`
+      : 'считаем курс…';
+  }
+
+  (async () => {
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/USD');
+      const data = await res.json();
+      if (data.result !== 'success') throw new Error('bad response');
+      rubPerVnd = data.rates.RUB / data.rates.VND;
+    } catch (e) {
+      rubPerVnd = null;
+    }
+    render();
+  })();
+
+  render();
+</script>
+</body>
+</html>

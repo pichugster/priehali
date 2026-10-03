@@ -1,0 +1,94 @@
+---
+import SiteHeader from '../../components/SiteHeader.astro';
+
+const tools = [
+  {
+    href: '/move/checklist/',
+    icon: '✅',
+    title: 'Чек-лист переезда',
+    summary: 'Пошаговый план на переезд в Нячанг: что сделать до вылета, в первый день и в первый месяц. Прогресс сохраняется в браузере.',
+  },
+  {
+    href: '/tourist/kalkulyator/',
+    icon: '💸',
+    title: 'Калькулятор бюджета поездки',
+    summary: 'Дни, человек, уровень комфорта — и ориентир бюджета в донгах и рублях по текущему курсу.',
+  },
+  {
+    href: '/live/kalkulyator/',
+    icon: '🧮',
+    title: 'Калькулятор расходов на жизнь',
+    summary: 'Сколько в месяц уходит на аренду, еду, транспорт и быт — по составу семьи и уровню жизни. Пока черновик, цифры уточняем.',
+  },
+];
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструменты — приехали.ком</title>
+<meta name="description" content="Чек-лист переезда, калькулятор бюджета поездки и другие инструменты приехали.ком — чтобы не только читать, но и планировать.">
+<meta name="theme-color" content="#F4F6F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style is:global>
+  :root{
+    --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
+    --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
+    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
+
+  main{padding-bottom:60px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.5rem);margin-bottom:8px}
+  .lede{color:var(--ink-soft);margin-bottom:28px;font-size:.95rem}
+
+  .list{display:flex;flex-direction:column;gap:14px}
+  .item{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;transition:border-color .15s,transform .15s}
+  .item:hover{border-color:var(--jade);transform:translateY(-2px)}
+  .item__ic{font-size:1.8rem;flex:none;line-height:1}
+  .item h2{font-family:var(--serif);font-weight:500;font-size:1.15rem;margin-bottom:4px}
+  .item p{color:var(--ink-soft);font-size:.86rem}
+
+  footer{padding:24px 0 40px;border-top:1px solid var(--line)}
+  .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
+  .footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+</style>
+</head>
+<body>
+<SiteHeader />
+
+<main class="wrap">
+  <h1>Инструменты</h1>
+  <p class="lede">Не только читать, но и планировать — чек-листы, калькуляторы и другие инструменты приехали.ком.</p>
+
+  <div class="list">
+    {tools.map((t) => (
+      <a class="item" href={t.href}>
+        <span class="item__ic">{t.icon}</span>
+        <div>
+          <h2>{t.title}</h2>
+          <p>{t.summary}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</main>
+
+<footer>
+  <div class="footer__row">
+    <a href="/">приехали.ком</a>
+    <span class="footer__muted">© 2026</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -7,15 +7,22 @@ export async function getStaticPaths() {
   return entries.map((entry) => {
     const a = entry.data;
     const topic = topics.find((t) => t.rubric === a.rubric && t.slug === a.category);
+    // Перелинковка: если в статье задан curated-список `related` (слаги), используем его —
+    // иначе падаем обратно на старое поведение (все остальные статьи той же категории).
+    let related;
+    if (a.related && a.related.length > 0) {
+      related = a.related
+        .map((slug) => entries.find((x) => x.data.slug === slug))
+        .filter(Boolean)
+        .map((x) => x.data);
+    } else {
+      related = entries
+        .filter((x) => x.data.rubric === a.rubric && x.data.category === a.category && x.data.slug !== a.slug)
+        .map((x) => x.data);
+    }
     return {
       params: { rubric: a.rubric, category: a.category, article: a.slug },
-      props: {
-        entry,
-        topic,
-        related: entries
-          .filter((x) => x.data.rubric === a.rubric && x.data.category === a.category && x.data.slug !== a.slug)
-          .map((x) => x.data),
-      },
+      props: { entry, topic, related },
     };
   });
 }
@@ -301,7 +308,7 @@ import SiteHeader from '../../../components/SiteHeader.astro';
   )}
 
   <div class="siblings">
-    <h3>Другие статьи в теме «{topic.title}»</h3>
+    <h3>Похожие места</h3>
     <div class="sib-list">
       {related.map((r) => (
         <a class="sib" href={`/${r.rubric}/${r.category}/${r.slug}/`}>{r.icon} {r.title}</a>
