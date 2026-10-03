@@ -1,0 +1,227 @@
+---
+import SiteHeader from '../../../components/SiteHeader.astro';
+
+// Данные чек-листа переезда. Каждый пункт — { text, href? }.
+// href ведёт на нашу статью с подробностями; если статьи ещё нет — просто текст без ссылки.
+const stages = [
+  {
+    title: 'За 1–3 месяца до переезда',
+    items: [
+      { text: 'Проверить загранпаспорт — срок действия должен быть от 6 месяцев' },
+      { text: 'Выбрать и оформить визу', href: '/move/viza/vidy-viz/' },
+      { text: 'Посчитать стартовый бюджет на переезд', href: '/move/byudzhet/pereezd-v-nyachang-s-chego-nachat/' },
+      { text: 'Разобраться с картами и деньгами', href: '/move/banki/banki-vo-vietname-dlya-inostrancev/' },
+      { text: 'Если едете с питомцем — оформить документы на ввоз', href: '/move/pitomec/dokumenty-dlya-vvoza-zhivotnogo-vo-vietnam/' },
+      { text: 'Купить билеты' },
+    ],
+  },
+  {
+    title: 'За неделю до вылета',
+    items: [
+      { text: 'Сделать копии документов — паспорт, виза, страховка' },
+      { text: 'Разобраться с SIM-картой и интернетом', href: '/move/internet/sim-i-internet-vo-vietname/' },
+      { text: 'Забронировать жильё на первые 1–2 недели — отель или коливинг' },
+      { text: 'Если едете с питомцем — выбрать авиакомпанию и подготовить перевозку', href: '/move/pitomec/kak-vybrat-aviakompaniyu-dlya-pereleta-s-pitomcem/' },
+      { text: 'Установить нужные приложения — Grab, банк, переводчик' },
+    ],
+  },
+  {
+    title: 'Первый день',
+    items: [
+      { text: 'Доехать из аэропорта Камрань', href: '/move/transport/grab-vmesto-taksi-v-aeroportu/' },
+      { text: 'Подключить местную SIM-карту или активировать eSIM', href: '/move/internet/sim-i-internet-vo-vietname/' },
+      { text: 'Заселиться в забронированное жильё' },
+      { text: 'Снять немного местной наличности на первые расходы' },
+    ],
+  },
+  {
+    title: 'Первая неделя',
+    items: [
+      { text: 'Начать искать долгосрочное жильё — лично, не заочно', href: '/move/zhile/kak-iskat-dlitelnuyu-arendu/' },
+      { text: 'Зарегистрироваться по месту проживания', href: '/move/zhile/registraciya-inostranca-po-mestu-prozhivaniya/' },
+      { text: 'Найти ближайший супермаркет и рынок' },
+      { text: 'Освоиться с транспортом — Grab или свой байк' },
+    ],
+  },
+  {
+    title: 'Первый месяц',
+    items: [
+      { text: 'Проверить сроки визы и когда её нужно продлевать' },
+      { text: 'Разобраться со страховкой и ближайшей клиникой' },
+      { text: 'Если есть дети — определиться со школой или садом', href: '/live/shkoly/' },
+      { text: 'Найти своё комьюнити и новые знакомства' },
+    ],
+  },
+];
+
+const totalItems = stages.reduce((sum, s) => sum + s.items.length, 0);
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Чек-лист переезда в Нячанг — приехали.ком</title>
+<meta name="description" content="Пошаговый план переезда в Нячанг: что сделать за 1–3 месяца, за неделю до вылета, в первый день, первую неделю и первый месяц. Прогресс сохраняется в вашем браузере.">
+<meta name="theme-color" content="#F4F6F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style is:global>
+  :root{
+    --bg:#F4F6F0; --bg-card:#FFFFFF; --ink:#16232B; --ink-soft:#4A5A5F; --line:#DAE1D3;
+    --jade:#2F7B6D; --jade-dark:#204F46; --gold:#D9A441;
+    --serif:"Newsreader",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif; --maxw:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;max-width:100%}
+  img,iframe{max-width:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:6px}
+
+  main{padding-bottom:60px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,7vw,2.5rem);margin-bottom:8px}
+  .lede{color:var(--ink-soft);margin-bottom:24px;font-size:.95rem}
+
+  .progress-card{background:var(--bg-card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:28px;box-shadow:0 16px 32px -26px rgba(22,35,43,.25)}
+  .progress-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .progress-label{font-weight:600;font-size:.95rem}
+  .progress-pct{font-family:var(--serif);font-size:1.3rem;color:var(--jade-dark);font-weight:500}
+  .progress-track{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+  .progress-fill{height:100%;background:var(--jade);border-radius:999px;width:0%;transition:width .3s ease}
+  .progress-reset{margin-top:12px;font-size:.78rem;color:var(--ink-soft);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0;font-family:var(--sans)}
+  .progress-reset:hover{color:var(--jade-dark)}
+
+  .stage{margin-bottom:26px}
+  .stage h2{font-family:var(--serif);font-weight:500;font-size:1.25rem;margin-bottom:12px;color:var(--jade-dark)}
+  .stage-items{display:flex;flex-direction:column;gap:2px}
+  .citem{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:12px;transition:background .15s}
+  .citem:hover{background:var(--bg-card)}
+  .citem input{appearance:none;flex:none;width:21px;height:21px;margin-top:1px;border:1.5px solid var(--line);border-radius:7px;background:#fff;cursor:pointer;position:relative;transition:border-color .15s,background .15s}
+  .citem input:checked{background:var(--jade);border-color:var(--jade)}
+  .citem input:checked::after{content:'';position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg)}
+  .citem label{font-size:.92rem;cursor:pointer;line-height:1.45}
+  .citem.done label{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--line)}
+  .citem label a{color:var(--jade-dark);text-decoration:underline;text-decoration-color:rgba(47,123,109,.35)}
+  .citem label a:hover{text-decoration-color:var(--jade-dark)}
+
+  .done-banner{display:none;background:var(--bg-card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;margin-top:10px}
+  .done-banner.show{display:block}
+  .done-banner .ic{font-size:1.6rem;display:block;margin-bottom:6px}
+
+  footer{padding:24px 0 40px;border-top:1px solid var(--line)}
+  .footer__row{display:flex;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 24px;font-family:var(--serif);color:var(--jade-dark)}
+  .footer__muted{font-family:var(--sans);color:var(--ink-soft);font-size:.85rem}
+</style>
+</head>
+<body>
+<SiteHeader />
+
+<main class="wrap">
+  <h1>Чек-лист переезда в Нячанг</h1>
+  <p class="lede">Пошаговый план: что сделать до вылета, в первый день и в первый месяц на месте. Отмечайте пункты — прогресс сохранится в этом браузере, можно вернуться позже.</p>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <span class="progress-label">Готовность к переезду</span>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="progress-reset" id="resetBtn" type="button">Сбросить прогресс</button>
+  </div>
+
+  {stages.map((stage, si) => (
+    <div class="stage">
+      <h2>{stage.title}</h2>
+      <div class="stage-items">
+        {stage.items.map((item, ii) => {
+          const id = `s${si}-i${ii}`;
+          return (
+            <div class="citem" data-citem>
+              <input type="checkbox" id={id} data-id={id} />
+              <label for={id}>{item.href ? <a href={item.href}>{item.text}</a> : item.text}</label>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+
+  <div class="done-banner" id="doneBanner">
+    <span class="ic">🎉</span>
+    <p>Все пункты отмечены — похоже, вы готовы к переезду в Нячанг!</p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer__row">
+    <a href="/">приехали.ком</a>
+    <span class="footer__muted">© 2026</span>
+  </div>
+</footer>
+
+<script define:vars={{ totalItems }}>
+  const STORAGE_KEY = 'priehali_pereezd_checklist_v1';
+  const checkboxes = Array.from(document.querySelectorAll('.citem input[type="checkbox"]'));
+  const fill = document.getElementById('progressFill');
+  const pct = document.getElementById('progressPct');
+  const resetBtn = document.getElementById('resetBtn');
+  const doneBanner = document.getElementById('doneBanner');
+
+  function loadChecked() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch (e) {
+      return new Set();
+    }
+  }
+  function saveChecked(set) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
+    } catch (e) {}
+  }
+
+  let checked = loadChecked();
+
+  // клик по ссылке внутри подписи не должен переключать чекбокс
+  document.querySelectorAll('.citem label a').forEach((a) => {
+    a.addEventListener('click', (e) => e.stopPropagation());
+  });
+
+  function render() {
+    checkboxes.forEach((cb) => {
+      const id = cb.dataset.id;
+      const isChecked = checked.has(id);
+      cb.checked = isChecked;
+      cb.closest('.citem').classList.toggle('done', isChecked);
+    });
+    const n = checked.size;
+    const p = totalItems ? Math.round((n / totalItems) * 100) : 0;
+    fill.style.width = p + '%';
+    pct.textContent = p + '%';
+    doneBanner.classList.toggle('show', n === totalItems && totalItems > 0);
+  }
+
+  checkboxes.forEach((cb) => {
+    cb.addEventListener('change', () => {
+      const id = cb.dataset.id;
+      if (cb.checked) checked.add(id); else checked.delete(id);
+      saveChecked(checked);
+      render();
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    checked = new Set();
+    saveChecked(checked);
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>
