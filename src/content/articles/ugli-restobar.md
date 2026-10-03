@@ -9,6 +9,8 @@ icon: "🍸"
 map: "UGLI Restobar, 72 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-10-03"
 checkedDate: "2026-10-03"
+group: "Ресторан на вечер"
+order: 60
 related:
   - "le-sofi-restaurant"
   - "madam-phuong"

@@ -9,6 +9,8 @@ icon: "🍩"
 map: "OPTIMIST Casual Cafe, 39 Trần Nguyên Hãn, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 45
 related:
   - "cafe-culture"
   - "atelier"

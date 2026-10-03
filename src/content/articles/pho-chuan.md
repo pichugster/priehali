@@ -9,6 +9,8 @@ icon: "🍜"
 map: "Phở chuẩn, 67 Nguyễn Đức Cảnh, Nam Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Вьетнамская кухня и стритфуд"
+order: 11
 related:
   - "banh-mi-phan"
   - "ut-kieu-com-chien-mi-xao"

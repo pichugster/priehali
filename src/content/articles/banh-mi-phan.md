@@ -9,6 +9,8 @@ icon: "🥖"
 map: "Bánh Mì Phan, 164 Bạch Đằng, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Вьетнамская кухня и стритфуд"
+order: 10
 related:
   - "pho-chuan"
   - "ut-kieu-com-chien-mi-xao"

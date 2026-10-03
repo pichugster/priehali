@@ -9,6 +9,8 @@ icon: "🥗"
 map: "Simê, 120/22A Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-10-03"
 checkedDate: "2026-10-03"
+group: "Здоровая еда"
+order: 50
 related:
   - "alpaca-restaurant"
   - "cafe-culture"

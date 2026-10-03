@@ -9,6 +9,8 @@ icon: "🍳"
 map: "Simple Cafe, 29 Cao Văn Bé, Vĩnh Phước, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 46
 related:
   - "chekhov-coffee-food"
   - "optimist-casual-cafe"

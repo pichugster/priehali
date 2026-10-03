@@ -9,6 +9,8 @@ icon: "🍣"
 map: "IZAKAYA KIWAMI, 114 Hồng Bàng, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Суши и японская кухня"
+order: 33
 related:
   - "tomita-sushi"
   - "mr-tom-sushi"

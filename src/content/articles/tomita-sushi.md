@@ -9,6 +9,8 @@ icon: "🍣"
 map: "Tomita Sushi, 67 Lê Đại Hành, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Суши и японская кухня"
+order: 32
 related:
   - "kiwami-izakaya"
   - "mr-tom-sushi"

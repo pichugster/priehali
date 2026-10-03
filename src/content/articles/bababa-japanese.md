@@ -9,6 +9,8 @@ icon: "🍱"
 map: "BaBaBa Japanese, 4/25 Phạm Văn Đồng, Bắc Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Суши и японская кухня"
+order: 34
 related:
   - "kiwami-izakaya"
   - "tomita-sushi"

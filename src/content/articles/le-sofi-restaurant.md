@@ -9,6 +9,8 @@ icon: "🥩"
 map: "Le'Sofi Restaurant, 67-69 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 47
 related:
   - "alpaca-restaurant"
   - "madam-phuong"

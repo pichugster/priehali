@@ -9,6 +9,8 @@ icon: "🥐"
 map: "Artisan Cafe & Eatery, 17/35A Hoàng Diệu, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 42
 related:
   - "alpaca-restaurant"
   - "cafe-culture"

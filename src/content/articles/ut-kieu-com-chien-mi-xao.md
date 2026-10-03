@@ -9,6 +9,8 @@ icon: "🦐"
 map: "ÚT Kiều cơm chiên mì xào, Đoàn Trần Nghiệp, Bắc Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Морепродукты"
+order: 20
 related:
   - "banh-mi-phan"
   - "pho-chuan"

@@ -9,6 +9,8 @@ icon: "🍳"
 map: "Alpaca Homestyle Cafe, 10/1B Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 40
 related:
   - "cafe-culture"
   - "artisan-cafe-eatery"

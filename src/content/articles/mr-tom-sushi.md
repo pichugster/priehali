@@ -9,6 +9,8 @@ icon: "🍣"
 map: "Mr.Tôm Sushi, 81/2 Hoàng Diệu, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Суши и японская кухня"
+order: 30
 related:
   - "tomita-sushi"
   - "kiwami-izakaya"

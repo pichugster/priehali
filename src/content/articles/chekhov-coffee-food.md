@@ -9,6 +9,8 @@ icon: "🥞"
 map: "CHEKHOV Coffee&food, 95/2 Bạch Đằng, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 44
 related:
   - "simple-cafe"
   - "optimist-casual-cafe"

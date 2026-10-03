@@ -9,6 +9,8 @@ icon: "🍳"
 map: "Cafe Culture, 120/25-26 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Завтраки и бранчи"
+order: 41
 related:
   - "artisan-cafe-eatery"
   - "alpaca-restaurant"

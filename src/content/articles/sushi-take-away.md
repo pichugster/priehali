@@ -9,6 +9,8 @@ icon: "🍣"
 map: "Sushi Take Away Nha Trang, 65 Trần Nguyên Hãn, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Суши и японская кухня"
+order: 31
 related:
   - "tomita-sushi"
   - "mr-tom-sushi"

@@ -9,6 +9,8 @@ icon: "🍜"
 map: "Madam Phuong, 34 Nguyễn Thiện Thuật, Nha Trang, Khánh Hòa"
 date: "2026-09-16"
 checkedDate: "2026-10-03"
+group: "Вьетнамская кухня и стритфуд"
+order: 12
 related:
   - "banh-mi-phan"
   - "pho-chuan"
